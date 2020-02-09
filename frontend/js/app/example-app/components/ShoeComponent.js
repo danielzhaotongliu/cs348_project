@@ -16,23 +16,21 @@ const ShoeComponent = (props) => {
 
     return (
         <div>
-            <Col span={6}>
-                <Card 
-                    hoverable 
-                    title={props.name} 
-                    bordered={true} 
-                    style={styles.cardStyle}
-                    headStyle={{fontSize : 25}}
-                    bodyStyle={{display:'flex'}}
-                    >
-                    <img alt="example" src="https://images-na.ssl-images-amazon.com/images/I/71WDF498N5L._AC_UX695_.jpg" style={styles.coverStyle}/>
-                    <List bordered={false} style={styles.listStyle}>                        
-                        <List.Item style={styles.listItemStyle}>{props.brand}</List.Item>
-                        <List.Item style={styles.listItemStyle}>CDN$ {props.price}</List.Item>
-                        <List.Item style={styles.listItemStyle}>Size: {props.size}</List.Item>
-                    </List>
-                </Card>
-            </Col>        
+            <Card 
+                hoverable 
+                title={props.name} 
+                bordered={true} 
+                style={styles.cardStyle}
+                headStyle={{fontSize : 25}}
+                bodyStyle={{display:'flex'}}
+                >
+                <img alt="example" src="https://images-na.ssl-images-amazon.com/images/I/71WDF498N5L._AC_UX695_.jpg" style={styles.coverStyle}/>
+                <List bordered={false} style={styles.listStyle}>
+                    <List.Item style={styles.listItemStyle}>{props.brand}</List.Item>
+                    <List.Item style={styles.listItemStyle}>CDN$ {props.price}</List.Item>
+                    <List.Item style={styles.listItemStyle}>Size: {props.size}</List.Item>
+                </List>
+            </Card>
         </div>
     );
 
