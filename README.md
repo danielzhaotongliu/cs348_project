@@ -24,7 +24,12 @@ This is a good starting point for modern Python/JavaScript web projects.
 
 ## Running
 ### Setup
-- Inside the `backend` folder, do the following:
+- Create the virtual environment by: `python3 -m venv cs348_project`
+- Activate the virtual environment by: `source cs348_project/bin/activate`
+- Install pip-tools by: `pip3 install pip-tools`
+- Compile the requirements by: `pip-compile requirements.in > requirements.txt && pip-compile dev-requirements.in > dev-requirements.txt`
+- Install the requirements by: `pip3 install -r requirements.txt && pip3 install -r dev-requirements.txt`
+- Change directory to the `backend` folder, do the following:
 - Create a copy of ``cs348_project/settings/local.py.example``:  
   `cp cs348_project/settings/local.py.example cs348_project/settings/local.py`
 - Create a copy of ``.env.example``:

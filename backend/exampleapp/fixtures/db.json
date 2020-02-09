@@ -1,0 +1,66 @@
+[
+    {
+        "model": "exampleapp.shoe",
+        "fields": {
+            "sid": 1,
+            "style": "Oxford",
+            "price": 74.99,
+            "brand": "Clarks",
+            "stock": 21,
+            "size": 9.5,
+            "image_url": "https://images-na.ssl-images-amazon.com/images/I/71WDF498N5L._AC_UX695_.jpg",
+            "colour": "brown",
+            "name": "Cotrell Walk Oxford",
+            "release_date": "2016-03-16",
+            "description": "100% leather"
+        }
+    },
+    {
+        "model": "exampleapp.shoe",
+        "fields": {
+            "sid": 2,
+            "style": "Oxford",
+            "price": 97.76,
+            "brand": "Stacy Adams",
+            "stock": 4,
+            "size": 10,
+            "image_url": "https://images-na.ssl-images-amazon.com/images/I/81osCUGO2cL._AC_UX695_.jpg",
+            "colour": "black",
+            "name": "Dunbar - Wingtip Oxford",
+            "release_date": "2017-03-16",
+            "description": "Antiqued leather, Manmade sole"
+        }
+    },
+    {
+        "model": "exampleapp.shoe",
+        "fields": {
+            "sid": 3,
+            "style": "Slip-on Loafers",
+            "price": 194.85,
+            "brand": "Ecco",
+            "stock": 1,
+            "size": 9.5,
+            "image_url": "https://images-na.ssl-images-amazon.com/images/I/81PyHodteFL._AC_UX695_.jpg",
+            "colour": "brown",
+            "name": "DIP Moc Slip On Moccasins",
+            "release_date": "2018-03-16",
+            "description": "Leather and Textile, Rubber sole"
+        }
+    },
+    {
+        "model": "exampleapp.shoe",
+        "fields": {
+            "sid": 4,
+            "style": "Slip-on Loafers",
+            "price": 108.76,
+            "brand": "Clarks",
+            "stock": 11,
+            "size": 10,
+            "image_url": "https://images-na.ssl-images-amazon.com/images/I/81yvgRwvR3L._AC_UX695_.jpg",
+            "colour": "brown",
+            "name": "Vanek Step Loafers",
+            "release_date": "2019-02-16",
+            "description": "Leather, Rubber sole,"
+        }
+    }
+]
