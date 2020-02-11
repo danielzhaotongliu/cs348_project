@@ -1,17 +1,15 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
 import { List, Input } from 'antd';
+import API from '../api'
 
 const { Search } = Input
 
 
 /*
     TODO: 
-    - Add a search box to this
-    - Have a List of ShoeComponents instead of one
-    - Install axios
     - Fix up workflow of the app
-        - first, axios calls the api to populate a data array
+        - first, axios calls the api to populate a data array -- Use ComponentDidMount() method
         - then in render Item, we get the data from an array into the component
         - question: how do we now to stop iterating --> pop from array? 
 */
