@@ -9,7 +9,7 @@ from exampleapp import views
 
 
 router = routers.DefaultRouter()
-router.register(r'shoe', views.ShoeViewSet)
+router.register(r'shoe', views.ShoeViewSet, basename='Shoe')
 
 urlpatterns = [
     path('api/', include(router.urls)),
