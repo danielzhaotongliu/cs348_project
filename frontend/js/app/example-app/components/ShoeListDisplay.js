@@ -17,32 +17,37 @@ const { Search } = Input
 */
 
 
-const ShoeListDisplay = (props) => {
+export default class ShoeListDisplay extends React.Component {
 
-    return (
-        <div style={styles.rootContainerStyle}>
-            <div style={styles.containerStyle}>    
-                <p style={styles.titleStyle}>Shoe Store</p>
 
-                <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => console.log(value)} />
+    render() {
 
-                <List
-                    grid={{column: 2 }}
-                >
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                    <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+        return (
+            <div style={styles.rootContainerStyle}>
+                <div style={styles.containerStyle}>    
+                    <p style={styles.titleStyle}>Shoe Store</p>
 
-                </List>
+                    <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => console.log(value)} />
 
+                    <List
+                        grid={{column: 2 }}>
+
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+
+                    </List>
+
+                </div>
             </div>
-        </div>
-    );
+        );
+
+    }
 
 };
 
@@ -74,6 +79,3 @@ const styles = {
     }
 
 };
-
-
-export default ShoeListDisplay
