@@ -1,7 +1,6 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
 import { List, Input } from 'antd';
-// import API from '../api'
 import axios from 'axios'
 
 const { Search } = Input
@@ -9,7 +8,7 @@ const { Search } = Input
 
 /*
     TODO: 
-    - pass image url to shoecomponent
+    - Search functionality
 
 */
 
@@ -38,8 +37,6 @@ export default class ShoeListDisplay extends React.Component {
     render() {
 
         console.log(this.state.shoeList);
-
-        const data = [];
 
         return (
             <div style={styles.rootContainerStyle}>
