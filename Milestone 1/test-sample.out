@@ -1,0 +1,45 @@
+|                                                          name |         brand |        colour |       description |                                                          name |         brand |        colour |       description |
+|---------------------------------------------------------------|---------------|---------------|-------------------|---------------------------------------------------------------|---------------|---------------|-------------------|
+| Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | MAUI AND SONS | Sketchy Slant | Some descriptions | Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | MAUI AND SONS |         Brown | Some descriptions |
+|                Native Miller Men Us 10 Gray Loafer Uk 9 Eu 43 |        NATIVE |         Black | Some descriptions | Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | MAUI AND SONS |         Brown | Some descriptions |
+|                Native Miller Men Us 10 Gray Loafer Uk 9 Eu 43 |        NATIVE |         Black | Some descriptions | Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | MAUI AND SONS | Sketchy Slant | Some descriptions |
+
+
+
+| count |               style |               brand |
+|-------|---------------------|---------------------|
+|     2 |        Blucher shoe | SERVUS BY HONEYWELL |
+|     1 |           Boat shoe | SERVUS BY HONEYWELL |
+|     1 |              Brogan | SERVUS BY HONEYWELL |
+|     1 |         Brogue shoe | SERVUS BY HONEYWELL |
+|     1 | Cantabrian albarcas | SERVUS BY HONEYWELL |
+|     2 |         Chukka boot | SERVUS BY HONEYWELL |
+
+
+
+NO OUTPUT ON UPDATE;
+
+
+
+| sid | stock |  price | size |        colour |      image_url |                                                                        name |       description |               brand |               style |
+|-----|-------|--------|------|---------------|----------------|-----------------------------------------------------------------------------|-------------------|---------------------|---------------------|
+|   1 |    13 |  39.89 |    6 |         White | www.google.com |               Josmo 8190 Plain Infant Walking Shoes Navy - Wide - Size 7. 5 | Some descriptions |               Josmo |           Boat shoe |
+|   2 |    11 |  51.99 |   10 | Sketchy Slant | www.google.com |               Josmo 8190 Plain Infant Walking Shoes Navy - Wide - Size 7. 5 | Some descriptions |               Josmo | Cantabrian albarcas |
+|   3 |     8 |  40.02 |    8 |         Black | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |           Boat shoe |
+|   4 |     4 |  50.31 |   12 |         Black | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |        Blucher shoe |
+|   5 |    13 |  46.26 |    6 |  Multi-Colour | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |              Brogan |
+|   6 |    13 |  55.99 |    6 |     BlackBlue | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL | Cantabrian albarcas |
+|   7 |     4 |  41.12 |   10 |         Beige | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |        Blucher shoe |
+|   8 |     8 |  46.19 |    9 |         White | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |         Chukka boot |
+|   9 |     9 |   21.4 |    7 |         Brown | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |         Brogue shoe |
+|  10 |    15 |  45.23 |   10 |        Yellow | www.google.com |                                  Servus By Honeywell Shoe Studs Zsr101blmlg | Some descriptions | SERVUS BY HONEYWELL |         Chukka boot |
+|  11 |    11 |     45 |    9 |         Brown | www.google.com |                              Native Miller Men Us 10 Gray Loafer Uk 9 Eu 43 | Some descriptions |              NATIVE |           Boat shoe |
+|  12 |     1 |   7.99 |    6 |         Brown | www.google.com |                              Native Miller Men Us 10 Gray Loafer Uk 9 Eu 43 | Some descriptions |              NATIVE |           Boat shoe |
+|  13 |     3 |   9.99 |    7 |         Black | www.google.com |                              Native Miller Men Us 10 Gray Loafer Uk 9 Eu 43 | Some descriptions |              NATIVE |               Bucks |
+|  14 |    14 |   9.99 |    8 | Sketchy Slant | www.google.com |               Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | Some descriptions |       MAUI AND SONS |       Climbing shoe |
+|  15 |     1 |  19.99 |   10 |           Red | www.google.com |               Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | Some descriptions |       MAUI AND SONS |       Climbing shoe |
+|  16 |     4 |     25 |   11 |  Multi-Colour | www.google.com |               Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | Some descriptions |       MAUI AND SONS |        Blucher shoe |
+|  17 |    13 |  15.99 |    7 |         Beige | www.google.com |               Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | Some descriptions |       MAUI AND SONS |       Climbing shoe |
+|  18 |     2 |   9.99 |    8 |         Brown | www.google.com |               Maui and Sons David Men  Open Toe Synthetic  Flip Flop Sandal | Some descriptions |       MAUI AND SONS | Cantabrian albarcas |
+|  19 |     2 |  37.99 |   13 |         Black | www.google.com | Men's Faux Leather Business Handbag Messenger Shoulder Briefcase Laptop Bag | Some descriptions |              Hao-bo |              Brogan |
+|  20 |    12 | 299.99 |   10 |         Beige | www.google.com |        Twisted X Western Boots Mens Buckaroo Spur Ridge Crazy Horse Mbkl012 | Some descriptions |           Twisted X |              Brogan |
