@@ -52,9 +52,9 @@ export default class ShoeListDisplay extends React.Component {
                         renderItem={ item => {
 
                             return (
-                            <List.Item>
-                                <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
-                            </List.Item>
+                                <List.Item>
+                                    <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                </List.Item>
                             );
 
                         } } />
