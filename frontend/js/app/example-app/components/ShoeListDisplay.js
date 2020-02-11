@@ -86,7 +86,8 @@ const styles = {
     },
 
     searchboxStyle : {
-        width : 500
+        width : 500,
+        margin : 50
     }, 
 
     listItemStyle : {
