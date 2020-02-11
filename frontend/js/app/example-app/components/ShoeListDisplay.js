@@ -1,45 +1,62 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
 import { List, Input } from 'antd';
-import API from '../api'
+// import API from '../api'
+import axios from 'axios'
 
 const { Search } = Input
 
 
 /*
     TODO: 
-    - Fix up workflow of the app
-        - first, axios calls the api to populate a data array -- Use ComponentDidMount() method
-        - then in render Item, we get the data from an array into the component
-        - question: how do we now to stop iterating --> pop from array? 
+    - pass image url to shoecomponent
+
 */
+
 
 
 export default class ShoeListDisplay extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            shoeList : []
+        };
+    }
+
+    // When this page loads, call populate our array of shoes
+    componentDidMount() {
+
+        axios.get('api/shoe/')
+            .then(response => {
+            const shoes = response.data;
+            this.setState({ shoeList : shoes });
+        })
+
+    }
 
     render() {
 
+        console.log(this.state.shoeList);
+
+        const data = [];
+
         return (
             <div style={styles.rootContainerStyle}>
-                <div style={styles.containerStyle}>    
+                <div style={styles.containerStyle}>
+
                     <p style={styles.titleStyle}>Shoe Store</p>
 
-                    <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => console.log(value)} />
+                    <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => { console.log(value); }} />
 
                     <List
-                        grid={{column: 2 }}>
-
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-
-                    </List>
+                        grid={{column: 2 }}
+                        dataSource={this.state.shoeList}
+                        renderItem={ item => (
+                            <List.Item>
+                                <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size}/>
+                            </List.Item>
+                        )} />
 
                 </div>
             </div>
