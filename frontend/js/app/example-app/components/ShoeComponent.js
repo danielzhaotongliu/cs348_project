@@ -16,7 +16,7 @@ const ShoeComponent = (props) => {
                 headStyle={styles.cardHeaderStyle}
                 bodyStyle={{display:'flex'}}
                 >
-                <img alt="example" src="https://images-na.ssl-images-amazon.com/images/I/71WDF498N5L._AC_UX695_.jpg" style={styles.imageStyle}/>
+                <img alt="example" src={props.imgSrc} style={styles.imageStyle}/>
                 <List bordered={false} style={styles.listStyle}>
                     <List.Item style={styles.listItemStyle}>{props.brand}</List.Item>
                     <List.Item style={styles.listItemStyle}>CDN$ {props.price}</List.Item>
