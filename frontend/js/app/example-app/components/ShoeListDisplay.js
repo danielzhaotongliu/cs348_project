@@ -52,11 +52,15 @@ export default class ShoeListDisplay extends React.Component {
                     <List
                         grid={{column: 2 }}
                         dataSource={this.state.shoeList}
-                        renderItem={ item => (
+                        renderItem={ item => {
+
+                            return (
                             <List.Item>
-                                <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size}/>
+                                <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                             </List.Item>
-                        )} />
+                            );
+
+                        } } />
 
                 </div>
             </div>
