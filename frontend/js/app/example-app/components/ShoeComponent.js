@@ -1,16 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, Col, Row, List } from "antd";
+import { Card, List } from "antd";
 import "antd/dist/antd.css";
 
 
-
-
-/* 
-    TODO:
-    - make page with a list of ShoeDisplay
-    - install axios -- and make the above page make requests to retrieve data
-*/
 
 const ShoeComponent = (props) => {
 
