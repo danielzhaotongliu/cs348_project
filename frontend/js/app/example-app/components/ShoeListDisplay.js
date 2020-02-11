@@ -1,6 +1,8 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
-import { List } from 'antd';
+import { List, Input } from 'antd';
+
+const { Search } = Input
 
 
 /*
@@ -20,7 +22,9 @@ const ShoeListDisplay = (props) => {
     return (
         <div style={styles.rootContainerStyle}>
             <div style={styles.containerStyle}>    
-                <p style={{fontSize : 100, textAlign : 'center'}}>Shoe Store</p>
+                <p style={styles.titleStyle}>Shoe Store</p>
+
+                <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => console.log(value)} />
 
                 <List
                     grid={{column: 2 }}
@@ -51,8 +55,18 @@ const styles = {
 
     containerStyle : {
         display : 'flex',
-        flexDirection : 'column'
+        flexDirection : 'column',
+        alignItems : 'center'
     },
+
+    titleStyle : {
+        fontSize : 100, 
+        textAlign : 'center'
+    },
+
+    searchboxStyle : {
+        width : 500
+    }, 
 
     listItemStyle : {
         padding : 20,
