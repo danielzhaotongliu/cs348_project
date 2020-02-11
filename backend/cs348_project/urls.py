@@ -1,4 +1,4 @@
-from django.conf.urls import url  # noqa
+from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import include, path
