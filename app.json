@@ -3,7 +3,8 @@
   "description": "Cs348_Project Heroku app.",
   "env": {
     "ALLOWED_HOSTS": {
-      "description": "Django ALLOWED_HOSTS setting, e.g.: .appname.herokuapp.com"
+      "description": "Django ALLOWED_HOSTS setting, e.g.: .appname.herokuapp.com",
+      "value": [".cs348shoeapp.herokuapp.com", "localhost", "127.0.0.1", "[::1]"]
     },
     "DISABLE_COLLECTSTATIC": {
       "description": "Disables Heroku collectstatic",
