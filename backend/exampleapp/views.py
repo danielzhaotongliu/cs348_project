@@ -23,7 +23,8 @@ class ShoeViewSet(viewsets.ModelViewSet):
         
         # filter by brand if the parameter exists in the url
         brand = self.request.query_params.get('brand', None)
-        if brand is not None:
+
+        if brand:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE brand = %s', [brand])
         
         return queryset

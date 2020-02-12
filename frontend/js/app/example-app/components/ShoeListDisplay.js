@@ -1,9 +1,10 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
-import { List, Input } from 'antd';
+import { List, Input, Select } from 'antd';
 import axios from 'axios'
 
-const { Search } = Input
+const { Search } = Input;
+const { Option } = Select;
 
 
 /*
@@ -13,14 +14,39 @@ const { Search } = Input
 */
 
 
+const searchOptions = (
+    <Select defaultValue="Brand" style={{ width: 80 }}>
+        <Option value="Brand">Brand</Option>
+        <Option value="Name">Name</Option>
+        <Option value="Size">Size</Option>
+    </Select>
+);
+
 
 export default class ShoeListDisplay extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            shoeList : []
+            shoeList : [],
+            searching : false
         };
+
+        this.searchHelper = this.searchHelper.bind(this);
+    }
+
+    // calls api to search with parameters
+    async searchHelper(value) {
+        console.log(value);
+
+        this.setState({searching : true})
+
+        axios.get('api/shoe', { params : {brand : value}})
+            .then(response => {
+            const shoes = response.data;
+            this.setState({ shoeList : shoes, searching : false });
+        })
+ 
     }
 
     // When this page loads, call populate our array of shoes
@@ -36,15 +62,18 @@ export default class ShoeListDisplay extends React.Component {
 
     render() {
 
-        console.log(this.state.shoeList);
-
         return (
             <div style={styles.rootContainerStyle}>
                 <div style={styles.containerStyle}>
 
                     <p style={styles.titleStyle}>Shoe Store</p>
 
-                    <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => { console.log(value); }} />
+                    {this.state.searching ?
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" loading onSearch={(value) => { this.searchHelper(value) }} />
+                    : 
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" onSearch={(value) => { this.searchHelper(value) }} />
+                    }
+                    
 
                     <List
                         grid={{column: 2 }}
