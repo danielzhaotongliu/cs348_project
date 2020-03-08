@@ -36,14 +36,13 @@ CREATE TABLE PaymentMethod(
 );
 
 CREATE TABLE Transaction(
-    tid SERIAL,
+    tid SERIAL PRIMARY KEY,
     uid INTEGER REFERENCES Customer(uid),
     sid INTEGER REFERENCES Shoe(sid),
     datetime TIMESTAMP,
     quantity INTEGER CHECK (quantity > 0),
     address TEXT,
     cardNumber VARCHAR(16),
-    PRIMARY KEY(tid, uid, sid),
     FOREIGN KEY (uid, cardNumber) REFERENCES PaymentMethod(uid, cardNumber)
 );
 
