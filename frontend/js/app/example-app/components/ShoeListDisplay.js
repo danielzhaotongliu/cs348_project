@@ -63,6 +63,7 @@ export default class ShoeListDisplay extends React.Component {
         axios.get('api/shoe', { params : paramObj})
             .then(response => {
             const shoes = response.data;
+            console.log(shoes);
             this.setState({ shoeList : shoes, searching : false });
         })
  
@@ -97,7 +98,7 @@ export default class ShoeListDisplay extends React.Component {
                     <List
                         style={styles.listStyle}
                         size="large"
-                        grid={{gutter: 16, column: 1}}
+                        grid={{gutter: 16, column: 2}}
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
@@ -139,7 +140,7 @@ const styles = {
     }, 
 
     listStyle : {
-        width : "60%"
+        width : '1500px'
     }
 
 };
