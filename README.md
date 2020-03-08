@@ -3,6 +3,8 @@
 # CS 348 Project
 
 ## About
+Please visit our shoe app website at [https://cs348shoeapp.herokuapp.com](https://cs348shoeapp.herokuapp.com)
+
 A [Django](https://www.djangoproject.com/) project with lots of state of the art libraries and tools like:
 - [React](https://facebook.github.io/react/), for building interactive UIs
 - [django-js-reverse](https://github.com/ierror/django-js-reverse), for generating URLs on JS

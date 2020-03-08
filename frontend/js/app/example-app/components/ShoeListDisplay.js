@@ -1,45 +1,92 @@
 import React from 'react';
 import ShoeComponent from './ShoeComponent';
-import { List, Input } from 'antd';
-import API from '../api'
+import { List, Input, Select } from 'antd';
+import axios from 'axios'
 
-const { Search } = Input
+const { Search } = Input;
+const { Option } = Select;
 
 
 /*
     TODO: 
-    - Fix up workflow of the app
-        - first, axios calls the api to populate a data array -- Use ComponentDidMount() method
-        - then in render Item, we get the data from an array into the component
-        - question: how do we now to stop iterating --> pop from array? 
+    - Search functionality
+
 */
+
+
+const searchOptions = (
+    <Select defaultValue="Brand" style={{ width: 80 }}>
+        <Option value="Brand">Brand</Option>
+        <Option value="Name">Name</Option>
+        <Option value="Size">Size</Option>
+    </Select>
+);
 
 
 export default class ShoeListDisplay extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            shoeList : [],
+            searching : false
+        };
+
+        this.searchHelper = this.searchHelper.bind(this);
+    }
+
+    // calls api to search with parameters
+    async searchHelper(value) {
+        console.log(value);
+
+        this.setState({searching : true})
+
+        axios.get('api/shoe', { params : {brand : value}})
+            .then(response => {
+            const shoes = response.data;
+            this.setState({ shoeList : shoes, searching : false });
+        })
+ 
+    }
+
+    // When this page loads, call populate our array of shoes
+    componentDidMount() {
+
+        axios.get('api/shoe/')
+            .then(response => {
+            const shoes = response.data;
+            this.setState({ shoeList : shoes });
+        })
+
+    }
 
     render() {
 
         return (
             <div style={styles.rootContainerStyle}>
-                <div style={styles.containerStyle}>    
+                <div style={styles.containerStyle}>
+
                     <p style={styles.titleStyle}>Shoe Store</p>
 
-                    <Search style={styles.searchboxStyle} size='large' placeholder="Search store" onSearch={(value) => console.log(value)} />
+                    {this.state.searching ?
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" loading onSearch={(value) => { this.searchHelper(value) }} />
+                    : 
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" onSearch={(value) => { this.searchHelper(value) }} />
+                    }
+                    
 
                     <List
-                        grid={{column: 2 }}>
+                        grid={{column: 2 }}
+                        dataSource={this.state.shoeList}
+                        renderItem={ item => {
 
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
-                        <List.Item style={styles.listItemStyle}><ShoeComponent name={'Contigo'} price={20} brand={'Clarks'} size={10}/></List.Item>
+                            return (
+                                <List.Item>
+                                    <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                </List.Item>
+                            );
 
-                    </List>
+                        } } />
 
                 </div>
             </div>
@@ -68,7 +115,8 @@ const styles = {
     },
 
     searchboxStyle : {
-        width : 500
+        width : 500,
+        margin : 50
     }, 
 
     listItemStyle : {
