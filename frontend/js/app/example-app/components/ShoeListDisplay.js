@@ -13,12 +13,18 @@ const { Option } = Select;
 
 */
 
+var searchBy = "brand";
+
+function setSearchOption(value){
+    searchBy = value;
+    console.log(searchBy);
+}
 
 const searchOptions = (
-    <Select defaultValue="Brand" style={{ width: 80 }}>
-        <Option value="Brand">Brand</Option>
-        <Option value="Name">Name</Option>
-        <Option value="Size">Size</Option>
+    <Select defaultValue="Brand" style={{ width: 80 }} onChange={setSearchOption}>
+        <Option value="brand">Brand</Option>
+        <Option value="name">Name</Option>
+        <Option value="size">Size</Option>
     </Select>
 );
 
@@ -37,11 +43,24 @@ export default class ShoeListDisplay extends React.Component {
 
     // calls api to search with parameters
     async searchHelper(value) {
-        console.log(value);
 
         this.setState({searching : true})
 
-        axios.get('api/shoe', { params : {brand : value}})
+        var paramObj = {};
+
+        switch(searchBy){
+            case "brand":
+                paramObj = {brand : value};
+                break;
+            case "size":
+                paramObj = {size : value};
+                break;
+            case "name":
+                paramObj = {name : value};
+                break;
+        };
+
+        axios.get('api/shoe', { params : paramObj})
             .then(response => {
             const shoes = response.data;
             this.setState({ shoeList : shoes, searching : false });
@@ -56,7 +75,7 @@ export default class ShoeListDisplay extends React.Component {
             .then(response => {
             const shoes = response.data;
             this.setState({ shoeList : shoes });
-        })
+        });
 
     }
 
@@ -76,16 +95,16 @@ export default class ShoeListDisplay extends React.Component {
                     
 
                     <List
-                        grid={{column: 2 }}
+                        style={styles.listStyle}
+                        size="large"
+                        grid={{gutter: 16, column: 1}}
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
-
                             return (
                                 <List.Item>
                                     <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                 </List.Item>
                             );
-
                         } } />
 
                 </div>
@@ -119,9 +138,8 @@ const styles = {
         margin : 50
     }, 
 
-    listItemStyle : {
-        padding : 20,
-        margin : 10
+    listStyle : {
+        width : "60%"
     }
 
 };
