@@ -6,6 +6,7 @@ from random import randrange
 import json
 from datetime import timedelta
 from datetime import datetime
+import csv
 
 def random_date(start, end):
     """
@@ -34,7 +35,7 @@ counter = 0
 startDate = datetime.strptime('1/1/2015 1:30 PM', '%m/%d/%Y %I:%M %p')
 endDate = datetime.strptime('1/1/2020 4:50 AM', '%m/%d/%Y %I:%M %p')
 globalData = []
-
+csvList =[]
 for style in styles:
     f=codecs.open(style + ".html", 'r')
     html = f.read()
@@ -92,7 +93,15 @@ for style in styles:
         data["fields"] = field
         globalData.append(data)
 
+        csvRow = [brand,style,colour,description,full_url,name,price,stock,size]
+        csvList.append(csvRow)
+
 
 with open('db.json', 'w') as f:
     json.dump(globalData, f)
     
+with open('db.csv', 'w', newline='') as myfile:
+     wr = csv.writer(myfile)
+     wr.writerow(["brand", "style",	"colour", "description",	"image_url",	"name",	"price",	"stock",	"size"])
+     for row in csvList:
+         wr.writerow(row)
