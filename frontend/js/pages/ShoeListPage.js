@@ -23,7 +23,7 @@ const searchOptions = (
 );
 
 
-export default class ShoeListDisplay extends React.Component {
+export default class ShoeListPage extends React.Component {
 
     constructor(props){
         super(props);

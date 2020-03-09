@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ShoeListDisplay from './ShoeListDisplay';
+import ShoeListPage from './ShoeListPage';
 import { Switch, Route } from 'react-router-dom';
 
 /*
@@ -19,7 +19,7 @@ const Home = () => {
       </button> */}
 
       <Switch>
-        <Route exact path='/' component={ShoeListDisplay} />
+        <Route exact path='/' component={ShoeListPage} />
       </Switch>
 
 
