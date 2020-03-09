@@ -1,0 +1,52 @@
+NO OUTPUT ON PREPARE
+
+
+| sid | stock | price | size | colour |                                                                      image_url |                                          name |                                                           description |         brand |               style |
+|-----|-------|-------|------|--------|--------------------------------------------------------------------------------|-----------------------------------------------|-----------------------------------------------------------------------|---------------|---------------------|
+|   4 |    11 | 64.99 |    8 |  Black | https://www.famousfootwear.ca//productimages/shoes_ib710340.jpg?preset=results | Men's Groton Wide Slip-Resistant Work Sneaker | Soft textile lining with lightweight construction for maximum comfort | Skechers Work | mens-athletic-shoes |
+
+
+|                                                     name |         brand |             colour |                                                                   description |                              name |       brand |                   colour |                                                                   description |
+|----------------------------------------------------------|---------------|--------------------|-------------------------------------------------------------------------------|-----------------------------------|-------------|--------------------------|-------------------------------------------------------------------------------|
+|       Chuck Taylor All Star High Street High Top Sneaker |      Converse |         Black/Grey |                                                                        Modern | Men's 481 Wide Trail Running Shoe | New Balance |              Grey/Orange |                  Full canvas double sided print with rounded toe construction |
+|                           Men's Air Max Motion 2 Sneaker |          Nike |        Black/White |                  Full canvas double sided print with rounded toe construction |       Precision 2 Basketball Shoe |        Nike |               Black/Gold |                 High quality EVA sole for traction and exceptional durability |
+|                 Men's Charged Escape Wide 3 Running Shoe |  Under Armour | Black/White/Silver | Water-resistant with a vibrant canvas print along the full length of the tops |    Men's Air Max Motion 2 Sneaker |        Nike |                    Black |                                     Elastic stretch V for easy on-and-off use |
+|  Men's Chuck Taylor All Star High Street Leather Sneaker |      Converse |        Black/White |                                     Elastic stretch V for easy on-and-off use |         Men's Grand Court Sneaker |      adidas |              Black/White | Crafted from a premium fabric blend for enhanced moisture-wicking performance |
+|                  Men's Cloudfoam Adapt 2 Slip On Sneaker |        adidas |        Black/Black |         Soft textile lining with lightweight construction for maximum comfort |       Precision 2 Basketball Shoe |        Nike |               Black/Gold |                 High quality EVA sole for traction and exceptional durability |
+|                  Men's Cloudfoam Adapt 2 Slip On Sneaker |        adidas |        Black/Black |         Soft textile lining with lightweight construction for maximum comfort |    Men's Air Max Motion 2 Sneaker |        Nike |              Black/White |                  Full canvas double sided print with rounded toe construction |
+| Men's Nampa Groton Wide Slip On Slip Resistant Work Shoe | Skechers Work |              Black |                                                 High-quality and light-weight |        Men's Ward Low Top Sneaker |        Vans |                    White |                 High quality EVA sole for traction and exceptional durability |
+| Men's Nampa Groton Wide Slip On Slip Resistant Work Shoe | Skechers Work |              Black |                                                 High-quality and light-weight |        Men's Ward Low Top Sneaker |        Vans | Checkerboard/Black/White |                                     Elastic stretch V for easy on-and-off use |
+|                               Men's Ward Low Top Sneaker |          Vans |              White |                 High quality EVA sole for traction and exceptional durability |        Men's Ward Low Top Sneaker |        Vans | Checkerboard/Black/White |                                     Elastic stretch V for easy on-and-off use |
+
+
+| count |               style | brand |
+|-------|---------------------|-------|
+|     5 | mens-athletic-shoes |  Nike |
+
+
+NO OUTPUT ON INSERT
+
+
+|   password |
+|------------|
+| bruhm0ment |
+
+
+NO OUTPUT ON INSERT
+
+
+NO OUTPUT ON UPDATE
+
+
+| sid | stock |  price | size |             colour |                                                                      image_url |                                                     name |                                                                   description |         brand |               style |
+|-----|-------|--------|------|--------------------|--------------------------------------------------------------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------|---------------|---------------------|
+|   1 |    13 |  94.99 |   13 |        Black/Black | https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results |                  Men's Cloudfoam Adapt 2 Slip On Sneaker |         Soft textile lining with lightweight construction for maximum comfort |        adidas | mens-athletic-shoes |
+|   2 |     5 | 104.99 |   10 | Black/White/Silver | https://www.famousfootwear.ca//productimages/shoes_ib709527.jpg?preset=results |                 Men's Charged Escape Wide 3 Running Shoe | Water-resistant with a vibrant canvas print along the full length of the tops |  Under Armour | mens-athletic-shoes |
+|   3 |     6 |  74.99 |    6 |         Black/Grey | https://www.famousfootwear.ca//productimages/shoes_ib709650.jpg?preset=results |       Chuck Taylor All Star High Street High Top Sneaker |                                                                        Modern |      Converse | mens-athletic-shoes |
+|   4 |    11 |  64.99 |    8 |              Black | https://www.famousfootwear.ca//productimages/shoes_ib710340.jpg?preset=results |            Men's Groton Wide Slip-Resistant Work Sneaker |         Soft textile lining with lightweight construction for maximum comfort | Skechers Work | mens-athletic-shoes |
+|   5 |    11 |  69.99 |   12 |              Black | https://www.famousfootwear.ca//productimages/shoes_ib710341.jpg?preset=results | Men's Nampa Groton Wide Slip On Slip Resistant Work Shoe |                                                 High-quality and light-weight | Skechers Work | mens-athletic-shoes |
+|   6 |     7 |  87.99 |    8 |         Grey/Black | https://www.famousfootwear.ca//productimages/shoes_ib705970.jpg?preset=results |                      Air Ring Leader Low Basketball Shoe |                                                 High-quality and light-weight |          Nike | mens-athletic-shoes |
+|   7 |    15 |  69.99 |    6 |              White | https://www.famousfootwear.ca//productimages/shoes_ib705597.jpg?preset=results |                               Men's Ward Low Top Sneaker |                 High quality EVA sole for traction and exceptional durability |          Vans | mens-athletic-shoes |
+|   8 |     1 |  94.99 |    7 |        Black/White | https://www.famousfootwear.ca//productimages/shoes_ib708484.jpg?preset=results |                           Men's Air Max Motion 2 Sneaker |                  Full canvas double sided print with rounded toe construction |          Nike | mens-athletic-shoes |
+|   9 |    12 |  74.99 |    6 |        Grey/Orange | https://www.famousfootwear.ca//productimages/shoes_ib707671.jpg?preset=results |                        Men's 481 Wide Trail Running Shoe |                  Full canvas double sided print with rounded toe construction |   New Balance | mens-athletic-shoes |
+|  10 |     9 |  79.99 |    9 |        Black/White | https://www.famousfootwear.ca//productimages/shoes_ib705775.jpg?preset=results |  Men's Chuck Taylor All Star High Street Leather Sneaker |                                     Elastic stretch V for easy on-and-off use |      Converse | mens-athletic-shoes |
