@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ShoeListDisplay from './ShoeListDisplay';
+import { Switch, Route } from 'react-router-dom';
 
 /*
     TODO: 
@@ -12,11 +13,15 @@ const Home = () => {
 
   return (
     <>
+      {/* Leave the below commented out for now */}
       {/* <button type="button" onClick={() => setShowBugComponent(true)}>
         Click to test if Sentry is capturing frontend errors! (Should only work in Production)
       </button> */}
 
-      <ShoeListDisplay />
+      <Switch>
+        <Route exact path='/' component={ShoeListDisplay} />
+      </Switch>
+
 
       {showBugComponent && showBugComponent.field.notexist}
     </>
