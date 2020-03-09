@@ -7,9 +7,10 @@ from rest_framework import routers
 import django_js_reverse.views
 from exampleapp import views
 
-
 router = routers.DefaultRouter()
 router.register(r'shoe', views.ShoeViewSet, basename='Shoe')
+router.register(r'customer', views.CustomerViewSet, basename='Customer')
+router.register(r'transaction', views.TransactionViewSet, basename='Transaction')
 
 urlpatterns = [
     path('api/', include(router.urls)),
