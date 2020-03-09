@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import ShoeListDisplay from '../app/example-app/components/ShoeListDisplay';
+import ShoeListDisplay from './ShoeListDisplay';
+
+/*
+    TODO: 
+    - Implement Cart
+    - Implement Users
+*/
 
 const Home = () => {
   const [showBugComponent, setShowBugComponent] = useState(false);

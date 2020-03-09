@@ -1,17 +1,11 @@
 import React from 'react';
-import ShoeComponent from './ShoeComponent';
+import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import { List, Input, Select } from 'antd';
 import axios from 'axios'
 
 const { Search } = Input;
 const { Option } = Select;
 
-
-/*
-    TODO: 
-    - Search functionality
-
-*/
 
 var searchBy = "brand";
 
