@@ -55,11 +55,24 @@ class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
 
     def create(self, request):
-        transaction_data = request.data
-        transaction_data['quantity'] = 1
-        serializer = TransactionSerializer(data=transaction_data)
+        t_data = request.data
+        # TODO: remove once frontend can pass in the quantity
+        t_data['quantity'] = 1
+        serializer = TransactionSerializer(data=t_data)
+
+        # check if the serialized data is valid
         if serializer.is_valid():
-            # TODO: INSERT INTO DB
+            # # sanitize data for insertion using SQL
+            # for attribute in t_data:
+            #     if t_data[attribute] is None:
+            #         t_data[attribute] = 'NULL'
+
+            # # Insert into DB
+            # cursor = connection.cursor()
+            # cursor.execute("INSERT INTO exampleapp_transaction(uid_id, sid_id, datetime, quantity, address, payMethod_id) VALUES(%s, %s, %s, %s, %s, %s)", 
+            # [t_data['uid'], t_data['sid'], t_data['datetime'], t_data['quantity'], t_data['address'], t_data['payMethod']])
+            
+            serializer.save()
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

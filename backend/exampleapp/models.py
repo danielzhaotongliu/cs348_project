@@ -61,7 +61,7 @@ class Transaction(models.Model):
     sid = models.ForeignKey(Shoe, null=True, on_delete=models.SET_NULL)
     datetime = models.DateTimeField(null=True)
     quantity = models.IntegerField(validators=[MinValueValidator(1)])
-    address = models.TextField(null=True)
+    address = models.TextField(null=True, blank=True)
     payMethod = models.ForeignKey(PaymentMethod, null=True, on_delete=models.SET_NULL)
 
 
