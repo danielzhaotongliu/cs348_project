@@ -19,7 +19,7 @@ CREATE TABLE Shoe(
 
 CREATE TABLE Review(
     uid INTEGER REFERENCES Customer(uid),
-    sid INTEGER NOT NULL REFERENCES Shoe(sid),
+    sid INTEGER REFERENCES Shoe(sid),
     rating INTEGER NOT NULL CHECK (1 <= rating AND rating <= 5),
     comment TEXT,
     PRIMARY KEY(uid, sid)
@@ -36,14 +36,14 @@ CREATE TABLE PaymentMethod(
 );
 
 CREATE TABLE Transaction(
-    tid SERIAL,
+    --  # since Transaction is not a weak entity, tid itself is enough for primary key
+    tid SERIAL PRIMARY KEY NOT NULL,
     uid INTEGER REFERENCES Customer(uid),
     sid INTEGER REFERENCES Shoe(sid),
     datetime TIMESTAMP,
-    quantity INTEGER CHECK (quantity > 0),
+    quantity INTEGER CHECK (quantity >= 1),
     address TEXT,
     cardNumber VARCHAR(16),
-    PRIMARY KEY(tid, uid, sid),
     FOREIGN KEY (uid, cardNumber) REFERENCES PaymentMethod(uid, cardNumber)
 );
 
