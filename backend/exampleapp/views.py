@@ -28,6 +28,7 @@ class ShoeViewSet(viewsets.ModelViewSet):
         brand = self.request.query_params.get('brand', None)
         size = self.request.query_params.get('size', None)
         name = self.request.query_params.get('name', None)
+        sid = self.request.query_params.get('sid', None)
 
         if brand:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE brand = %s', [brand])
@@ -35,6 +36,8 @@ class ShoeViewSet(viewsets.ModelViewSet):
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE size = %s', [size])
         if name:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE name = %s', [name])
+        if sid:
+            queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE sid = %s', [sid])
         
         return queryset
 
@@ -58,6 +61,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         t_data = request.data
         # TODO: remove once frontend can pass in the quantity
         t_data['quantity'] = 1
+        t_data['sid'] = request.data['params']['sid']
         serializer = TransactionSerializer(data=t_data)
 
         # check if the serialized data is valid
