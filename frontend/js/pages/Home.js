@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ShoeListPage from './ShoeListPage';
 import CartPage from './CartPage';
+import ReviewPage from './ReviewPage';
 import { Switch, Route } from 'react-router-dom';
 
 /*
@@ -22,6 +23,7 @@ const Home = () => {
         <Route exact path='/' component={ShoeListPage} />
         <Route path='/cart' component={CartPage} />
         <Route path='/store' component={ShoeListPage} />
+        <Route path='/review' component={ReviewPage} />
       </Switch>
 
 
