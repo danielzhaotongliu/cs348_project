@@ -110,7 +110,6 @@ export default class CartPage extends React.Component {
                         
                         />
 
-
                 </Card>
             </div>
         );

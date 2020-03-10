@@ -105,11 +105,9 @@ export default class ShoeListPage extends React.Component {
                     <div style={{marginTop : 50}}>
 
                         <Link to="/cart">
-
-                        <Badge count={this.state.cart.length} showZero>
-                            <ShoppingCartOutlined style={{fontSize  : 100}}/>
-                        </Badge>
-
+                            <Badge count={this.state.cart.length} showZero>
+                                <ShoppingCartOutlined style={{fontSize  : 100}}/>
+                            </Badge>
                         </Link>
 
 
