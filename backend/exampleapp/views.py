@@ -80,17 +80,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=['delete'], detail=False)
-    def delete(self, request):
-        sid = request.query_params.get('sid', None)
-        if sid:
-            # TODO: additional constraints needed to support multiple users
-            t_instance = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE sid_id = %s', [sid])
-            print(t_instance)
-
-        return Response("got here")
+    def destroy(self, request, pk=None):
+        if pk:
+            # TODO in final milestone: additional constraints needed to support multiple users
+            t_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE tid = %s', [pk])
+            if len(t_queryset) == 1:
+                # sanity check
+                cursor = connection.cursor()
+                cursor.execute('DELETE FROM exampleapp_transaction WHERE tid = %s', [pk])
+                return Response(f'Success: deleted Transaction with tid: {pk}')
+            else:
+                return Response(f'Error: more than one Transaction with tid: {pk}', status=status.HTTP_400_BAD_REQUEST)
+        return Response(f'Error: no Transaction tid provided', status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
         queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
-        
         return queryset 
