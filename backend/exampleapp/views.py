@@ -76,3 +76,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        print("got here")
+        return Response(pk)
