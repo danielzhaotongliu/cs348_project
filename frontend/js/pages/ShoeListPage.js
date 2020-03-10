@@ -63,8 +63,8 @@ export default class ShoeListPage extends React.Component {
 
         console.log("About to add shoe with sid: " + shoe.sid);
 
-        var paramObj = { sid : shoe.sid};
-        axios.post('api/transaction/', { params : paramObj });
+        var params = { sid : shoe.sid};
+        axios.post('api/transaction/', params);
 
         var newCartCount = this.state.cartCount + 1;
         this.setState({cartCount : newCartCount});

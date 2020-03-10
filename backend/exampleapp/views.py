@@ -55,13 +55,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
     API endpoints to create/view Transaction information
     """
     serializer_class = TransactionSerializer
-    queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+
 
     def create(self, request):
         t_data = request.data
         # TODO: remove once frontend can pass in the quantity
         t_data['quantity'] = 1
-        t_data['sid'] = request.data['params']['sid']
         serializer = TransactionSerializer(data=t_data)
 
         # check if the serialized data is valid
