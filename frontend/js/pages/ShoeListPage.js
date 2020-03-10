@@ -1,17 +1,13 @@
 import React from 'react';
-import ShoeComponent from './ShoeComponent';
-import { List, Input, Select } from 'antd';
+import { List, Input, Select, Badge } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 const { Search } = Input;
 const { Option } = Select;
 
-
-/*
-    TODO: 
-    - Search functionality
-
-*/
 
 var searchBy = "brand";
 
@@ -29,16 +25,18 @@ const searchOptions = (
 );
 
 
-export default class ShoeListDisplay extends React.Component {
+export default class ShoeListPage extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             shoeList : [],
-            searching : false
+            searching : false,
+            cart : []
         };
 
         this.searchHelper = this.searchHelper.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     // calls api to search with parameters
@@ -69,7 +67,25 @@ export default class ShoeListDisplay extends React.Component {
  
     }
 
-    // When this page loads, call populate our array of shoes
+    // adds a shoe to the cart and transaction table
+    async addToCart(shoe){
+        console.log("Addeding shoe with id: " + shoe.sid);
+
+        // returns new array
+        var newCart = this.state.cart.concat(shoe);
+
+        this.setState({cart : newCart});
+
+
+        /* 
+            TODO: 
+                - Make API call to transaction table here
+        
+        */
+
+    }
+
+    // When this page loads, call to populate our array of shoes
     componentDidMount() {
 
         axios.get('api/shoe/')
@@ -85,6 +101,17 @@ export default class ShoeListDisplay extends React.Component {
         return (
             <div style={styles.rootContainerStyle}>
                 <div style={styles.containerStyle}>
+
+                    <div style={{marginTop : 50}}>
+
+                        <Link to="/cart">
+                            <Badge count={this.state.cart.length} showZero>
+                                <ShoppingCartOutlined style={{fontSize  : 100}}/>
+                            </Badge>
+                        </Link>
+
+
+                    </div>
 
                     <p style={styles.titleStyle}>Shoe Store</p>
 
@@ -102,11 +129,13 @@ export default class ShoeListDisplay extends React.Component {
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
-                                <List.Item>
+                                <List.Item onClick={(event) => {this.addToCart(item);}}>
                                     <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                 </List.Item>
                             );
-                        } } />
+                        } } 
+                        rowKey={shoe => {return shoe.sid;}}              
+                        />
 
                 </div>
             </div>

@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
-import ShoeListDisplay from '../app/example-app/components/ShoeListDisplay';
+import ShoeListPage from './ShoeListPage';
+import CartPage from './CartPage';
+import { Switch, Route } from 'react-router-dom';
+
+/*
+    TODO: 
+    - Implement Cart
+    - Implement Users
+*/
 
 const Home = () => {
   const [showBugComponent, setShowBugComponent] = useState(false);
 
   return (
     <>
+      {/* Leave the below commented out for now */}
       {/* <button type="button" onClick={() => setShowBugComponent(true)}>
         Click to test if Sentry is capturing frontend errors! (Should only work in Production)
       </button> */}
 
-      <ShoeListDisplay />
+      <Switch>
+        <Route exact path='/' component={ShoeListPage} />
+        <Route path='/cart' component={CartPage} />
+        <Route path='/store' component={ShoeListPage} />
+      </Switch>
+
 
       {showBugComponent && showBugComponent.field.notexist}
     </>
