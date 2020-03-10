@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Card, List, Button} from 'antd';
-import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import axios from 'axios';
+import { Card, List, Button} from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
+import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 /*
     TODO:
@@ -54,6 +55,15 @@ export default class CartPage extends React.Component {
     render(){
         return (
             <div style={styles.containerStyle}>
+
+                <Button
+                    style={styles.backButtonStyle}
+                    size="large"
+                    >
+                    <LeftOutlined />
+                    Back to Store
+                </Button>
+
                 <Card
                     title="My Cart"
                     headStyle={styles.cardHeadingStyle}
@@ -73,6 +83,7 @@ export default class CartPage extends React.Component {
                                         brand={shoe.brand}
                                         size={shoe.size}
                                         imgSrc={shoe.image_url} />
+
                                         <Button
                                         type="primary"
                                         danger
@@ -102,6 +113,16 @@ export default class CartPage extends React.Component {
 const styles = {
 
     containerStyle : {
+
+    },
+
+    backButtonStyle : {
+
+        margin : 25,
+        height : 75,
+        width : 150,
+        display : 'flex',
+        alignItems : 'center'
 
     },
 
