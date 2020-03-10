@@ -20,9 +20,9 @@ const Home = () => {
       </button> */}
 
       <Switch>
-        <Route exact path='/' component={CartPage} />
-        <Route exact path='/cart' component={CartPage} />
-        <Route exact path='/store' component={ShoeListPage} />
+        <Route exact path='/' component={ShoeListPage} />
+        <Route path='/cart' component={CartPage} />
+        <Route path='/store' component={ShoeListPage} />
       </Switch>
 
 

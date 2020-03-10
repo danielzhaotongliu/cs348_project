@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, List, Button} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
+import { Link } from 'react-router-dom';
 
 /*
     TODO:
@@ -56,13 +57,15 @@ export default class CartPage extends React.Component {
         return (
             <div style={styles.containerStyle}>
 
-                <Button
-                    style={styles.backButtonStyle}
-                    size="large"
-                    >
-                    <LeftOutlined />
-                    To Store
-                </Button>
+                <Link to="/store">
+                    <Button
+                        style={styles.backButtonStyle}
+                        size="large"
+                        >
+                        <LeftOutlined />
+                        To Store
+                    </Button>
+                </Link>
 
                 <Card
                     title="My Cart"
