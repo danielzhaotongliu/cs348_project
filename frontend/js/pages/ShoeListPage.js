@@ -27,19 +27,10 @@ const searchOptions = (
 
 export default class ShoeListPage extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            shoeList : [],
-            searching : false,
-            cart : []
-        };
 
-        this.searchHelper = this.searchHelper.bind(this);
-        this.addToCart = this.addToCart.bind(this);
-    }
+    /* HELPER FUNCTIONS */
 
-    // calls api to search with parameters
+    // calls shoe api to search with parameters
     async searchHelper(value) {
 
         this.setState({searching : true})
@@ -58,7 +49,7 @@ export default class ShoeListPage extends React.Component {
                 break;
         };
 
-        axios.get('api/shoe', { params : paramObj})
+        axios.get('api/shoe/', { params : paramObj})
             .then(response => {
             const shoes = response.data;
             console.log(shoes);
@@ -69,30 +60,46 @@ export default class ShoeListPage extends React.Component {
 
     // adds a shoe to the cart and transaction table
     async addToCart(shoe){
-        console.log("Addeding shoe with id: " + shoe.sid);
 
-        // returns new array
-        var newCart = this.state.cart.concat(shoe);
+        console.log("About to add shoe with sid: " + shoe.sid);
 
-        this.setState({cart : newCart});
+        var params = { sid : shoe.sid};
+        axios.post('api/transaction/', params);
 
-
-        /* 
-            TODO: 
-                - Make API call to transaction table here
-        
-        */
+        var newCartCount = this.state.cartCount + 1;
+        this.setState({cartCount : newCartCount});
 
     }
 
-    // When this page loads, call to populate our array of shoes
+
+    constructor(props){
+        super(props);
+        this.state = {
+            shoeList : [],
+            searching : false,
+            cartCount : 0
+        };
+
+        this.searchHelper = this.searchHelper.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+    }
+
+    // When this page loads
     componentDidMount() {
 
+        // populate array of shoes
         axios.get('api/shoe/')
             .then(response => {
             const shoes = response.data;
             this.setState({ shoeList : shoes });
         });
+
+        // call the get method
+        axios.get('api/transaction/')
+            .then(response => {
+                const transactions = response.data; // array
+                this.setState({cartCount : transactions.length})
+            });
 
     }
 
@@ -105,7 +112,7 @@ export default class ShoeListPage extends React.Component {
                     <div style={{marginTop : 50}}>
 
                         <Link to="/cart">
-                            <Badge count={this.state.cart.length} showZero>
+                            <Badge count={this.state.cartCount} showZero>
                                 <ShoppingCartOutlined style={{fontSize  : 100}}/>
                             </Badge>
                         </Link>
