@@ -31,10 +31,11 @@ export default class ShoeListPage extends React.Component {
         this.state = {
             shoeList : [],
             searching : false,
-            cartCount : 0
+            cart : []
         };
 
         this.searchHelper = this.searchHelper.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     // calls api to search with parameters
@@ -65,7 +66,25 @@ export default class ShoeListPage extends React.Component {
  
     }
 
-    // When this page loads, call populate our array of shoes
+    // adds a shoe to the cart and transaction table
+    async addToCart(shoe){
+        console.log("Addeding shoe with id: " + shoe.sid);
+
+        // returns new array
+        var newCart = this.state.cart.concat(shoe);
+
+        this.setState({cart : newCart});
+
+
+        /* 
+            TODO: 
+                - Make API call to transaction table here
+        
+        */
+
+    }
+
+    // When this page loads, call to populate our array of shoes
     componentDidMount() {
 
         axios.get('api/shoe/')
@@ -84,13 +103,12 @@ export default class ShoeListPage extends React.Component {
 
                     <div style={{marginTop : 50}}>
 
-                        <Badge count={this.state.cartCount} showZero>
+                        <Badge count={this.state.cart.length} showZero>
                             <ShoppingCartOutlined style={{fontSize  : 100}}/>
                         </Badge>
 
 
                     </div>
-
 
                     <p style={styles.titleStyle}>Shoe Store</p>
 
@@ -108,11 +126,13 @@ export default class ShoeListPage extends React.Component {
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
-                                <List.Item onClick={(event) => {console.log("card clicked")}}>
+                                <List.Item onClick={(event) => {this.addToCart(item);}}>
                                     <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                 </List.Item>
                             );
-                        } } />
+                        } } 
+                        rowKey={shoe => {return shoe.sid;}}              
+                        />
 
                 </div>
             </div>
