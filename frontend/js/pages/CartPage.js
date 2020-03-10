@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Card, List, Button} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
-import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import { Link } from 'react-router-dom';
+import ShoeComponent from '../app/example-app/components/ShoeComponent';
+
 
 /*
     TODO:
@@ -32,6 +33,11 @@ export default class CartPage extends React.Component {
 
                 this.setState({ shoes : response.data });
         });
+
+        /*
+            TODO:
+                - Need to call the get api for transaction to populate cart array
+        */
 
     }
 

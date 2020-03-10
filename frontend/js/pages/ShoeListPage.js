@@ -1,8 +1,9 @@
 import React from 'react';
-import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import { List, Input, Select, Badge } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -103,9 +104,13 @@ export default class ShoeListPage extends React.Component {
 
                     <div style={{marginTop : 50}}>
 
+                        <Link to="/cart">
+
                         <Badge count={this.state.cart.length} showZero>
                             <ShoppingCartOutlined style={{fontSize  : 100}}/>
                         </Badge>
+
+                        </Link>
 
 
                     </div>
