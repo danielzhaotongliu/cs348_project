@@ -61,7 +61,7 @@ export default class CartPage extends React.Component {
                     size="large"
                     >
                     <LeftOutlined />
-                    Back to Store
+                    To Store
                 </Button>
 
                 <Card
@@ -120,7 +120,7 @@ const styles = {
 
         margin : 25,
         height : 75,
-        width : 150,
+        width : 125,
         display : 'flex',
         alignItems : 'center'
 
