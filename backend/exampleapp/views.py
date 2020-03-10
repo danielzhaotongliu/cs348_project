@@ -28,6 +28,7 @@ class ShoeViewSet(viewsets.ModelViewSet):
         brand = self.request.query_params.get('brand', None)
         size = self.request.query_params.get('size', None)
         name = self.request.query_params.get('name', None)
+        sid = self.request.query_params.get('sid', None)
 
         if brand:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE brand = %s', [brand])
@@ -35,6 +36,8 @@ class ShoeViewSet(viewsets.ModelViewSet):
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE size = %s', [size])
         if name:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE name = %s', [name])
+        if sid:
+            queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE sid = %s', [sid])
         
         return queryset
 
@@ -52,7 +55,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     API endpoints to create/view Transaction information
     """
     serializer_class = TransactionSerializer
-    queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+
 
     def create(self, request):
         t_data = request.data
@@ -86,3 +89,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
             print(t_instance)
 
         return Response("got here")
+
+    def get_queryset(self):
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+        
+        return queryset 

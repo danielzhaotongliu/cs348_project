@@ -15,31 +15,8 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 export default class CartPage extends React.Component {
 
-    constructor(props){
-        super(props);
 
-        this.state = {
-            shoes : []
-        };
-
-        this.deleteItem = this.deleteItem.bind(this);
-    }
-
-    // When this page loads, call populate our array of shoes
-    componentDidMount() {
-
-        axios.get('api/shoe/')
-            .then(response => {
-
-                this.setState({ shoes : response.data });
-        });
-
-        /*
-            TODO:
-                - Need to call the get api for transaction to populate cart array
-        */
-
-    }
+    /* HELPER FUNCTIONS */
 
     // deletes item from cart
     deleteItem(event, shoe){
@@ -56,6 +33,53 @@ export default class CartPage extends React.Component {
             TODO:
                 - The delete API call will be made here to delete from database
         */
+
+    }
+
+
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            shoes : []
+        };
+
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+
+    // When this page loads, call populate our array of shoes
+    componentDidMount() {
+
+        var sids = [];
+        var shoeArr = [];
+
+        // populate sids
+        axios.get('api/transaction/')
+            .then(response => {
+
+                response.data.forEach(shoe => {
+                    if (shoe.sid !== null){
+                        sids.push(shoe.sid);
+                    }
+                });
+
+                sids.forEach(id => {
+
+                    const paramObj = {sid : id};
+
+                    axios.get('api/shoe/', { params : paramObj })
+                        .then(response => {
+                            shoeArr.push(response.data[0])
+                            this.setState({shoes : shoeArr});
+                        })
+
+               });
+
+
+
+        });
+
 
     }
 
