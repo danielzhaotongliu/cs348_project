@@ -77,6 +77,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def destroy(self, request, pk=None):
-        print("got here")
-        return Response(pk)
+    @action(methods=['delete'], detail=False)
+    def delete(self, request):
+        sid = request.query_params.get('sid', None)
+        if sid:
+            # TODO: additional constraints needed to support multiple users
+            t_instance = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE sid_id = %s', [sid])
+            print(t_instance)
+
+        return Response("got here")
