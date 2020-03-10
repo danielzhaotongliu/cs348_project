@@ -37,6 +37,7 @@ export default class CartPage extends React.Component {
     }
 
 
+
     constructor(props){
         super(props);
 
@@ -50,16 +51,35 @@ export default class CartPage extends React.Component {
     // When this page loads, call populate our array of shoes
     componentDidMount() {
 
-        axios.get('api/shoe/')
+        var sids = [];
+        var shoeArr = [];
+
+        // populate sids
+        axios.get('api/transaction/')
             .then(response => {
 
-                this.setState({ shoes : response.data });
+                response.data.forEach(shoe => {
+                    if (shoe.sid !== null){
+                        sids.push(shoe.sid);
+                    }
+                });
+
+                sids.forEach(id => {
+
+                    const paramObj = {sid : id};
+
+                    axios.get('api/shoe/', { params : paramObj })
+                        .then(response => {
+                            shoeArr.push(response.data[0])
+                            this.setState({shoes : shoeArr});
+                        })
+
+               });
+
+
+
         });
 
-        /*
-            TODO:
-                - Need to call the get api for transaction to populate cart array
-        */
 
     }
 
