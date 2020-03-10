@@ -1,6 +1,7 @@
 import React from 'react';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
-import { List, Input, Select } from 'antd';
+import { List, Input, Select, Badge } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
 
 const { Search } = Input;
@@ -29,7 +30,8 @@ export default class ShoeListPage extends React.Component {
         super(props);
         this.state = {
             shoeList : [],
-            searching : false
+            searching : false,
+            cartCount : 0
         };
 
         this.searchHelper = this.searchHelper.bind(this);
@@ -80,6 +82,16 @@ export default class ShoeListPage extends React.Component {
             <div style={styles.rootContainerStyle}>
                 <div style={styles.containerStyle}>
 
+                    <div style={{marginTop : 50}}>
+
+                        <Badge count={this.state.cartCount} showZero>
+                            <ShoppingCartOutlined style={{fontSize  : 100}}/>
+                        </Badge>
+
+
+                    </div>
+
+
                     <p style={styles.titleStyle}>Shoe Store</p>
 
                     {this.state.searching ?
@@ -96,7 +108,7 @@ export default class ShoeListPage extends React.Component {
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
-                                <List.Item>
+                                <List.Item onClick={(event) => {console.log("card clicked")}}>
                                     <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                 </List.Item>
                             );
