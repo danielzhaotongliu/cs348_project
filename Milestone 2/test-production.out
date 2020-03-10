@@ -50,3 +50,11 @@ NO OUTPUT ON UPDATE
 |   8 |     1 |  94.99 |    7 |        Black/White | https://www.famousfootwear.ca//productimages/shoes_ib708484.jpg?preset=results |                           Men's Air Max Motion 2 Sneaker |                  Full canvas double sided print with rounded toe construction |          Nike | mens-athletic-shoes |
 |   9 |    12 |  74.99 |    6 |        Grey/Orange | https://www.famousfootwear.ca//productimages/shoes_ib707671.jpg?preset=results |                        Men's 481 Wide Trail Running Shoe |                  Full canvas double sided print with rounded toe construction |   New Balance | mens-athletic-shoes |
 |  10 |     9 |  79.99 |    9 |        Black/White | https://www.famousfootwear.ca//productimages/shoes_ib705775.jpg?preset=results |  Men's Chuck Taylor All Star High Street Leather Sneaker |                                     Elastic stretch V for easy on-and-off use |      Converse | mens-athletic-shoes |
+
+
+NO OUTPUT ON INSERT
+
+
+| uid | sid | rating |   comment |
+|-----|-----|--------|-----------|
+|   1 |   3 |      4 | good shoe |

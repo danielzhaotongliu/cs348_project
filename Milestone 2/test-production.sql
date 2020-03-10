@@ -63,3 +63,15 @@ SELECT *
 FROM Shoe
 LIMIT 10;
 
+-- User leaves a review for a shoe
+
+INSERT INTO Review
+    (uid, sid, rating, comment)
+VALUES
+    (1, 3, 4, 'good shoe');
+
+-- Get all reviews for a shoe
+
+SELECT *
+FROM Review
+WHERE sid=3;
