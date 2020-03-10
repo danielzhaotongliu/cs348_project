@@ -36,13 +36,12 @@ export default class CartPage extends React.Component {
 
     }
 
-
-
     constructor(props){
         super(props);
 
         this.state = {
-            shoes : []
+            // maps tids -> shoe objects
+            transactions : []
         };
 
         this.deleteItem = this.deleteItem.bind(this);
@@ -51,30 +50,33 @@ export default class CartPage extends React.Component {
     // When this page loads, call populate our array of shoes
     componentDidMount() {
 
-        var sids = [];
-        var shoeArr = [];
+        // maps tid -> sid
+        var idMap = new Map();
+        // array of Objects(tid -> shoe objects)
+        var newTransactionArr = [];
 
         // populate sids
         axios.get('api/transaction/')
             .then(response => {
 
-                response.data.forEach(shoe => {
-                    if (shoe.sid !== null){
-                        sids.push(shoe.sid);
-                    }
+                response.data.forEach(transaction => {
+                    console.log(transaction.tid);
+                    idMap.set(transaction.tid, transaction.sid);
                 });
 
-                sids.forEach(id => {
+                idMap.forEach((shoeid, key, map) => {
 
-                    const paramObj = {sid : id};
+                    const paramObj = {sid : shoeid};
 
                     axios.get('api/shoe/', { params : paramObj })
                         .then(response => {
-                            shoeArr.push(response.data[0])
-                            this.setState({shoes : shoeArr});
+
+                            var objToPush = {tid : key, shoe : response.data[0]};
+                            newTransactionArr.push(objToPush);
+                            this.setState({transactions : newTransactionArr});
                         })
 
-               });
+                });
 
 
 
@@ -105,17 +107,17 @@ export default class CartPage extends React.Component {
                     <List
                         style={styles.listStyle}
                         grid={{column : 1}}
-                        dataSource={this.state.shoes}
-                        renderItem={ shoe => {
+                        dataSource={this.state.transactions}
+                        renderItem={ transaction => {
                             return (
                                 <List.Item>
                                     <div style={styles.listItemStyle}>
                                         <ShoeComponent
-                                        name={shoe.name}
-                                        price={shoe.price}
-                                        brand={shoe.brand}
-                                        size={shoe.size}
-                                        imgSrc={shoe.image_url} />
+                                        name={transaction.shoe.name}
+                                        price={transaction.shoe.price}
+                                        brand={transaction.shoe.brand}
+                                        size={transaction.shoe.size}
+                                        imgSrc={transaction.shoe.image_url} />
 
                                         <Button
                                         type="primary"
