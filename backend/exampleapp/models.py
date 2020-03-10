@@ -59,9 +59,9 @@ class Transaction(models.Model):
     tid = models.AutoField(primary_key=True)
     uid = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     sid = models.ForeignKey(Shoe, null=True, on_delete=models.SET_NULL)
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(null=True)
     quantity = models.IntegerField(validators=[MinValueValidator(1)])
-    address = models.TextField()
+    address = models.TextField(null=True, blank=True)
     payMethod = models.ForeignKey(PaymentMethod, null=True, on_delete=models.SET_NULL)
 
 

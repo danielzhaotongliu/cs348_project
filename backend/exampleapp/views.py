@@ -1,15 +1,18 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from django.utils import timezone
+from django.db import connection
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Shoe
-from .serializers import ShoeSerializer
+from .models import Shoe, Customer, Transaction
+from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer
+
 
 # Create your views here.
 class ShoeViewSet(viewsets.ModelViewSet):
     """
-    API endpoints to view shoe information
+    API endpoints to view Shoe information
     """
     serializer_class = ShoeSerializer
 
@@ -34,3 +37,42 @@ class ShoeViewSet(viewsets.ModelViewSet):
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE name = %s', [name])
         
         return queryset
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints to create/view Customer information
+    """
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
+
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints to create/view Transaction information
+    """
+    serializer_class = TransactionSerializer
+    queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+
+    def create(self, request):
+        t_data = request.data
+        # TODO: remove once frontend can pass in the quantity
+        t_data['quantity'] = 1
+        serializer = TransactionSerializer(data=t_data)
+
+        # check if the serialized data is valid
+        if serializer.is_valid():
+            # # sanitize data for insertion using SQL
+            # for attribute in t_data:
+            #     if t_data[attribute] is None:
+            #         t_data[attribute] = 'NULL'
+
+            # # Insert into DB
+            # cursor = connection.cursor()
+            # cursor.execute("INSERT INTO exampleapp_transaction(uid_id, sid_id, datetime, quantity, address, payMethod_id) VALUES(%s, %s, %s, %s, %s, %s)", 
+            # [t_data['uid'], t_data['sid'], t_data['datetime'], t_data['quantity'], t_data['address'], t_data['payMethod']])
+            
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
