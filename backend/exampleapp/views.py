@@ -76,3 +76,9 @@ class TransactionViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def get_queryset(self):
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+        
+        return queryset 
