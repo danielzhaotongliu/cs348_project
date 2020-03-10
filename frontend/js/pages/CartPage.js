@@ -68,8 +68,8 @@ export default class CartPage extends React.Component {
                                         type="primary"
                                         danger
                                         onClick={(event) => {this.deleteItem(event, item)}}
-                                        style={{marginRight : "100px"}}
-                                        >Remove from Cart</Button>
+                                        style={{marginRight : "100px"}}>
+                                        Remove from Cart</Button>
                                     </div>
                                 </List.Item>
                             );
