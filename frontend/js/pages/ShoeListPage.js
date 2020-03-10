@@ -32,7 +32,7 @@ export default class ShoeListPage extends React.Component {
         this.state = {
             shoeList : [],
             searching : false,
-            cart : []
+            cartCount : 0
         };
 
         this.searchHelper = this.searchHelper.bind(this);
@@ -58,7 +58,7 @@ export default class ShoeListPage extends React.Component {
                 break;
         };
 
-        axios.get('api/shoe', { params : paramObj})
+        axios.get('api/shoe/', { params : paramObj})
             .then(response => {
             const shoes = response.data;
             console.log(shoes);
@@ -69,19 +69,15 @@ export default class ShoeListPage extends React.Component {
 
     // adds a shoe to the cart and transaction table
     async addToCart(shoe){
-        console.log("Addeding shoe with id: " + shoe.sid);
 
-        // returns new array
-        var newCart = this.state.cart.concat(shoe);
+        console.log("About to add shoe with sid: " + shoe.sid);
 
-        this.setState({cart : newCart});
+        var paramObj = { sid : shoe.sid};
+        axios.post('api/transaction/', { params : paramObj });
 
+        var newCartCount = this.state.cartCount + 1;
+        this.setState({cartCount : newCartCount});
 
-        /* 
-            TODO: 
-                - Make API call to transaction table here
-        
-        */
 
     }
 
@@ -105,7 +101,7 @@ export default class ShoeListPage extends React.Component {
                     <div style={{marginTop : 50}}>
 
                         <Link to="/cart">
-                            <Badge count={this.state.cart.length} showZero>
+                            <Badge count={this.state.cartCount} showZero>
                                 <ShoppingCartOutlined style={{fontSize  : 100}}/>
                             </Badge>
                         </Link>

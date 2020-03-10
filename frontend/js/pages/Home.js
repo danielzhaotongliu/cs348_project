@@ -4,8 +4,7 @@ import CartPage from './CartPage';
 import { Switch, Route } from 'react-router-dom';
 
 /*
-    TODO: 
-    - Implement Cart
+    TODO:
     - Implement Users
 */
 
