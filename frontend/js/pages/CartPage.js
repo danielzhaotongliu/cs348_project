@@ -58,8 +58,18 @@ export default class CartPage extends React.Component {
                             return (
                                 <List.Item>
                                     <div style={styles.listItemStyle}>
-                                        <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url} />
-                                        <Button type="primary" danger onClick={(event) => {this.deleteItem(event, item)}}>Remove from Cart</Button>
+                                        <ShoeComponent
+                                        name={item.name}
+                                        price={item.price}
+                                        brand={item.brand}
+                                        size={item.size}
+                                        imgSrc={item.image_url} />
+                                        <Button
+                                        type="primary"
+                                        danger
+                                        onClick={(event) => {this.deleteItem(event, item)}}
+                                        style={{marginRight : "100px"}}
+                                        >Remove from Cart</Button>
                                     </div>
                                 </List.Item>
                             );
@@ -92,7 +102,6 @@ const styles = {
 
     listItemStyle : {
         display: "flex",
-        width : '1250px',
         alignItems: 'center',
         justifyContent : 'space-between'
     }
