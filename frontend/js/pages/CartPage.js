@@ -3,7 +3,11 @@ import { Card, List, Button} from 'antd';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import axios from 'axios';
 
+/*
+    TODO:
+        - add a button to go back to main shoe store page
 
+*/
 
 
 export default class CartPage extends React.Component {
@@ -29,16 +33,21 @@ export default class CartPage extends React.Component {
 
     }
 
-    // deletes item from list
-    deleteItem(event, item){
+    // deletes item from cart
+    deleteItem(event, shoe){
 
         var newShoeArr = [...this.state.shoes];
-        var shoeToDelIndex = newShoeArr.indexOf(item);
+        var shoeToDelIndex = newShoeArr.indexOf(shoe);
 
         if (shoeToDelIndex != -1){
             newShoeArr.splice(shoeToDelIndex, 1);
             this.setState({shoes : newShoeArr});
         }
+
+        /*
+            TODO:
+                - The delete API call will be made here to delete from database
+        */
 
     }
 
@@ -54,20 +63,20 @@ export default class CartPage extends React.Component {
                         style={styles.listStyle}
                         grid={{column : 1}}
                         dataSource={this.state.shoes}
-                        renderItem={ item => {
+                        renderItem={ shoe => {
                             return (
                                 <List.Item>
                                     <div style={styles.listItemStyle}>
                                         <ShoeComponent
-                                        name={item.name}
-                                        price={item.price}
-                                        brand={item.brand}
-                                        size={item.size}
-                                        imgSrc={item.image_url} />
+                                        name={shoe.name}
+                                        price={shoe.price}
+                                        brand={shoe.brand}
+                                        size={shoe.size}
+                                        imgSrc={shoe.image_url} />
                                         <Button
                                         type="primary"
                                         danger
-                                        onClick={(event) => {this.deleteItem(event, item)}}
+                                        onClick={(event) => {this.deleteItem(event, shoe)}}
                                         style={{marginRight : "100px"}}>
                                         Remove from Cart</Button>
                                     </div>
