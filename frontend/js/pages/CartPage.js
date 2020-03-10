@@ -15,6 +15,28 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 export default class CartPage extends React.Component {
 
+
+    /* HELPER FUNCTIONS */
+
+    // deletes item from cart
+    deleteItem(event, shoe){
+
+        var newShoeArr = [...this.state.shoes];
+        var shoeToDelIndex = newShoeArr.indexOf(shoe);
+
+        if (shoeToDelIndex != -1){
+            newShoeArr.splice(shoeToDelIndex, 1);
+            this.setState({shoes : newShoeArr});
+        }
+
+        /*
+            TODO:
+                - The delete API call will be made here to delete from database
+        */
+
+    }
+
+
     constructor(props){
         super(props);
 
@@ -37,24 +59,6 @@ export default class CartPage extends React.Component {
         /*
             TODO:
                 - Need to call the get api for transaction to populate cart array
-        */
-
-    }
-
-    // deletes item from cart
-    deleteItem(event, shoe){
-
-        var newShoeArr = [...this.state.shoes];
-        var shoeToDelIndex = newShoeArr.indexOf(shoe);
-
-        if (shoeToDelIndex != -1){
-            newShoeArr.splice(shoeToDelIndex, 1);
-            this.setState({shoes : newShoeArr});
-        }
-
-        /*
-            TODO:
-                - The delete API call will be made here to delete from database
         */
 
     }

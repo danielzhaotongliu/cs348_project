@@ -27,19 +27,10 @@ const searchOptions = (
 
 export default class ShoeListPage extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            shoeList : [],
-            searching : false,
-            cartCount : 0
-        };
 
-        this.searchHelper = this.searchHelper.bind(this);
-        this.addToCart = this.addToCart.bind(this);
-    }
+    /* HELPER FUNCTIONS */
 
-    // calls api to search with parameters
+    // calls shoe api to search with parameters
     async searchHelper(value) {
 
         this.setState({searching : true})
@@ -78,17 +69,37 @@ export default class ShoeListPage extends React.Component {
         var newCartCount = this.state.cartCount + 1;
         this.setState({cartCount : newCartCount});
 
-
     }
 
-    // When this page loads, call to populate our array of shoes
+
+    constructor(props){
+        super(props);
+        this.state = {
+            shoeList : [],
+            searching : false,
+            cartCount : 0
+        };
+
+        this.searchHelper = this.searchHelper.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+    }
+
+    // When this page loads
     componentDidMount() {
 
+        // populate array of shoes
         axios.get('api/shoe/')
             .then(response => {
             const shoes = response.data;
             this.setState({ shoeList : shoes });
         });
+
+        // call the get method
+        axios.get('api/transaction/')
+            .then(response => {
+                const transactions = response.data; // array
+                this.setState({cartCount : transactions.length})
+            });
 
     }
 
