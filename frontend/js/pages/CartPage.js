@@ -19,20 +19,24 @@ export default class CartPage extends React.Component {
     /* HELPER FUNCTIONS */
 
     // deletes item from cart
-    deleteItem(event, shoe){
+    deleteItem(event, tidToDel){
 
-        var newShoeArr = [...this.state.shoes];
-        var shoeToDelIndex = newShoeArr.indexOf(shoe);
+        var newTransactions = [...this.state.transactions];
 
-        if (shoeToDelIndex != -1){
-            newShoeArr.splice(shoeToDelIndex, 1);
-            this.setState({shoes : newShoeArr});
+        const findDelIndex = (transaction) => transaction.tid == tidToDel;
+        var indexToDel = newTransactions.findIndex(findDelIndex);
+
+        // found a valid index
+        if (indexToDel >= 0){
+            newTransactions.splice(indexToDel, 1);
         }
 
-        /*
-            TODO:
-                - The delete API call will be made here to delete from database
-        */
+        this.setState({transactions : newTransactions});
+
+        axios.delete("api/transaction/" + tidToDel)
+            .then(response => {
+                console.log(response);
+            })
 
     }
 
@@ -60,7 +64,6 @@ export default class CartPage extends React.Component {
             .then(response => {
 
                 response.data.forEach(transaction => {
-                    console.log(transaction.tid);
                     idMap.set(transaction.tid, transaction.sid);
                 });
 
@@ -122,7 +125,7 @@ export default class CartPage extends React.Component {
                                         <Button
                                         type="primary"
                                         danger
-                                        onClick={(event) => {this.deleteItem(event, shoe)}}
+                                        onClick={(event) => {this.deleteItem(event, transaction.tid)}}
                                         style={{marginRight : "100px"}}>
                                         Remove from Cart</Button>
                                     </div>
