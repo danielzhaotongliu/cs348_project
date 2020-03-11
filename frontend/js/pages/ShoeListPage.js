@@ -1,8 +1,9 @@
 import React from 'react';
-import { List, Input, Select, Badge } from 'antd';
+import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 const { Search } = Input;
@@ -17,7 +18,7 @@ function setSearchOption(value){
 }
 
 const searchOptions = (
-    <Select defaultValue="Brand" style={{ width: 80 }} onChange={setSearchOption}>
+    <Select defaultValue="Brand" style={{ width: 100}} onChange={setSearchOption}>
         <Option value="brand">Brand</Option>
         <Option value="name">Name</Option>
         <Option value="size">Size</Option>
@@ -136,8 +137,17 @@ export default class ShoeListPage extends React.Component {
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
-                                <List.Item onClick={(event) => {this.addToCart(item);}}>
+                                <List.Item style={styles.listItemStyle} onClick={(event) => {this.addToCart(item);}}>
                                     <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                    <StarRatings
+                                        rating={0}
+                                        starRatedColor="red"
+                                        numberOfStars={5}
+                                        name='rating'
+                                    />
+                                    <Link to="/review">
+                                        <Button style={{margin : 20}}>Add Review</Button>
+                                    </Link>
                                 </List.Item>
                             );
                         } } 
@@ -177,6 +187,11 @@ const styles = {
 
     listStyle : {
         width : '1500px'
+    },
+
+    listItemStyle : {
+        display : 'flex',
+        flexDirection : 'column'
     }
 
 };
