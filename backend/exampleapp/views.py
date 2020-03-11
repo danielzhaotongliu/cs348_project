@@ -56,7 +56,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
     serializer_class = TransactionSerializer
 
-
     def create(self, request):
         t_data = request.data
         # TODO: remove once frontend can pass in the quantity
@@ -103,8 +102,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
     API endpoints to create/view Review information
     """
     serializer_class = ReviewSerializer
-    queryset = Review.objects.raw('SELECT * FROM exampleapp_review')
-
+    
+    def get_queryset(self):
+        queryset = Review.objects.raw('SELECT * FROM exampleapp_review')
+        return queryset
+    
     def create(self, request):
         r_data = request.data
         serializer = ReviewSerializer(data=r_data)
