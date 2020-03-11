@@ -9,11 +9,35 @@ export default class ReviewPage extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {value: 'Review goes here', rating: 0};
+        this.state = {
+            value: 'Review goes here',
+            rating: 0,
+            imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results"
+            };
         
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.changeRating = this.changeRating.bind(this);
+    }
+
+
+    componentDidMount(){
+
+        var shoeId = 1;
+
+        if (this.props.location.state){
+            shoeId = this.props.location.state.shoeId;
+        }
+        
+        // need to query the shoe table with this shoeId to get an image
+
+        const paramObj = {sid : shoeId};
+
+        axios.get('api/shoe/', {params : paramObj})
+            .then(response => {
+
+            this.setState({imageUrl : response.data[0].image_url});
+        });
     }
 
     handleSubmit(event) {
@@ -53,7 +77,7 @@ export default class ReviewPage extends React.Component {
                     headStyle={styles.cardHeadingStyle}
                     bordered={false}
                 >
-                <img alt="example" src={tempImageUrl} style={styles.imageStyle}/>
+                <img alt="example" src={this.state.imageUrl} style={styles.imageStyle}/>
                 <form onSubmit={this.handleSubmit} >
                     <StarRatings 
                         rating={this.state.rating}
@@ -71,8 +95,6 @@ export default class ReviewPage extends React.Component {
     }
 
 };
-
-const tempImageUrl = "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results"
 
 const styles = {
 

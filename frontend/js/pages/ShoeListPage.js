@@ -137,15 +137,22 @@ export default class ShoeListPage extends React.Component {
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
-                                <List.Item style={styles.listItemStyle} onClick={(event) => {this.addToCart(item);}}>
-                                    <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                <List.Item style={styles.listItemStyle} >
+                                    <div onClick={(event) => {this.addToCart(item);}}>
+                                        <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                    </div>
                                     <StarRatings
                                         rating={0}
                                         starRatedColor="red"
                                         numberOfStars={5}
                                         name='rating'
                                     />
-                                    <Link to="/review">
+                                    <Link to={{
+                                        pathname : '/review',
+                                        state : {
+                                            shoeId : item.sid
+                                        }
+                                    }}>
                                         <Button style={{margin : 20}}>Add Review</Button>
                                     </Link>
                                 </List.Item>
