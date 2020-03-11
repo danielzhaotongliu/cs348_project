@@ -10,7 +10,7 @@ export default class ReviewPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'Review goes here',
+            value: 'Enter review',
             rating: 0,
             imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results"
             };
@@ -29,8 +29,6 @@ export default class ReviewPage extends React.Component {
             shoeId = this.props.location.state.shoeId;
         }
         
-        // need to query the shoe table with this shoeId to get an image
-
         const paramObj = {sid : shoeId};
 
         axios.get('api/shoe/', {params : paramObj})
