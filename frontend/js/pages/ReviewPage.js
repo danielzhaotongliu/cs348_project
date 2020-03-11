@@ -13,7 +13,7 @@ export default class ReviewPage extends React.Component {
             value: 'Enter review',
             rating: 0,
             imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results",
-            shoeId : 1
+            shoeId : props.location.state.shoeId
             };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,12 +24,8 @@ export default class ReviewPage extends React.Component {
 
     componentDidMount(){
 
-        if (this.props.location.state){
-            console.log(this.props.location.state.shoeId);
-            this.setState({shoeId : this.props.location.state.shoeId});
-        }
-        
-        const paramObj = {sid : this.props.location.state.shoeId};
+        console.log("Mounted with "+ this.state.shoeId);
+        const paramObj = {sid : this.state.shoeId};
 
         // get this shoe's rating
         axios.get('api/review/' , {params : paramObj})
@@ -58,6 +54,8 @@ export default class ReviewPage extends React.Component {
     }
 
     handleSubmit(event) {
+
+        event.preventDefault();
 
         console.log("about to post for shoe with shoeID: " + this.state.shoeId);
 
