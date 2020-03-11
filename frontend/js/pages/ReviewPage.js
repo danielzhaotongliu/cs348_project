@@ -12,7 +12,8 @@ export default class ReviewPage extends React.Component {
         this.state = {
             value: 'Enter review',
             rating: 0,
-            imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results"
+            imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results",
+            shoeId : 1
             };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,26 +24,55 @@ export default class ReviewPage extends React.Component {
 
     componentDidMount(){
 
-        var shoeId = 1;
-
         if (this.props.location.state){
-            shoeId = this.props.location.state.shoeId;
+            console.log(this.props.location.state.shoeId);
+            this.setState({shoeId : this.props.location.state.shoeId});
         }
         
-        const paramObj = {sid : shoeId};
+        const paramObj = {sid : this.props.location.state.shoeId};
 
-        axios.get('api/shoe/', {params : paramObj})
+        // get this shoe's rating
+        axios.get('api/review/' , {params : paramObj})
             .then(response => {
+                var review = response.data[0];
 
-            this.setState({imageUrl : response.data[0].image_url});
+                console.log(review);
+
+                if (review){
+                    this.setState({rating : review.rating});
+                    this.setState({value : review.comment});
+                }
+
         });
+
+        // get this shoe's image
+        axios.get('api/shoe/' , {params : paramObj})
+            .then(response => {
+                var shoe = response.data[0];
+
+                this.setState({imageUrl : shoe.image_url})
+
+        });
+
+        
     }
 
     handleSubmit(event) {
-        alert('A Review was submitted: ' + this.state.value + this.state.rating);
 
-        //TODO: make api call
-        event.preventDefault();
+        console.log("about to post for shoe with shoeID: " + this.state.shoeId);
+
+        var params = {
+            rating : this.state.rating,
+            sid : this.state.shoeId,
+            comment : this.state.value,
+            uid : null
+        };
+
+        axios.post('api/review/', params)
+        .then(response => {
+            console.log(response);
+        });
+        
     }
 
     handleChange(event) {
