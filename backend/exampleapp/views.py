@@ -104,7 +104,17 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     
     def get_queryset(self):
+
+        sid = self.request.query_params.get('sid', None)
+
         queryset = Review.objects.raw('SELECT * FROM exampleapp_review')
+
+        if sid:
+            print("bfore")
+            queryset = Review.objects.raw('SELECT * FROM exampleapp_review WHERE sid_id = %s', [sid])
+            print("after")
+            print(len(queryset))
+        
         return queryset
     
     def create(self, request):
@@ -114,9 +124,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
         # check if the serialized data is valid
         if serializer.is_valid():
             # TODO: this will be changed to raw SQL query in final milestone
-            cursor = connection.cursor()
-            cursor.execute('INSERT INTO exampleapp_review(sid_id, rating, comment) VALUES (%s, %s, %s)', [r_data['sid'], r_data['rating'], r_data['comment']])
-            # serializer.save()
+            # cursor = connection.cursor()
+            # cursor.execute('INSERT INTO exampleapp_review(sid_id, rating, comment) VALUES (%s, %s, %s)', [r_data['sid'], r_data['rating'], r_data['comment']])
+            serializer.save()
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

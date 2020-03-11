@@ -9,18 +9,70 @@ export default class ReviewPage extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {value: 'Review goes here', rating: 0};
+        this.state = {
+            value: 'Enter review',
+            rating: 0,
+            imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results",
+            shoeId : 1
+            };
         
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.changeRating = this.changeRating.bind(this);
     }
 
-    handleSubmit(event) {
-        alert('A Review was submitted: ' + this.state.value + this.state.rating);
 
-        //TODO: make api call
-        event.preventDefault();
+    componentDidMount(){
+
+        if (this.props.location.state){
+            console.log(this.props.location.state.shoeId);
+            this.setState({shoeId : this.props.location.state.shoeId});
+        }
+        
+        const paramObj = {sid : this.props.location.state.shoeId};
+
+        // get this shoe's rating
+        axios.get('api/review/' , {params : paramObj})
+            .then(response => {
+                var review = response.data[0];
+
+                console.log(review);
+
+                if (review){
+                    this.setState({rating : review.rating});
+                    this.setState({value : review.comment});
+                }
+
+        });
+
+        // get this shoe's image
+        axios.get('api/shoe/' , {params : paramObj})
+            .then(response => {
+                var shoe = response.data[0];
+
+                this.setState({imageUrl : shoe.image_url})
+
+        });
+
+        
+    }
+
+    handleSubmit(event) {
+
+        console.log("about to post for shoe with shoeID: " + this.state.shoeId);
+
+        var params = {
+            rating : this.state.rating,
+            sid : this.state.shoeId,
+            comment : this.state.value,
+            uid : null
+        };
+
+        axios.post('api/review/', params)
+        .then(response => {
+            console.log(response);
+        });
+        
     }
 
     handleChange(event) {
@@ -53,7 +105,7 @@ export default class ReviewPage extends React.Component {
                     headStyle={styles.cardHeadingStyle}
                     bordered={false}
                 >
-                <img alt="example" src={tempImageUrl} style={styles.imageStyle}/>
+                <img alt="example" src={this.state.imageUrl} style={styles.imageStyle}/>
                 <form onSubmit={this.handleSubmit} >
                     <StarRatings 
                         rating={this.state.rating}
@@ -71,8 +123,6 @@ export default class ReviewPage extends React.Component {
     }
 
 };
-
-const tempImageUrl = "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results"
 
 const styles = {
 
