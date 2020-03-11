@@ -90,7 +90,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
                 cursor.execute('DELETE FROM exampleapp_transaction WHERE tid = %s', [pk])
                 return Response(f'Success: deleted Transaction with tid: {pk}')
             else:
-                return Response(f'Error: more than one Transaction with tid: {pk}', status=status.HTTP_400_BAD_REQUEST)
+                return Response(f'Error: more than one Transaction with tid: {pk} or tid does not exist', status=status.HTTP_400_BAD_REQUEST)
         return Response(f'Error: no Transaction tid provided', status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
@@ -109,3 +109,24 @@ class ReviewViewSet(viewsets.ModelViewSet):
         r_data = request.data
         serializer = ReviewSerializer(data=r_data)
         
+        # check if the serialized data is valid
+        if serializer.is_valid():
+            # TODO: this will be changed to raw SQL query in final milestone
+            cursor = connection.cursor()
+            cursor.execute('INSERT INTO exampleapp_review(sid_id, rating, comment) VALUES (%s, %s, %s)', [r_data['sid'], r_data['rating'], r_data['comment']])
+            # serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        if pk:
+            r_queryset = Review.objects.raw('SELECT * FROM exampleapp_review WHERE id = %s', [pk])
+            if len(r_queryset) == 1:
+                cursor = connection.cursor()
+                cursor.execute('DELETE FROM exampleapp_review WHERE id = %s', [pk])
+                return Response(f'Success: deleted Review with id: {pk}')
+            else:
+                return Response(f'Error: the Review does not exist', status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(f'Error: no Review identifier provided', status=status.HTTP_400_BAD_REQUEST)
