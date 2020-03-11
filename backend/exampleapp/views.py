@@ -5,8 +5,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Shoe, Customer, Transaction
-from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer
+from .models import Shoe, Customer, Transaction, Review
+from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer
 
 
 # Create your views here.
@@ -96,3 +96,16 @@ class TransactionViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
         return queryset 
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints to create/view Review information
+    """
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.raw('SELECT * FROM exampleapp_review')
+
+    def create(self, request):
+        r_data = request.data
+        serializer = ReviewSerializer(data=r_data)
+        
