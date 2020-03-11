@@ -11,6 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'shoe', views.ShoeViewSet, basename='Shoe')
 router.register(r'customer', views.CustomerViewSet, basename='Customer')
 router.register(r'transaction', views.TransactionViewSet, basename='Transaction')
+router.register(r'review', views.ReviewViewSet, basename="Review")
 
 urlpatterns = [
     path('api/', include(router.urls)),

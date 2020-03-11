@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Shoe, Customer, Transaction
+from .models import Shoe, Customer, Transaction, Review
 
 class ShoeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,4 +17,10 @@ class CustomerSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
         fields = '__all__'
