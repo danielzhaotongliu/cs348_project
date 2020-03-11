@@ -35,7 +35,7 @@ class ShoeViewSet(viewsets.ModelViewSet):
         if size:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE size = %s', [size])
         if name:
-            queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE name = %s', [name])
+            queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE name LIKE %s', ['%' + name + '%'])
         if sid:
             queryset = Shoe.objects.raw('SELECT * FROM exampleapp_shoe WHERE sid = %s', [sid])
         
