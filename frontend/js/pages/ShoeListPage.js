@@ -141,12 +141,6 @@ export default class ShoeListPage extends React.Component {
                                     <div onClick={(event) => {this.addToCart(item);}}>
                                         <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                     </div>
-                                    <StarRatings
-                                        rating={0}
-                                        starRatedColor="red"
-                                        numberOfStars={5}
-                                        name='rating'
-                                    />
                                     <Link to={{
                                         pathname : '/review',
                                         state : {
