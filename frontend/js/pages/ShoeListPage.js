@@ -137,8 +137,23 @@ export default class ShoeListPage extends React.Component {
                         renderItem={ item => {
                             return (
                                 <List.Item style={styles.listItemStyle} >
-                                    <div onClick={(event) => {console.log("SHOE PRESSED")}}>
-                                        <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                    <div >
+                                        <Link to={{
+                                                pathname : '/shoe',
+                                                state : {
+                                                    shoeId : item.sid
+                                                }
+                                            }}>
+
+                                            <ShoeComponent
+                                            name={item.name}
+                                            price={item.price}
+                                            brand={item.brand}
+                                            size={item.size}
+                                            imgSrc={item.image_url}/>
+
+                                        </Link>
+
                                     </div>
 
                                     <div style={styles.buttonRowStyle}>
