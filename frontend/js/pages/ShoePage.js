@@ -8,9 +8,7 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 /* 
     TODO
-        - Connect this page to main page
         - Show review ratings
-        
 
         - show laoding spinner (maybe)
 */
@@ -34,7 +32,7 @@ export default class ShoePage extends React.Component {
     // When this page loads
     componentDidMount() {
 
-        var paramObj = {sid : 1};
+        var paramObj = {sid : this.state.shoeId};
 
         if (this.props.sid){
             paramObj.sid = this.props.sid;
@@ -62,10 +60,12 @@ export default class ShoePage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            shoeId : 2,
+            shoeId : props.location.state.shoeId,
             shoe : {},
             cartCount : 0
         };
+
+        console.log("State in constructor: " + this.state);
 
     }
 
