@@ -4,33 +4,36 @@
 #
 #    pip-compile dev-requirements.in
 #
-aspy.yaml==1.3.0          # via pre-commit
+appdirs==1.4.3            # via virtualenv
 astroid==2.3.3            # via prospector, pylint, pylint-celery, pylint-flask, requirements-detector
 bandit==1.6.2
-certifi==2019.11.28       # via requests
-cfgv==2.0.1               # via pre-commit
+certifi==2020.4.5.1       # via pipenv, requests
+cfgv==3.1.0               # via pre-commit
 chardet==3.0.4            # via requests
-click==7.0                # via safety
-coverage==5.0.3
+click==7.1.1              # via safety
+coverage==5.0.4
+distlib==0.3.0            # via virtualenv
 django-naomi==0.8
-django==2.2.10
+django==2.2.12
 dodgy==0.2.1              # via prospector
-dparse==0.4.1             # via safety
-gitdb2==2.0.6             # via gitpython
-gitpython==3.0.5          # via bandit
-identify==1.4.11          # via pre-commit
-idna==2.8                 # via requests
-importlib-metadata==1.5.0  # via pre-commit
-importlib-resources==1.0.2  # via pre-commit
+dparse==0.5.0             # via safety
+filelock==3.0.12          # via virtualenv
+gitdb==4.0.2              # via gitpython
+gitpython==3.1.0          # via bandit
+identify==1.4.14          # via pre-commit
+idna==2.9                 # via requests
+importlib-metadata==1.6.0  # via importlib-resources, pre-commit, virtualenv
+importlib-resources==1.4.0  # via pre-commit, virtualenv
 isort==4.3.21
 lazy-object-proxy==1.4.3  # via astroid
 mccabe==0.6.1             # via prospector, pylint
 model-mommy==2.0.0
 nodeenv==1.3.5            # via pre-commit
-packaging==20.1           # via dparse, safety
-pbr==5.4.4                # via stevedore
+packaging==20.3           # via dparse, safety
+pbr==5.4.5                # via stevedore
 pep8-naming==0.4.1        # via prospector
-pre-commit==2.0.1
+pipenv==2018.11.26        # via dparse
+pre-commit==2.2.0
 prospector[with-vulture]==1.2.0
 pycodestyle==2.4.0        # via prospector
 pydocstyle==5.0.2         # via prospector
@@ -40,24 +43,26 @@ pylint-django==2.0.12     # via prospector
 pylint-flask==0.6         # via prospector
 pylint-plugin-utils==0.6  # via prospector, pylint-celery, pylint-django, pylint-flask
 pylint==2.4.4             # via prospector, pylint-celery, pylint-django, pylint-flask, pylint-plugin-utils
-pyparsing==2.4.6          # via packaging
+pyparsing==2.4.7          # via packaging
 pytz==2019.3              # via django
-pyyaml==5.3               # via aspy.yaml, bandit, dparse, pre-commit, prospector
-requests==2.22.0          # via safety
+pyyaml==5.3.1             # via bandit, dparse, pre-commit, prospector
+requests==2.23.0          # via safety
 requirements-detector==0.6  # via prospector
-safety==1.8.5
+safety==1.8.7
 setoptconf==0.2.0         # via prospector
-six==1.14.0               # via astroid, bandit, cfgv, dparse, packaging, stevedore
-smmap2==2.0.5             # via gitdb2
+six==1.14.0               # via astroid, bandit, packaging, stevedore, virtualenv
+smmap==3.0.1              # via gitdb
 snowballstemmer==2.0.0    # via pydocstyle
-sqlparse==0.3.0           # via django
-stevedore==1.31.0         # via bandit
-toml==0.10.0              # via pre-commit
+sqlparse==0.3.1           # via django
+stevedore==1.32.0         # via bandit
+toml==0.10.0              # via dparse, pre-commit
 typed-ast==1.4.1          # via astroid
 urllib3==1.25.8           # via requests
-virtualenv==16.7.9        # via pre-commit
+virtualenv-clone==0.5.4   # via pipenv
+virtualenv==20.0.16       # via pipenv, pre-commit
 wrapt==1.11.2             # via astroid
-zipp==2.1.0               # via importlib-metadata
+zipp==3.1.0               # via importlib-metadata, importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
+# pip
 # setuptools

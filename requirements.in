@@ -15,3 +15,5 @@ psutil
 ipython
 sentry-sdk
 djangorestframework
+django-two-factor-auth
+twilio

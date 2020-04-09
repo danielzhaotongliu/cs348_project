@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import include, path
 from rest_framework import routers
-
+from two_factor.gateways.twilio.urls import urlpatterns as tf_twilio_urls
+from two_factor.urls import urlpatterns as tf_urls
 import django_js_reverse.views
 from exampleapp import views
 
@@ -20,4 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^jsreverse/$', django_js_reverse.views.urls_js, name='js_reverse'),
     url(r'^$', TemplateView.as_view(template_name='itworks.html'), name='home'),
+    url(r'', include(tf_twilio_urls)),
+    url(r'', include(tf_urls))
 ]
