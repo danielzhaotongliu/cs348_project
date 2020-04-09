@@ -5,6 +5,7 @@ import ReviewPage from './ReviewPage';
 import ShippingAddressPage from './ShippingAddressPage'
 import PaymentMethodPage from './PaymentMethodPage'
 import ReviewTransactionPage from './ReviewTransactionPage'
+import ShoePage from './ShoePage';
 import { Switch, Route } from 'react-router-dom';
 
 /*
@@ -23,9 +24,10 @@ const Home = () => {
       </button> */}
 
       <Switch>
-        <Route exact path='/' component={ShoeListPage} />
+        <Route exact path='/' component={ShoePage} />
         <Route path='/cart' component={CartPage} />
-        <Route path='/store' component={ShoeListPage} />
+        <Route path='/store' component={ShoeListPage}/>
+        <Route path='/shoe' component={ShoePage} />
         <Route path='/review' component={ReviewPage} />
         <Route path='/selectAddress' component={ShippingAddressPage} />
         <Route path='/selectPayment' component={PaymentMethodPage} />
