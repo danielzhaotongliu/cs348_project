@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ShoeListPage from './ShoeListPage';
 import CartPage from './CartPage';
 import ReviewPage from './ReviewPage';
+import ShoePage from './ShoePage';
 import { Switch, Route } from 'react-router-dom';
 
 /*
@@ -20,9 +21,10 @@ const Home = () => {
       </button> */}
 
       <Switch>
-        <Route exact path='/' component={ShoeListPage} />
+        <Route exact path='/' component={ShoePage} />
         <Route path='/cart' component={CartPage} />
-        <Route path='/store' component={ShoeListPage} />
+        <Route path='/store' component={ShoeListPage}/>
+        <Route path='/shoe' component={ShoePage} />
         <Route path='/review' component={ReviewPage} />
       </Switch>
 

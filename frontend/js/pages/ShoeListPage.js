@@ -3,7 +3,6 @@ import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 const { Search } = Input;
