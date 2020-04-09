@@ -7,9 +7,10 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 
 /* 
-    TODO:
-        - Add 'add review' functionality
+    TODO
+        - Connect this page to main page
         - Show review ratings
+        
 
         - show laoding spinner (maybe)
 */
@@ -110,7 +111,15 @@ export default class ShoePage extends React.Component {
                         flexDirection : 'column'
                     }}>
                         <p>RATING GOES HERE</p>
-                        <p>ADD REVIEW GOES HERE</p>
+
+                        <Link to={{
+                            pathname : '/review',
+                            state : {
+                                shoeId : this.state.shoeId
+                            }
+                        }}>
+                            <Button style={{margin : 20}}>Add Review</Button>
+                        </Link>
                     </div>
 
                     <Button
