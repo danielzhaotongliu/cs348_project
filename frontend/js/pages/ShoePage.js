@@ -1,17 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import { LeftOutlined } from '@ant-design/icons';
+import { Button, Badge } from 'antd';
+import { LeftOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 
 /* 
     TODO:
-        - Add 'Back to store' button with functionality
-        - Add functionality to query the database to pull out a shoe
-        - Add the cart to the page with correct items
-        - Add 'add to cart' functionality
         - Add 'add review' functionality
         - Show review ratings
 
@@ -29,6 +25,8 @@ export default class ShoePage extends React.Component {
 
         var params = {sid : this.state.shoeId};
         axios.post('api/transaction/', params);
+
+        this.setState({cartCount : this.state.cartCount + 1});
 
     }
 
@@ -50,13 +48,22 @@ export default class ShoePage extends React.Component {
                 this.setState({shoeId : shoes[0].sid, shoe: shoes[0]});
         });
 
+
+        // get cart count method
+        axios.get('api/transaction/')
+            .then(response => {
+                const transactions = response.data; // array
+                this.setState({cartCount : transactions.length})
+        });
+
     }
 
     constructor(props){
         super(props);
         this.state = {
             shoeId : 2,
-            shoe : {}
+            shoe : {},
+            cartCount : 0
         };
 
     }
@@ -65,15 +72,25 @@ export default class ShoePage extends React.Component {
         return (
         <div style={styles.rootContainerStyle}>
             
-            <Link to="/store">
-                    <Button
-                        style={styles.backButtonStyle}
-                        size="large"
-                        >
-                        <LeftOutlined />
-                        Store
-                    </Button>
-            </Link>
+            <div style={{display : 'flex', justifyContent : 'space-between'}}>
+                <Link to="/store">
+                        <Button
+                            style={styles.backButtonStyle}
+                            size="large"
+                            >
+                            <LeftOutlined />
+                            Store
+                        </Button>
+                </Link>
+
+                <div style={{padding : 20, marginRight : 25}}>
+                    <Link to="/cart">
+                        <Badge count={this.state.cartCount} showZero>
+                            <ShoppingCartOutlined style={{fontSize  : 100}}/>
+                        </Badge>
+                    </Link>
+                </div>
+            </div>
 
             <div style={styles.innerContainerStyle}>
 
@@ -127,7 +144,7 @@ const styles = {
 
         margin : 25,
         height : 75,
-        width : 125,
+        width : 110,
         display : 'flex',
         alignItems : 'center'
 
