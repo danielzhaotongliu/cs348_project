@@ -8,7 +8,6 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 /* 
     TODO:
-        - Create basic display page        
         - Add 'Back to store' button with functionality
         - Add functionality to query the database to pull out a shoe
         - Add the cart to the page with correct items
@@ -23,6 +22,15 @@ export default class ShoePage extends React.Component {
 
     /* HELPER FUNCTIONS */
 
+    // adds a shoe to the cart and transaction table
+    async addToCart(){
+
+        console.log("About to add shoe with sid: " + this.state.shoeId);
+
+        var params = {sid : this.state.shoeId};
+        axios.post('api/transaction/', params);
+
+    }
 
     // When this page loads
     componentDidMount() {
@@ -33,12 +41,13 @@ export default class ShoePage extends React.Component {
             paramObj.sid = this.props.sid;
         }
 
-        // populate array of shoes
+        // populate shoe
         axios.get('api/shoe/', { params : paramObj} )
             .then(response => {
-            const shoes = response.data;
-            console.log(shoes[0]);
-            this.setState({shoe: shoes[0]});
+
+                const shoes = response.data;
+
+                this.setState({shoeId : shoes[0].sid, shoe: shoes[0]});
         });
 
     }
@@ -46,10 +55,10 @@ export default class ShoePage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            shoeId : 1,
+            shoeId : 2,
             shoe : {}
         };
-        
+
     }
 
     render() {
@@ -86,7 +95,12 @@ export default class ShoePage extends React.Component {
                         <p>RATING GOES HERE</p>
                         <p>ADD REVIEW GOES HERE</p>
                     </div>
-                    <p>ADD TO CART GOES HERE</p>
+
+                    <Button
+                    style={{margin : 20}}
+                    onClick={() => {this.addToCart();}}>
+                        Add to cart
+                    </Button>
                 </div>
 
             </div>
