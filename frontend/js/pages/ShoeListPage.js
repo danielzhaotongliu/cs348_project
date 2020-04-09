@@ -132,7 +132,7 @@ export default class ShoeListPage extends React.Component {
                     <List
                         style={styles.listStyle}
                         size="large"
-                        grid={{gutter: 16, column: 2}}
+                        grid={{column: 1}}
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
@@ -205,7 +205,7 @@ const styles = {
     }, 
 
     listStyle : {
-        width : '1500px'
+        width : 1500
     },
 
     listItemStyle : {
