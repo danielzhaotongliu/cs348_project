@@ -9,9 +9,6 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 /* 
     TODO
-        - Show review ratings
-        - Style review ratings
-
         - show laoding spinner (maybe)
 */
 
