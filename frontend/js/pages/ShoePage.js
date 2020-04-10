@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Badge } from 'antd';
 import { LeftOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 
@@ -27,6 +28,13 @@ export default class ShoePage extends React.Component {
 
         this.setState({cartCount : this.state.cartCount + 1});
 
+    }
+
+    changeRating( newRating, name ) {
+        console.log(newRating)
+        this.setState({
+          rating: newRating
+        });
     }
 
     // When this page loads
@@ -62,10 +70,13 @@ export default class ShoePage extends React.Component {
         this.state = {
             shoeId : props.location.state.shoeId,
             shoe : {},
-            cartCount : 0
+            cartCount : 0,
+            rating : 3
         };
 
         console.log("State in constructor: " + this.state);
+
+        this.changeRating = this.changeRating.bind(this);
 
     }
 
@@ -110,7 +121,13 @@ export default class ShoePage extends React.Component {
                         display : 'flex',
                         flexDirection : 'column'
                     }}>
-                        <p>RATING GOES HERE</p>
+                        <StarRatings 
+                        rating={this.state.rating}
+                        starRatedColor="red"
+                        changeRating={this.changeRating}
+                        numberOfStars={5}
+                        name='rating'
+                        />
 
                         <Link to={{
                             pathname : '/review',
