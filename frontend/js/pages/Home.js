@@ -6,6 +6,9 @@ import ShippingAddressPage from './ShippingAddressPage'
 import PaymentMethodPage from './PaymentMethodPage'
 import ReviewTransactionPage from './ReviewTransactionPage'
 import ShoePage from './ShoePage';
+import ShippingAddressPage from './ShippingAddressPage'
+import PaymentMethodPage from './PaymentMethodPage'
+import ReviewTransactionPage from './ReviewTransactionPage'
 import { Switch, Route } from 'react-router-dom';
 
 /*
