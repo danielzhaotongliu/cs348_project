@@ -2,12 +2,12 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Customer(models.Model):
+class Customer(AbstractUser):
+    # AbstractUser gives access to username, password, uid
     uid = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
 
 
 class Shoe(models.Model):

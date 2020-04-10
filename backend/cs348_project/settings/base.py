@@ -21,7 +21,7 @@ ADMINS = (
     ('Admin', 'ztliu@uwaterloo.ca'),
 )
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'exampleapp.Customer'
 
 ALLOWED_HOSTS = [".cs348shoeapp.herokuapp.com", "localhost", "127.0.0.1", "[::1]"]
 
