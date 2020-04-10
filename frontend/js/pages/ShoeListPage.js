@@ -77,7 +77,8 @@ export default class ShoeListPage extends React.Component {
         this.state = {
             shoeList : [],
             searching : false,
-            cartCount : 0
+            cartCount : 0,
+            trendingShoes : []
         };
 
         this.searchHelper = this.searchHelper.bind(this);
@@ -99,7 +100,14 @@ export default class ShoeListPage extends React.Component {
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
-            });
+        });
+
+        // populate trending shoes
+        axios.get('api/shoe/get_popular')
+            .then(response => {
+                const trending = response.data;
+                console.log(trending);
+        });
 
     }
 

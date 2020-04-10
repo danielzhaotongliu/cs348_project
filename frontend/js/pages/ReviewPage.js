@@ -5,13 +5,6 @@ import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 
-
-/* 
-    TODO: 
-        - implement a list in reviews
-        - query Review table to get reviews to populate
-*/
-
 export default class ReviewPage extends React.Component {
     
     constructor(props) {
