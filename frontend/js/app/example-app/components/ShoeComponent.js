@@ -31,7 +31,7 @@ const ShoeComponent = (props) => {
 const styles = {
 
     cardStyle : {
-        width : '150',
+        width : '100%',
         padding : 50
         
     },
@@ -40,7 +40,7 @@ const styles = {
         margin : 10
     },
     imageStyle : {
-        width : '50%',
+        width : 500
     },
     listStyle : {
         paddingLeft : '20%'

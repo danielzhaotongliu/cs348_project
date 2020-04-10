@@ -3,7 +3,6 @@ import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
 const { Search } = Input;
@@ -133,13 +132,28 @@ export default class ShoeListPage extends React.Component {
                     <List
                         style={styles.listStyle}
                         size="large"
-                        grid={{gutter: 16, column: 2}}
+                        grid={{column: 1}}
                         dataSource={this.state.shoeList}
                         renderItem={ item => {
                             return (
                                 <List.Item style={styles.listItemStyle} >
-                                    <div onClick={(event) => {console.log("SHOE PRESSED")}}>
-                                        <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
+                                    <div >
+                                        <Link to={{
+                                                pathname : '/shoe',
+                                                state : {
+                                                    shoeId : item.sid
+                                                }
+                                            }}>
+
+                                            <ShoeComponent
+                                            name={item.name}
+                                            price={item.price}
+                                            brand={item.brand}
+                                            size={item.size}
+                                            imgSrc={item.image_url}/>
+
+                                        </Link>
+
                                     </div>
 
                                     <div style={styles.buttonRowStyle}>
@@ -151,7 +165,7 @@ export default class ShoeListPage extends React.Component {
                                         }}>
                                             <Button style={{margin : 20}}>Add Review</Button>
                                         </Link>
-                                        <Button style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
+                                        <Button type='primary' style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
                                     </div>
                                 </List.Item>
                             );
@@ -191,7 +205,7 @@ const styles = {
     }, 
 
     listStyle : {
-        width : '1500px'
+        width : 1500
     },
 
     listItemStyle : {

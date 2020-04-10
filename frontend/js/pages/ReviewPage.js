@@ -63,7 +63,7 @@ export default class ReviewPage extends React.Component {
             rating : this.state.rating,
             sid : this.state.shoeId,
             comment : this.state.value,
-            uid : null
+            uid : null  // TODO: Update this when we have users
         };
 
         axios.post('api/review/', params)
