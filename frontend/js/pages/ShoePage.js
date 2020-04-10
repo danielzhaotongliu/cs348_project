@@ -66,7 +66,15 @@ export default class ShoePage extends React.Component {
                     count += 1;
                 }
 
-                var average = total / count;
+                var average = 0; 
+
+                if (count > 0){
+                    average = total / count;
+                }
+
+
+
+                console.log("average: " + average);
                 this.setState({rating : average});
 
         });
