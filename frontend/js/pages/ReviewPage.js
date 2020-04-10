@@ -146,9 +146,16 @@ export default class ReviewPage extends React.Component {
                                 dataSource={this.state.reviews}
                                 renderItem={ item => {
                                     return (
-                                        <List.Item>
-                                            <p>{item.rating}</p>
-                                            <p>{item.comment}</p>
+                                        <List.Item style={{padding : 20}}>
+                                            <div style={{padding: 20}}>
+                                                <StarRatings
+                                                    rating={item.rating}
+                                                    starRatedColor="red"
+                                                    numberOfStars={5}
+                                                    name='rating'
+                                                />
+                                            </div>
+                                            <p style={styles.reviewsTextStyle}>{item.comment}</p>
                                         </List.Item>
                                     );
                                 } }
@@ -202,8 +209,16 @@ const styles = {
     },
 
     reviewsTitleStyle : {
-        margin : 50,
+        marginTop : 70,
+        marginLeft : 50,
+        marginBottom : 30,
         fontSize : 45
+    },
+
+    reviewsTextStyle : {
+        padding: 20,
+        marginLeft: 30,
+        fontSize : 20
     }
 
 };
