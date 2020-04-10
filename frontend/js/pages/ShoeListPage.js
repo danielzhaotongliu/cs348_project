@@ -138,17 +138,21 @@ export default class ShoeListPage extends React.Component {
                         renderItem={ item => {
                             return (
                                 <List.Item style={styles.listItemStyle} >
-                                    <div onClick={(event) => {this.addToCart(item);}}>
+                                    <div onClick={(event) => {console.log("SHOE PRESSED")}}>
                                         <ShoeComponent name={item.name} price={item.price} brand={item.brand} size={item.size} imgSrc={item.image_url}/>
                                     </div>
-                                    <Link to={{
-                                        pathname : '/review',
-                                        state : {
-                                            shoeId : item.sid
-                                        }
-                                    }}>
-                                        <Button style={{margin : 20}}>Add Review</Button>
-                                    </Link>
+
+                                    <div style={styles.buttonRowStyle}>
+                                        <Link to={{
+                                            pathname : '/review',
+                                            state : {
+                                                shoeId : item.sid
+                                            }
+                                        }}>
+                                            <Button style={{margin : 20}}>Add Review</Button>
+                                        </Link>
+                                        <Button style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
+                                    </div>
                                 </List.Item>
                             );
                         } } 
@@ -193,6 +197,12 @@ const styles = {
     listItemStyle : {
         display : 'flex',
         flexDirection : 'column'
+    },
+
+    buttonRowStyle : {
+        display : 'flex',
+        justifyContent : 'space-between',
+        width : '50%'
     }
 
 };
