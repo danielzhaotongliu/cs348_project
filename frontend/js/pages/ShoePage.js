@@ -132,12 +132,14 @@ export default class ShoePage extends React.Component {
                         name='rating'
                         />
 
-                        <Link to={{
+                        <Link
+                        to={{
                             pathname : '/review',
                             state : {
                                 shoeId : this.state.shoeId
                             }
-                        }}>
+                        }}
+                        style={{display : 'flex', justifyContent : 'center'}}>
                             <Button style={{margin : 30}}>Add Review</Button>
                         </Link>
                     </div>
