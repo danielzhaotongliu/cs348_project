@@ -15,6 +15,7 @@ router.register(r'review', views.ReviewViewSet, basename="Review")
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/', include('exampleapp.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^jsreverse/$', django_js_reverse.views.urls_js, name='js_reverse'),
     url(r'^$', TemplateView.as_view(template_name='itworks.html'), name='home'),
