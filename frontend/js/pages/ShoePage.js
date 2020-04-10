@@ -50,9 +50,7 @@ export default class ShoePage extends React.Component {
         // populate shoe
         axios.get('api/shoe/', { params : paramObj} )
             .then(response => {
-
                 const shoes = response.data;
-
                 this.setState({shoeId : shoes[0].sid, shoe: shoes[0]});
         });
 
@@ -63,6 +61,10 @@ export default class ShoePage extends React.Component {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
         });
+   
+
+        // populate rating
+
 
     }
 
@@ -72,7 +74,7 @@ export default class ShoePage extends React.Component {
             shoeId : props.location.state.shoeId,
             shoe : {},
             cartCount : 0,
-            rating : 3
+            rating : 3.5
         };
 
         console.log("State in constructor: " + this.state);
@@ -136,12 +138,13 @@ export default class ShoePage extends React.Component {
                                 shoeId : this.state.shoeId
                             }
                         }}>
-                            <Button style={{margin : 20}}>Add Review</Button>
+                            <Button style={{margin : 30}}>Add Review</Button>
                         </Link>
                     </div>
 
                     <Button
                     style={{margin : 20}}
+                    type='primary'
                     onClick={() => {this.addToCart();}}>
                         Add to cart
                     </Button>

@@ -165,7 +165,7 @@ export default class ShoeListPage extends React.Component {
                                         }}>
                                             <Button style={{margin : 20}}>Add Review</Button>
                                         </Link>
-                                        <Button style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
+                                        <Button type='primary' style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
                                     </div>
                                 </List.Item>
                             );
