@@ -31,13 +31,6 @@ export default class ShoePage extends React.Component {
 
     }
 
-    changeRating( newRating, name ) {
-        console.log(newRating)
-        this.setState({
-          rating: newRating
-        });
-    }
-
     // When this page loads
     componentDidMount() {
 
@@ -64,6 +57,22 @@ export default class ShoePage extends React.Component {
    
 
         // populate rating
+        axios.get('api/review/', {params : paramObj})
+            .then(response => {
+                const reviews = response.data; // array
+
+                var total = 0;
+                var count = 0;
+                var i;
+                for(i in reviews){
+                    total += reviews[i].rating;
+                    count += 1;
+                }
+
+                var average = total / count;
+                this.setState({rating : average});
+
+        });
 
 
     }
@@ -74,12 +83,10 @@ export default class ShoePage extends React.Component {
             shoeId : props.location.state.shoeId,
             shoe : {},
             cartCount : 0,
-            rating : 3.5
+            rating : 0
         };
 
         console.log("State in constructor: " + this.state);
-
-        this.changeRating = this.changeRating.bind(this);
 
     }
 
@@ -127,7 +134,6 @@ export default class ShoePage extends React.Component {
                         <StarRatings 
                         rating={this.state.rating}
                         starRatedColor="red"
-                        changeRating={this.changeRating}
                         numberOfStars={5}
                         name='rating'
                         />
