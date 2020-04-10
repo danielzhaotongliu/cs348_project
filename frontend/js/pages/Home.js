@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import ShoeListPage from './ShoeListPage';
 import CartPage from './CartPage';
 import ReviewPage from './ReviewPage';
-import ShippingAddressPage from './ShippingAddressPage'
-import PaymentMethodPage from './PaymentMethodPage'
-import ReviewTransactionPage from './ReviewTransactionPage'
 import ShoePage from './ShoePage';
 import ShippingAddressPage from './ShippingAddressPage'
 import PaymentMethodPage from './PaymentMethodPage'
