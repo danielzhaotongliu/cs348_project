@@ -107,6 +107,7 @@ export default class ShoeListPage extends React.Component {
             .then(response => {
                 const trending = response.data;
                 console.log(trending);
+                this.setState({trendingShoes : trending});
         });
 
     }
@@ -117,23 +118,71 @@ export default class ShoeListPage extends React.Component {
             <div style={styles.rootContainerStyle}>
                 <div style={styles.containerStyle}>
 
-                    <div style={{marginTop : 50}}>
+                    <div style={{display : 'flex', justifyContent : 'space-between'}}>
 
-                        <Link to="/cart">
-                            <Badge count={this.state.cartCount} showZero>
-                                <ShoppingCartOutlined style={{fontSize  : 100}}/>
-                            </Badge>
-                        </Link>
+                        <p style={styles.titleStyle}>Shoe Store</p>
+
+                        <div style={{marginTop : 50}}>
+
+                            <Link to="/cart">
+                                <Badge count={this.state.cartCount} showZero>
+                                    <ShoppingCartOutlined style={{fontSize  : 100}}/>
+                                </Badge>
+                            </Link>
 
 
+                        </div>
                     </div>
 
-                    <p style={styles.titleStyle}>Shoe Store</p>
+                    <p style={{fontSize : 50, alignSelf : 'center'}}>Trending</p>
+
+                    <List
+                        style={styles.listStyle}
+                        size="large"
+                        grid={{column: 2}}
+                        dataSource={this.state.trendingShoes}
+                        renderItem={ item => {
+                            return (
+                                <List.Item style={styles.listItemStyle} >
+
+                                    <Link to={{
+                                            pathname : '/shoe',
+                                            state : {
+                                                shoeId : item.sid
+                                            }
+                                        }}>
+
+                                        <ShoeComponent
+                                        name={item.name}
+                                        price={item.price}
+                                        brand={item.brand}
+                                        size={item.size}
+                                        imgSrc={item.image_url}/>
+
+                                    </Link>
+
+                                    <div style={styles.buttonRowStyle}>
+                                        <Link to={{
+                                            pathname : '/review',
+                                            state : {
+                                                shoeId : item.sid
+                                            }
+                                        }}>
+                                            <Button style={{margin : 20}}>Add Review</Button>
+                                        </Link>
+                                        <Button type='primary' style={{margin : 20}} onClick={(event) => {this.addToCart(item);}}>Add to cart</Button>
+                                    </div>
+                                </List.Item>
+                            );
+                        } }
+                        rowKey={shoe => {return shoe.sid;}}   
+                        />
+
 
                     {this.state.searching ?
-                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" loading onSearch={(value) => { this.searchHelper(value) }} />
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search Store" loading onSearch={(value) => { this.searchHelper(value) }} />
                     : 
-                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search" onSearch={(value) => { this.searchHelper(value) }} />
+                        <Search addonBefore={searchOptions} style={styles.searchboxStyle} size='large' placeholder="Search Store" onSearch={(value) => { this.searchHelper(value) }} />
                     }
                     
 
@@ -198,8 +247,7 @@ const styles = {
 
     containerStyle : {
         display : 'flex',
-        flexDirection : 'column',
-        alignItems : 'center'
+        flexDirection : 'column'
     },
 
     titleStyle : {
@@ -209,11 +257,13 @@ const styles = {
 
     searchboxStyle : {
         width : 500,
-        margin : 50
+        margin : 50,
+        alignSelf : 'center'
     }, 
 
     listStyle : {
-        width : 1500
+        width : 1600,
+        alignSelf : 'center'
     },
 
     listItemStyle : {
