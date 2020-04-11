@@ -55,6 +55,10 @@ class ShoeViewSet(viewsets.ModelViewSet):
             'SELECT sid_id FROM exampleapp_transaction GROUP BY sid_id ORDER BY COUNT(*) DESC LIMIT 2')
         row1 = cursor.fetchone()
         row2 = cursor.fetchone()
+        # if there are no Transaction objects then set trending to sid=1 and sid=2
+        if row1 is None or row2 is None:
+            row1 = [1]
+            row2 = [2]
         # TODO row1 and row2 are returning Nonetype so the field access below
         # throws an error
         # print(shoeids[1])
