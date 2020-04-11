@@ -5,8 +5,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Shoe, Customer, Transaction, Review
-from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer
+from .models import Shoe, Customer, Transaction, Review, AddressBook, PaymentMethod
+from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer, AddressBookSerializer, PaymentMethodSerializer
 
 
 # Create your views here.
@@ -164,6 +164,62 @@ class ReviewViewSet(viewsets.ModelViewSet):
                     'DELETE FROM exampleapp_review WHERE id = %s', [pk])
                 return Response(f'Success: deleted Review with id: {pk}')
             else:
-                return Response(f'Error: the Review does not exist', status=status.HTTP_400_BAD_REQUEST)
+                return Response(f'Error: the Review does not exist', status=status.HTTP_400_BAD_REQUEST) 
 
-        return Response(f'Error: no Review identifier provided', status=status.HTTP_400_BAD_REQUEST)
+class AddressBookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints to create/view AddressBook information
+    """
+    serializer_class = AddressBookSerializer
+    
+    def get_queryset(self):
+
+        #uid = self.request.query_params.get('uid', None)
+        print("getting Address")
+
+        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_addressbook')
+        print(queryset)
+        return queryset
+
+    def create(self, request):
+        r_data = request.data
+        serializer = AddressBookSerializer(data=r_data)
+        if serializer.is_valid():
+            # TODO: this will be changed to raw SQL query in final milestone
+            # cursor = connection.cursor()
+            # cursor.execute('INSERT INTO exampleapp_review(sid_id, rating, comment) VALUES (%s, %s, %s)', [r_data['sid'], r_data['rating'], r_data['comment']])
+            serializer.save()
+            print("post here")
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PaymentMethodViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints to create/view PaymentMethod information
+    """
+    serializer_class = PaymentMethodSerializer
+    
+    #TODO: need to by user id
+    def get_queryset(self):
+
+        #uid = self.request.query_params.get('uid', None)
+        print("getting Payment methods")
+
+        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_paymentmethod')
+        print(queryset)
+        return queryset
+
+    def create(self, request):
+        r_data = request.data
+        serializer = PaymentMethodSerializer(data=r_data)
+        print(serializer.is_valid())
+        print(serializer.errors)
+        if serializer.is_valid():
+            # TODO: this will be changed to raw SQL query in final milestone
+            # cursor = connection.cursor()
+            # cursor.execute('INSERT INTO exampleapp_review(sid_id, rating, comment) VALUES (%s, %s, %s)', [r_data['sid'], r_data['rating'], r_data['comment']])
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

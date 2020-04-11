@@ -58,8 +58,6 @@ export default class ReviewPage extends React.Component {
                 this.setState({imageUrl : shoe.image_url})
 
         });
-
-        
     }
 
     handleSubmit(event) {
