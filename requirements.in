@@ -16,3 +16,4 @@ ipython
 sentry-sdk
 djangorestframework
 djangorestframework-simplejwt
+django-extensions
