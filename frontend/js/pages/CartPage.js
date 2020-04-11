@@ -110,7 +110,7 @@ export default class CartPage extends React.Component {
                         size="large"
                         >
                         <LeftOutlined />
-                        To Store
+                        Store
                     </Button>
                 </Link>
 

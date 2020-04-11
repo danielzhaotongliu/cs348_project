@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
 import ShoeListPage from './ShoeListPage';
 import CartPage from './CartPage';
 import ReviewPage from './ReviewPage';
 import ShoePage from './ShoePage';
-import ShippingAddressPage from './ShippingAddressPage'
-import PaymentMethodPage from './PaymentMethodPage'
-import ReviewTransactionPage from './ReviewTransactionPage'
-import { Switch, Route } from 'react-router-dom';
-
-/*
-    TODO:
-    - Implement Users
-*/
+import ShippingAddressPage from './ShippingAddressPage';
+import PaymentMethodPage from './PaymentMethodPage';
+import ReviewTransactionPage from './ReviewTransactionPage';
+import UserPage from './UserPage';
 
 const Home = () => {
   const [showBugComponent, setShowBugComponent] = useState(false);
@@ -32,8 +29,8 @@ const Home = () => {
         <Route path='/selectAddress' component={ShippingAddressPage} />
         <Route path='/selectPayment' component={PaymentMethodPage} />
         <Route path='/reviewTransaction' component={ReviewTransactionPage} />
+        <Route path='/user' component={UserPage} />
       </Switch>
-
 
       {showBugComponent && showBugComponent.field.notexist}
     </>

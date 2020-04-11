@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Input, Select, Badge, Button } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
@@ -130,6 +130,9 @@ export default class ShoeListPage extends React.Component {
                                 </Badge>
                             </Link>
 
+                            <Link to="/user">
+                                <UserOutlined style={{fontSize  : 100, marginLeft: 30}}/>
+                            </Link>
 
                         </div>
                     </div>
