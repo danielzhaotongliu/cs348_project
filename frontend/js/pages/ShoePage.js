@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Badge } from 'antd';
-import { LeftOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { LeftOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
@@ -115,6 +115,10 @@ export default class ShoePage extends React.Component {
                         <Badge count={this.state.cartCount} showZero>
                             <ShoppingCartOutlined style={{fontSize  : 100}}/>
                         </Badge>
+                    </Link>
+
+                    <Link to="/user">
+                        <UserOutlined style={{fontSize  : 100, marginLeft: 30}}/>
                     </Link>
                 </div>
             </div>
