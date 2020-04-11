@@ -11,34 +11,38 @@ export default class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          username: '',
-          password: ''
+          username: "",
+          password: ""
         };
         
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        // get this shoe's rating
-        // axios.get('api/review/' , {params : paramObj})
-        //     .then(response => {
-        //         var review = response.data[0];
+    handleChange(event) {
+      this.setState({[event.target.name]: event.target.value});
+    }
 
-        //         console.log(review);
-
-        //         if (review){
-        //             this.setState({rating : review.rating});
-        //             this.setState({value : review.comment});
-        //         }
-
-        // });
+    handleSubmit(event) {
+      alert('A username and password was submitted: ' + this.state.username + " " + this.state.password);
+      event.preventDefault();
     }
 
     render() {
       return (
         <div>
-          <h2>Login page</h2>
+          <h1>Login</h1>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Username:
+              <input name="username" type="text" value={this.state.username} onChange={this.handleChange}/>
+            </label>
+            <label>
+              Password:
+              <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
+            </label>
+            <input type="submit" value="Submit"/>
+          </form>
         </div>
       )
     }

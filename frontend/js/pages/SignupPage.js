@@ -2,39 +2,49 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 // TODO:
+// consider setting up form for default address
 
 export default class SignupPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          username: '',
-          password: ''
+          username: "",
+          password: "",
+          email: ""
         };
         
-        //this.handleSubmit = this.handleSubmit.bind(this);
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        // get this shoe's rating
-        // axios.get('api/review/' , {params : paramObj})
-        //     .then(response => {
-        //         var review = response.data[0];
+    handleChange(event) {
+      this.setState({[event.target.name]: event.target.value});
+    }
 
-        //         console.log(review);
-
-        //         if (review){
-        //             this.setState({rating : review.rating});
-        //             this.setState({value : review.comment});
-        //         }
-
-        // });
+    handleSubmit(event) {
+      alert('A username, password, and email was submitted: ' + this.state.username + " " + this.state.password + " " + this.state.email);
+      event.preventDefault();
     }
 
     render() {
       return (
         <div>
-          <h2>Signup page</h2>
+          <h1>Signup</h1>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Username:
+              <input name="username" type="text" value={this.state.username} onChange={this.handleChange}/>
+            </label>
+            <label>
+              Email:
+              <input name="email" type="email" value={this.state.email} onChange={this.handleChange}/>
+            </label>
+            <label>
+              Password:
+              <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
+            </label>
+            <input type="submit" value="Submit"/>
+          </form>
         </div>
       )
     }
