@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.utils import timezone
 from django.db import connection
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Shoe, Customer, Transaction, Review
 from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer
@@ -48,6 +49,19 @@ class CustomerViewSet(viewsets.ModelViewSet):
     """
     serializer_class = CustomerSerializer
     queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
+
+
+class CustomerCreate(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format='json'):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
