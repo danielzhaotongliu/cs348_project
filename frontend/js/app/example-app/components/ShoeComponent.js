@@ -40,7 +40,8 @@ const styles = {
         margin : 10
     },
     imageStyle : {
-        width : 500
+        width : 500,
+        height : 300
     },
     listStyle : {
         paddingLeft : '20%'
