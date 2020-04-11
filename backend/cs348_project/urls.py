@@ -13,7 +13,6 @@ router.register(r'customer', views.CustomerViewSet, basename='Customer')
 router.register(r'transaction', views.TransactionViewSet, basename='Transaction')
 router.register(r'review', views.ReviewViewSet, basename="Review")
 
-
 urlpatterns = [ 
     path('', include('exampleapp.urls')), # ensure this is added before api/router.urls
     path('api/', include(router.urls)),
