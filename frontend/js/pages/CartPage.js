@@ -37,7 +37,17 @@ export default class CartPage extends React.Component {
             .then(response => {
                 console.log(response);
             })
+        this.updateSubTotal()
+    }
 
+    updateSubTotal(){
+        console.log("update total")
+        var total = 0;
+        this.state.transactions.forEach(function (item, index) {
+             total  += item.shoe.price;
+          });
+        total = (Math.round(total * 100) / 100).toFixed(2);
+        this.setState({numberOfItems : this.state.transactions.length, cartTotal : total});
     }
 
     constructor(props){
@@ -45,10 +55,13 @@ export default class CartPage extends React.Component {
 
         this.state = {
             // maps tids -> shoe objects
-            transactions : []
+            transactions : [],
+            cartTotal: 0.00,
+            numberOfItems: 0
         };
 
         this.deleteItem = this.deleteItem.bind(this);
+        this.updateSubTotal = this.updateSubTotal.bind(this);
     }
 
     // When this page loads, call populate our array of shoes
@@ -75,14 +88,13 @@ export default class CartPage extends React.Component {
                         .then(response => {
 
                             var objToPush = {tid : key, shoe : response.data[0]};
+                            console.log("here")
+                            console.log(objToPush)
                             newTransactionArr.push(objToPush);
                             this.setState({transactions : newTransactionArr});
+                            this.updateSubTotal();
                         })
-
                 });
-
-
-
         });
 
 
@@ -106,7 +118,20 @@ export default class CartPage extends React.Component {
                     title="My Cart"
                     headStyle={styles.cardHeadingStyle}
                     bordered={false}
-                >
+                >   
+                    <Card
+                    >   
+                        <h1>Subtotal ({this.state.numberOfItems} item(s)): ${this.state.cartTotal}</h1>
+                        <Link to="/selectAddress">
+                            <Button
+                            type="primary"
+                            size="large"
+                            style={{width : "150px"}}
+                            >
+                            Checkout
+                            </Button>
+                        </Link>
+                    </Card>
                     <List
                         style={styles.listStyle}
                         grid={{column : 1}}
@@ -164,13 +189,13 @@ const styles = {
     },
 
     cardHeadingStyle : {
-        fontSize : 100
+        fontSize : 35
     },
 
     listItemStyle : {
         display: "flex",
+        width: "80%",
         alignItems: 'center',
         justifyContent : 'space-between'
     }
-
 };

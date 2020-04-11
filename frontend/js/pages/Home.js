@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import ShoeListPage from './ShoeListPage';
 import CartPage from './CartPage';
 import ReviewPage from './ReviewPage';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
-import { Switch, Route, Link } from 'react-router-dom';
+import ShoePage from './ShoePage';
+import ShippingAddressPage from './ShippingAddressPage'
+import PaymentMethodPage from './PaymentMethodPage'
+import ReviewTransactionPage from './ReviewTransactionPage'
 
 import { Layout, Menu } from 'antd';
 const { Header, Content } = Layout;
@@ -47,7 +51,6 @@ const Home = () => {
           </Switch>
         </Content>
       </Layout>
-
 
       {showBugComponent && showBugComponent.field.notexist}
     </>

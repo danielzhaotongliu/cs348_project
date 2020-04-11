@@ -10,10 +10,11 @@ export default class ReviewPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'Enter review',
-            rating: 0,
+            value : 'Enter review',
+            rating : 0,
             imageUrl : "https://www.famousfootwear.ca//productimages/shoes_ib709394.jpg?preset=results",
-            shoeId : props.location.state.shoeId
+            shoeId : props.location.state.shoeId,
+            reviews : []
             };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,16 +28,24 @@ export default class ReviewPage extends React.Component {
         console.log("Mounted with "+ this.state.shoeId);
         const paramObj = {sid : this.state.shoeId};
 
-        // get this shoe's rating
+        // get this shoe's reviews
         axiosInstance.get('api/review/' , {params : paramObj})
             .then(response => {
-                var review = response.data[0];
+                var reviews = response.data;
 
-                console.log(review);
+                console.log(reviews);
 
-                if (review){
-                    this.setState({rating : review.rating});
-                    this.setState({value : review.comment});
+                if(reviews.length > 0){
+                    // need to calculate average
+                    var total = 0;
+                    var x;
+                    for(x in reviews){
+                        total += reviews[x].rating;
+                    }
+                    var average = total / reviews.length;
+
+                    this.setState({rating : average, reviews : reviews});
+
                 }
 
         });
@@ -49,8 +58,6 @@ export default class ReviewPage extends React.Component {
                 this.setState({imageUrl : shoe.image_url})
 
         });
-
-        
     }
 
     handleSubmit(event) {
@@ -63,7 +70,7 @@ export default class ReviewPage extends React.Component {
             rating : this.state.rating,
             sid : this.state.shoeId,
             comment : this.state.value,
-            uid : null
+            uid : null  // TODO: Update this when we have users
         };
 
         axiosInstance.post('api/review/', params)
@@ -116,6 +123,39 @@ export default class ReviewPage extends React.Component {
                     <input type="submit" value="Submit" />
                 </form>
                 </Card>
+
+                <div>
+
+                        <div>
+                            <p style={styles.reviewsTitleStyle}>Reviews</p>
+                        </div>
+
+                        <List
+                                // style={styles.listStyle}
+                                // size="large"
+                                grid={{column: 1}}
+                                dataSource={this.state.reviews}
+                                renderItem={ item => {
+                                    return (
+                                        <List.Item style={{padding : 20}}>
+                                            <div style={{padding: 20}}>
+                                                <StarRatings
+                                                    rating={item.rating}
+                                                    starRatedColor="red"
+                                                    numberOfStars={5}
+                                                    name='rating'
+                                                />
+                                            </div>
+                                            <p style={styles.reviewsTextStyle}>{item.comment}</p>
+                                        </List.Item>
+                                    );
+                                } }
+                                rowKey={review => {return review.id;}}
+                        />
+
+                </div>
+
+
             </div>
         );
     }
@@ -157,6 +197,19 @@ const styles = {
         display: "flex",
         alignItems: 'center',
         justifyContent : 'space-between'
+    },
+
+    reviewsTitleStyle : {
+        marginTop : 70,
+        marginLeft : 50,
+        marginBottom : 30,
+        fontSize : 45
+    },
+
+    reviewsTextStyle : {
+        padding: 20,
+        marginLeft: 30,
+        fontSize : 20
     }
 
 };
