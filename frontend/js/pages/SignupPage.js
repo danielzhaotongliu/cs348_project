@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { axiosInstance } from '../axiosApi';
+import { Redirect } from 'react-router';
 
 // TODO:
 // consider setting up form for default shipping address
@@ -10,7 +11,8 @@ export default class SignupPage extends React.Component {
         this.state = {
           username: "",
           password: "",
-          email: ""
+          email: "",
+          isCreated: false,
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -29,6 +31,12 @@ export default class SignupPage extends React.Component {
           username: this.state.username,
           email: this.state.email,
           password: this.state.password
+        }).then((result) => {
+          // if successful creation
+          if (result.status === 201) {
+            console.log(result);
+            this.setState({isCreated: true});
+          }
         });
       } catch (error) {
         console.log(error.stack);
@@ -38,22 +46,28 @@ export default class SignupPage extends React.Component {
     render() {
       return (
         <div>
-          <h1>Signup</h1>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Username:
-              <input name="username" type="text" value={this.state.username} onChange={this.handleChange}/>
-            </label>
-            <label>
-              Email:
-              <input name="email" type="email" value={this.state.email} onChange={this.handleChange}/>
-            </label>
-            <label>
-              Password:
-              <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
-            </label>
-            <input type="submit" value="Submit"/>
-          </form>
+          {this.state.isCreated ?
+            <Redirect to='/login' />
+          :
+            <div>
+              <h1>Signup</h1>
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Username:
+                  <input name="username" type="text" value={this.state.username} onChange={this.handleChange}/>
+                </label>
+                <label>
+                  Email:
+                  <input name="email" type="email" value={this.state.email} onChange={this.handleChange}/>
+                </label>
+                <label>
+                  Password:
+                  <input name="password" type="password" value={this.state.password} onChange={this.handleChange}/>
+                </label>
+                <input type="submit" value="Submit"/>
+              </form>
+            </div>
+          }
         </div>
       )
     }
