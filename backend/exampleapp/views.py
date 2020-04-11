@@ -53,6 +53,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
 class CustomerCreate(APIView):
     permission_classes = (permissions.AllowAny,)
+    authentication_classes = () # opens up view to public
 
     def post(self, request, format='json'):
         serializer = CustomerSerializer(data=request.data)

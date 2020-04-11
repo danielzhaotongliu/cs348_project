@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosInstance } from "../axiosApi"; 
 
 // TODO:
-// - login form
-// - passing token to global state
-// - redirect to login when token expired (server returns 401 error). This shouldn't be a problem because I set token expiration to 30 minutes
-// - logout page
+// - UI cleanup Login and Signup pages
+// - redirect to login when refresh token:
+//   1. expired(server returns 401 error):
+//      This shouldn't be a problem because I set token expiration to 30 minutes
+//   2. does not exist (important for presentation)
+//
+// - logging out (logout page, blacklisting tokens)
+// - error handling for emails (server return err on duplicate username) 
+// - redirect to home after login/signup/logout
+// - allow home page to be viewable when not authenticated? 
+// - consider adding default shipping address to signup form
 
 export default class LoginPage extends React.Component {
     constructor(props) {
@@ -23,9 +30,21 @@ export default class LoginPage extends React.Component {
       this.setState({[event.target.name]: event.target.value});
     }
 
-    handleSubmit(event) {
-      alert('A username and password was submitted: ' + this.state.username + " " + this.state.password);
+    async handleSubmit(event) {
       event.preventDefault();
+
+      try {
+        axiosInstance.post('api/token/obtain/', {
+          username: this.state.username,
+          password: this.state.password
+        }).then(response => {
+          axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+          localStorage.setItem('access_token', response.data.access);
+          localStorage.setItem('refresh_token', response.data.refresh);
+        })
+      } catch (err) {
+        throw err;
+      }
     }
 
     render() {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosInstance } from '../axiosApi';
 
 // TODO:
-// consider setting up form for default address
+// consider setting up form for default shipping address
 
 export default class SignupPage extends React.Component {
     constructor(props) {
@@ -21,9 +21,18 @@ export default class SignupPage extends React.Component {
       this.setState({[event.target.name]: event.target.value});
     }
 
-    handleSubmit(event) {
-      alert('A username, password, and email was submitted: ' + this.state.username + " " + this.state.password + " " + this.state.email);
+    async handleSubmit(event) {
       event.preventDefault();
+
+      try {
+        const response = await axiosInstance.post('api/customer/create/', {
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password
+        });
+      } catch (error) {
+        console.log(error.stack);
+      }
     }
 
     render() {

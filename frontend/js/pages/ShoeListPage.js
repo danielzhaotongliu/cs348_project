@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import axios from 'axios'
+import { axiosInstance } from "../axiosApi"; 
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
@@ -50,7 +50,7 @@ export default class ShoeListPage extends React.Component {
                 break;
         };
 
-        axios.get('api/shoe/', { params : paramObj})
+        axiosInstance.get('api/shoe/', { params : paramObj})
             .then(response => {
             const shoes = response.data;
             console.log(shoes);
@@ -65,7 +65,7 @@ export default class ShoeListPage extends React.Component {
         console.log("About to add shoe with sid: " + shoe.sid);
 
         var params = { sid : shoe.sid};
-        axios.post('api/transaction/', params);
+        axiosInstance.post('api/transaction/', params);
 
         var newCartCount = this.state.cartCount + 1;
         this.setState({cartCount : newCartCount});
@@ -89,14 +89,14 @@ export default class ShoeListPage extends React.Component {
     componentDidMount() {
 
         // populate array of shoes
-        axios.get('api/shoe/')
+        axiosInstance.get('api/shoe/')
             .then(response => {
             const shoes = response.data;
             this.setState({ shoeList : shoes });
         });
 
         // call the get method
-        axios.get('api/transaction/')
+        axiosInstance.get('api/transaction/')
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})

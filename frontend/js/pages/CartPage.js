@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosInstance } from "../axiosApi"; 
 import { Card, List, Button} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ export default class CartPage extends React.Component {
 
         this.setState({transactions : newTransactions});
 
-        axios.delete("api/transaction/" + tidToDel)
+        axiosInstance.delete("api/transaction/" + tidToDel)
             .then(response => {
                 console.log(response);
             })
@@ -60,7 +60,7 @@ export default class CartPage extends React.Component {
         var newTransactionArr = [];
 
         // populate sids
-        axios.get('api/transaction/')
+        axiosInstance.get('api/transaction/')
             .then(response => {
 
                 response.data.forEach(transaction => {
@@ -71,7 +71,7 @@ export default class CartPage extends React.Component {
 
                     const paramObj = {sid : shoeid};
 
-                    axios.get('api/shoe/', { params : paramObj })
+                    axiosInstance.get('api/shoe/', { params : paramObj })
                         .then(response => {
 
                             var objToPush = {tid : key, shoe : response.data[0]};

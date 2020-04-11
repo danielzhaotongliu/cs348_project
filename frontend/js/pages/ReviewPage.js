@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosInstance } from "../axiosApi"; 
 import { Card, List, Button, TextArea, Form} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ export default class ReviewPage extends React.Component {
         const paramObj = {sid : this.state.shoeId};
 
         // get this shoe's rating
-        axios.get('api/review/' , {params : paramObj})
+        axiosInstance.get('api/review/' , {params : paramObj})
             .then(response => {
                 var review = response.data[0];
 
@@ -42,7 +42,7 @@ export default class ReviewPage extends React.Component {
         });
 
         // get this shoe's image
-        axios.get('api/shoe/' , {params : paramObj})
+        axiosInstance.get('api/shoe/' , {params : paramObj})
             .then(response => {
                 var shoe = response.data[0];
 
@@ -66,7 +66,7 @@ export default class ReviewPage extends React.Component {
             uid : null
         };
 
-        axios.post('api/review/', params)
+        axiosInstance.post('api/review/', params)
         .then(response => {
             console.log(response);
         });
