@@ -8,6 +8,7 @@ class Customer(models.Model):
     uid = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
+    email = models.EmailField(null=True, blank=True)
 
 
 class Shoe(models.Model):
