@@ -117,6 +117,7 @@ class UserPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     username: state.customer.username,
+    uid: state.customer.uid,
   };
 };
 
