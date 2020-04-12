@@ -5,13 +5,19 @@ import { connect } from 'react-redux';
 
 import { setLoggedInCustomer } from '../reducers/customer/actions';
 
+const styles = {
+    formStyle: {
+        display: 'table-caption',
+    }
+}
+
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
           username: "",
           password: "",
-          failed: null,
+          failed: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,20 +36,21 @@ class LoginPage extends React.Component {
                 password: this.state.password,
             }
         });
-        if (response.data.length != 1) {
-            this.setState({ failed: true });
-        } else {
+        if (response.data.length == 1 && response.status === 200) {
             // update username in Redux state
             this.props.setLoggedInCustomer(response.data[0].username);
+        } else {
+            this.setState({ failed: true });
         }
       } catch (error) {
         console.log(error);
+        this.setState({ failed: true });
       }
     }
 
     render() {
       return (
-        <div>
+        <div style={styles.formStyle}>
           <form onSubmit={this.handleSubmit}>
             <label>
               Username:
