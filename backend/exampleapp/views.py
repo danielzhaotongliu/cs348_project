@@ -54,11 +54,14 @@ class ShoeViewSet(viewsets.ModelViewSet):
             'SELECT sid_id FROM exampleapp_transaction GROUP BY sid_id ORDER BY COUNT(*) DESC LIMIT 2')
         row1 = cursor.fetchone()
         row2 = cursor.fetchone()
-        # print(shoeids[1])
+        # if there are no Transaction objects then set trending to sid=1 and sid=2
+        if row1 is None or row2 is None:
+            row1 = [1]
+            row2 = [2]
         queryset = Shoe.objects.raw(
             'SELECT * FROM exampleapp_shoe WHERE sid = %s OR sid = %s', [row1[0], row2[0]])
-        serialzer = self.get_serializer(queryset, many=True)
-        return Response(serialzer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class CustomerViewSet(viewsets.ModelViewSet):
@@ -66,7 +69,31 @@ class CustomerViewSet(viewsets.ModelViewSet):
     API endpoints to create/view Customer information
     """
     serializer_class = CustomerSerializer
-    queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
+
+    def create(self, request):
+        c_data = request.data
+        serializer = CustomerSerializer(data=c_data)
+        # check if the serialized data is valid
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+        queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
+
+        # filter by username if the parameter exists in the url
+        username = self.request.query_params.get('username', None)
+        password = self.request.query_params.get('password', None)
+
+        if username and password:
+            queryset = Customer.objects.raw(
+                'SELECT * FROM exampleapp_customer WHERE username = %s AND password = %s',
+                [username, password])
+
+        return queryset
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
