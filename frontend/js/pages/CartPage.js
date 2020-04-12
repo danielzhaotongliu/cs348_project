@@ -4,7 +4,7 @@ import { Card, List, Button} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
-
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 /*
     TODO:
@@ -103,16 +103,18 @@ export default class CartPage extends React.Component {
     render(){
         return (
             <div style={styles.containerStyle}>
-
-                <Link to="/store">
-                    <Button
-                        style={styles.backButtonStyle}
-                        size="large"
-                        >
-                        <LeftOutlined />
-                        Store
-                    </Button>
-                </Link>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Link to="/store">
+                        <Button
+                            style={styles.backButtonStyle}
+                            size="large"
+                            >
+                            <LeftOutlined />
+                            Store
+                        </Button>
+                    </Link>
+                    <LoginStatusComponent />
+                </div>
 
                 <Card
                     title="My Cart"

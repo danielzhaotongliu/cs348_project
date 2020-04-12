@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, Button, Carousel} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 export default class ShippingAddressPage extends React.Component {
     
@@ -94,15 +95,18 @@ export default class ShippingAddressPage extends React.Component {
         }
         return (
             <div style={styles.containerStyle}>
-                <Link to="/store">
-                    <Button
-                        style={styles.backButtonStyle}
-                        size="large"
-                        >
-                        <LeftOutlined />
-                        To Store
-                    </Button>
-                </Link>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Link to="/store">
+                        <Button
+                            style={styles.backButtonStyle}
+                            size="large"
+                            >
+                            <LeftOutlined />
+                            To Store
+                        </Button>
+                    </Link>
+                    <LoginStatusComponent />
+                </div>
 
                 {this.state.existingAddresses && this.state.existingAddresses.length != 0 ?
                 <Card
