@@ -30,7 +30,7 @@ const styles = {
   loginStatusStyle: {
     margin: 25,
     height: 75,
-    width: 180,
+    width: 200,
     fontSize: 24,
   },
 
@@ -56,6 +56,12 @@ class UserPage extends React.Component {
       email: '',
       password: '',
     };
+    this.handleSignOut = this.handleSignOut.bind(this);
+  }
+
+  handleSignOut(event) {
+    const { setLoggedInCustomer } = this.props;
+    setLoggedInCustomer(null);
   }
 
   render() {
@@ -71,7 +77,12 @@ class UserPage extends React.Component {
             </Button>
           </Link>
           {username ? (
-            <div style={styles.loginStatusStyle}>Hello, {username}</div>
+            <div style={styles.loginStatusStyle}>
+              <div>Hello, {username}</div>
+              <Button type="primary" onClick={this.handleSignOut}>
+                Sign Out
+              </Button>
+            </div>
           ) : (
             <div style={styles.loginStatusStyle}>Not logged in</div>
           )}
