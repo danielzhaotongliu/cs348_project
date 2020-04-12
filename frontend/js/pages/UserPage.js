@@ -8,6 +8,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { setLoggedInCustomer } from '../reducers/customer/actions';
 
 import LoginPage from './LoginPage';
+import SignUpPage from './SignUpPage';
 
 const styles = {
   rootContainerStyle: {
@@ -66,6 +67,11 @@ class UserPage extends React.Component {
 
   render() {
     // NOTE: this.props.username is used differently from this.state.username
+    // this.props.username effective emulates the logged in user using Redux state,
+    // when this value is not null (set by Sign Up or Sign In),
+    // the status displays "Hello, <username>" and shows a "Sign Out"
+    // button, when on clicks that button, it sets the value of this.props.username to null
+    // in the redux state.
     const { username } = this.props;
     return (
       <div style={styles.rootContainerStyle}>
@@ -96,7 +102,9 @@ class UserPage extends React.Component {
                 <TabPane tab="Sign In" key="1">
                   <LoginPage />
                 </TabPane>
-                <TabPane tab="Sign Up" key="2"></TabPane>
+                <TabPane tab="Sign Up" key="2">
+                  <SignUpPage />
+                </TabPane>
               </Tabs>
             </div>
           )}
