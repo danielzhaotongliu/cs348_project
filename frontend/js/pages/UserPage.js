@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
 
 import { setLoggedInCustomer } from '../reducers/customer/actions';
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
@@ -26,13 +27,6 @@ const styles = {
     width: 110,
     display: 'flex',
     alignItems: 'center',
-  },
-
-  loginStatusStyle: {
-    margin: 25,
-    height: 75,
-    width: 200,
-    fontSize: 24,
   },
 
   tabStyle: {
@@ -57,12 +51,6 @@ class UserPage extends React.Component {
       email: '',
       password: '',
     };
-    this.handleSignOut = this.handleSignOut.bind(this);
-  }
-
-  handleSignOut(event) {
-    const { setLoggedInCustomer } = this.props;
-    setLoggedInCustomer(null, null);
   }
 
   render() {
@@ -82,16 +70,7 @@ class UserPage extends React.Component {
               Store
             </Button>
           </Link>
-          {username ? (
-            <div style={styles.loginStatusStyle}>
-              <div>Hello, {username}</div>
-              <Button type="primary" onClick={this.handleSignOut}>
-                Sign Out
-              </Button>
-            </div>
-          ) : (
-            <div style={styles.loginStatusStyle}>Not logged in</div>
-          )}
+          <LoginStatusComponent />
         </div>
         <div style={styles.innerContainerStyle}>
           {username ? (
