@@ -4,6 +4,6 @@ export function setLoggedInCustomer(username, uid) {
   return {
     type: SET_LOGGED_IN_CUSTOMER,
     username,
-    uid
+    uid,
   };
 }

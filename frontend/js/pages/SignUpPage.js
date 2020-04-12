@@ -39,7 +39,7 @@ class SignUpPage extends React.Component {
       if (response.status === 200) {
           // update username in Redux state
           // NOTE: sign up automatically sign in the user
-          this.props.setLoggedInCustomer(response.data.username);
+          this.props.setLoggedInCustomer(response.data.username, response.data.uid);
       } else {
         this.setState({ failed: true });
       }
@@ -76,6 +76,7 @@ class SignUpPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     username: state.customer.username,
+    uid: state.customer.uid,
   };
 };
 
