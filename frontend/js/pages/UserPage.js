@@ -62,7 +62,7 @@ class UserPage extends React.Component {
 
   handleSignOut(event) {
     const { setLoggedInCustomer } = this.props;
-    setLoggedInCustomer(null);
+    setLoggedInCustomer(null, null);
   }
 
   render() {
@@ -95,7 +95,7 @@ class UserPage extends React.Component {
         </div>
         <div style={styles.innerContainerStyle}>
           {username ? (
-            <div />
+            <div> <p> Hello </p> </div>
           ) : (
             <div style={styles.tabStyle}>
               <Tabs onChange={tabCallBack}>

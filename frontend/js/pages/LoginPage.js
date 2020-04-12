@@ -37,8 +37,8 @@ class LoginPage extends React.Component {
             }
         });
         if (response.data.length == 1 && response.status === 200) {
-            // update username in Redux state
-            this.props.setLoggedInCustomer(response.data[0].username);
+            // update username and uid in Redux state
+            this.props.setLoggedInCustomer(response.data[0].username, response.data[0].uid);
         } else {
             this.setState({ failed: true });
         }
