@@ -82,6 +82,27 @@ class CustomerViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, pk=None):
+        queryset = Customer.objects.raw(
+            'SELECT * FROM exampleapp_customer WHERE uid = %s', [pk])
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['patch'])
+    def edit(self, request, pk=None):
+        queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer WHERE uid = %s', [pk])
+        if len(queryset) == 1:
+            customer = queryset[0]
+            serializer = CustomerSerializer(customer, request.data, partial=True)
+            # check if the serialized data is valid
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response('uid does not exist', status=status.HTTP_400_BAD_REQUEST)
+
     def get_queryset(self):
         queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
 
@@ -177,6 +198,27 @@ class TransactionViewSet(viewsets.ModelViewSet):
             return Response(f'Fail: missing transaction')
         else :
             return  Response('Nothing to purchase')
+
+    # get transactions with datetime == NULL
+    @action(detail=False)
+    def cart(self, request):
+        uid = request.query_params.get('uid', None)
+
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s AND datetime is NULL', [uid])
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+    @action(detail=False)
+    def history(self, request):
+        uid = request.query_params.get('uid', None)
+
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s AND datetime is NOT NULL', [uid])
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """
