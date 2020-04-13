@@ -7,6 +7,7 @@ import { LeftOutlined } from '@ant-design/icons';
 
 import { setLoggedInCustomer } from '../reducers/customer/actions';
 import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
+import ShowEditUserInfo from '../app/example-app/components/ShowEditUserInfo';
 
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
@@ -74,7 +75,9 @@ class UserPage extends React.Component {
         </div>
         <div style={styles.innerContainerStyle}>
           {username ? (
-            <div> <p> Hello </p> </div>
+            <div>
+              <ShowEditUserInfo />
+            </div>
           ) : (
             <div style={styles.tabStyle}>
               <Tabs onChange={tabCallBack}>
