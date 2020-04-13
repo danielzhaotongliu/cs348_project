@@ -11,8 +11,10 @@ class ShowEditUserInfo extends React.Component {
     this.state = {
       password: '',
       email: '',
+      updated: false,
     };
     this.getUserInfo = this.getUserInfo.bind(this);
+    this.updateSuccess = this.updateSuccess.bind(this);
   }
 
   componentDidMount() {
@@ -22,13 +24,13 @@ class ShowEditUserInfo extends React.Component {
     this.getUserInfo(uid);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const prevPassword = prevState.password;
-    const prevEmail = prevState.email;
-    const { password, email } = this.state;
+  componentDidUpdate() {
+    const { updated } = this.state;
     const { uid } = this.props;
-    if ((prevPassword && prevPassword !== password) || (prevEmail && prevEmail !== email)) {
+    if (updated) {
       this.getUserInfo(uid);
+      // we reset the updated status to false
+      this.setState({ updated: false });
     }
   }
 
@@ -49,8 +51,13 @@ class ShowEditUserInfo extends React.Component {
       });
   }
 
+  // callback passed to Modal (child) component
+  updateSuccess() {
+    this.setState({ updated: true });
+  }
+
   render() {
-    const { username, uid } = this.props;
+    const { username } = this.props;
     const { password, email } = this.state;
     return (
       <div>
@@ -72,7 +79,7 @@ class ShowEditUserInfo extends React.Component {
             {password}
           </List.Item>
         </List>
-        <EditUserInfoComponent />
+        <EditUserInfoComponent updateSuccessCallback={this.updateSuccess} />
       </div>
     );
   }

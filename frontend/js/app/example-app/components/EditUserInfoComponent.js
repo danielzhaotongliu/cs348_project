@@ -24,7 +24,7 @@ class EditUserInfoComponent extends React.Component {
   }
 
   handleOk() {
-    const { uid } = this.props;
+    const { uid, updateSuccessCallback } = this.props;
     const { password, email } = this.state;
     const url = `api/customer/${uid}/edit/`;
     const params = {};
@@ -42,6 +42,8 @@ class EditUserInfoComponent extends React.Component {
         .then((response) => {
           if (response.status === 200) {
             this.setState({ visible: false, failed: false, invalidEmail: false });
+            // NOTE: callback to notify parent of sucessful update
+            updateSuccessCallback();
           }
         })
         .catch((error) => {
