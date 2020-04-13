@@ -28,7 +28,7 @@ class OrderHistoryComponent extends React.Component {
         var newOrderArr = [];
 
         // populate sids
-        axios.get('api/transaction/', { params : {uid : this.props.uid} })
+        axios.get('api/transaction/history', { params : {uid : this.props.uid} })
             .then(response => {
 
                 response.data.forEach(transaction => {

@@ -175,9 +175,17 @@ class TransactionViewSet(viewsets.ModelViewSet):
     def cart(self, request):
         uid = request.query_params.get('uid', None)
 
-        print(uid)
-
         queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s AND datetime is NULL', [uid])
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+    @action(detail=False)
+    def history(self, request):
+        uid = request.query_params.get('uid', None)
+
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s AND datetime is NOT NULL', [uid])
 
         serializer = self.get_serializer(queryset, many=True)
 
