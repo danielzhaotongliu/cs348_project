@@ -4,8 +4,9 @@ import { Card, Button, Carousel, Select} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { func } from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class PaymentMethodPage extends React.Component {
+class PaymentMethodPage extends React.Component {
     
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ export default class PaymentMethodPage extends React.Component {
 
     componentDidMount(){
         
-        axios.get('api/paymentmethod/')
+        axios.get('api/paymentmethod/', { params : {uid : this.props.uid} })
             .then(response => {
                 console.log(response.data);
                 var address = this.props.location.data;
@@ -43,7 +44,7 @@ export default class PaymentMethodPage extends React.Component {
 
     addNewPaymentMethod(){
         //TODO: when users are added uid
-        var params = {uid: null, cardNumber: this.state.cardNumber, type: this.state.cardType, isDefault: false};
+        var params = {uid: this.props.uid, cardNumber: this.state.cardNumber, type: this.state.cardType, isDefault: false};
         console.log(params)
         axios.post('api/paymentmethod/', params)
             .then(response => {
@@ -176,3 +177,11 @@ const styles = {
         overflow: "hidden"
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(PaymentMethodPage);

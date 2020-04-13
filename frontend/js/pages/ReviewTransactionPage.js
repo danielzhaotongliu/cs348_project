@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Card, Button, Carousel, Select, List} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
-export default class ReviewTransactionPage extends React.Component {
+class ReviewTransactionPage extends React.Component {
     
     constructor(props) {
         super(props);
@@ -15,6 +16,7 @@ export default class ReviewTransactionPage extends React.Component {
         }
         console.log(this.props.location.data)
         this.updateSubTotal = this.updateSubTotal.bind(this);
+        this.finalPurchase = this.finalPurchase.bind(this);
     }
 
     componentDidMount(){
@@ -25,7 +27,7 @@ export default class ReviewTransactionPage extends React.Component {
         var newTransactionArr = [];
 
         // populate sids
-        axios.get('api/transaction/')
+        axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
                 console.log(response)
                 response.data.forEach(transaction => {
@@ -60,9 +62,20 @@ export default class ReviewTransactionPage extends React.Component {
         this.setState({numberOfItems : this.state.transactions.length, cartTotal : total});
     }
 
+    finalPurchase(){
+        var params = {uid: this.props.uid, cardNumber: this.props.location.data.paymentMethod.cardNumber, cardType: this.props.location.data.paymentMethod.cardType, address: this.props.location.data.address};
+        console.log(params)
+        axios.post('api/transaction/purchase/', params)
+            .then(response => {
+                console.log(response);
+                this.props.history.push({
+                    pathname: '/reviewTransaction',
+                    data: {address: this.props.location.data, paymentMethod: {cardNumber: this.state.cardNumber, cardType: this.state.cardType }}
+                  })
+        });
+    }
+
     render(){
-        
-        
         var address = this.props.location.data.address.split("\n")
         var addressLines = [<h5> Shipping address </h5>]
         address.forEach(function(item,idx) {
@@ -99,7 +112,7 @@ export default class ReviewTransactionPage extends React.Component {
                     <div style={{background: "#E8E8E8", borderRadius: '7px', float: "left", marginLeft: 80, textAlign: "center", padding: 10}}>
                         <h5>Subtotal: {this.state.cartTotal}</h5>
                         <h5>Total: {(this.state.cartTotal*1.13).toFixed(2)}</h5>
-                        <Button type="primary">Place order </Button>
+                        <Button onClick={this.finalPurchase} type="primary">Place order </Button>
                     </div>
                 </Card>
 
@@ -168,3 +181,11 @@ const styles = {
         justifyContent : 'space-between'
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ReviewTransactionPage);

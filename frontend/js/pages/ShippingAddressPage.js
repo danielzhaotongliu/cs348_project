@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Card, Button, Carousel} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
-export default class ShippingAddressPage extends React.Component {
+class ShippingAddressPage extends React.Component {
     
     constructor(props) {
         super(props);
@@ -22,7 +23,10 @@ export default class ShippingAddressPage extends React.Component {
     }
 
     componentDidMount(){
-        axios.get('api/addressbook/')
+        console.log(this.props.uid)
+        console.log(this.props)
+        console.log(this.state)
+        axios.get('api/addressbook/', { params : {uid : this.props.uid} })
             .then(response => {
                 console.log(response.data);
                 var address = []
@@ -61,7 +65,7 @@ export default class ShippingAddressPage extends React.Component {
         var address = this.state.addressline1 + "\n" + this.state.addressline2 + "\n" + this.state.city + "\n" + this.state.prov + "\n" + this.state.zip + "\n" + this.state.country
         console.log(address);
         //TODO: when users are added uid
-        var params = {uid: null, address: address, isDefault: false};
+        var params = {uid: this.props.uid, address: address, isDefault: false};
         axios.post('api/addressbook/', params)
             .then(response => {
                 console.log(response);
@@ -212,3 +216,11 @@ const styles = {
         overflow: "hidden"
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ShippingAddressPage);
