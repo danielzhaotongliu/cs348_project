@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
@@ -13,7 +14,6 @@ var searchBy = "brand";
 
 function setSearchOption(value){
     searchBy = value;
-    console.log(searchBy);
 }
 
 const searchOptions = (
@@ -25,7 +25,7 @@ const searchOptions = (
 );
 
 
-export default class ShoeListPage extends React.Component {
+class ShoeListPage extends React.Component {
 
 
     /* HELPER FUNCTIONS */
@@ -52,7 +52,6 @@ export default class ShoeListPage extends React.Component {
         axios.get('api/shoe/', { params : paramObj})
             .then(response => {
             const shoes = response.data;
-            console.log(shoes);
             this.setState({ shoeList : shoes, searching : false });
         })
  
@@ -61,13 +60,15 @@ export default class ShoeListPage extends React.Component {
     // adds a shoe to the cart and transaction table
     async addToCart(shoe){
 
-        console.log("About to add shoe with sid: " + shoe.sid);
+        // only add to the cart (and transaction) if the uid is not null
+        if (this.props.uid){
+            var params = {sid : shoe.sid, uid : this.props.uid};
+            axios.post('api/transaction/', params);
 
-        var params = { sid : shoe.sid};
-        axios.post('api/transaction/', params);
+            var newCartCount = this.state.cartCount + 1;
+            this.setState({cartCount : newCartCount});
 
-        var newCartCount = this.state.cartCount + 1;
-        this.setState({cartCount : newCartCount});
+        }
 
     }
 
@@ -96,7 +97,7 @@ export default class ShoeListPage extends React.Component {
         });
 
         // call the get method
-        axios.get('api/transaction/')
+        axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
@@ -106,7 +107,6 @@ export default class ShoeListPage extends React.Component {
         axios.get('api/shoe/get_popular')
             .then(response => {
                 const trending = response.data;
-                console.log(trending);
                 this.setState({trendingShoes : trending});
         });
 
@@ -281,3 +281,11 @@ const styles = {
     }
 
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ShoeListPage);

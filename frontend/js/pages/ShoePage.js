@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Badge } from 'antd';
@@ -6,25 +7,22 @@ import { LeftOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/ic
 import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
-
-/* 
-    TODO
-        - show laoding spinner (maybe)
-*/
-
-export default class ShoePage extends React.Component {
+class ShoePage extends React.Component {
 
     /* HELPER FUNCTIONS */
 
     // adds a shoe to the cart and transaction table
     async addToCart(){
 
-        console.log("About to add shoe with sid: " + this.state.shoeId);
+        // only add to the cart (and transaction) if the uid is not null
+        if (this.props.uid){
+            var params = {sid : shoe.sid, uid : this.props.uid};
+            axios.post('api/transaction/', params);
 
-        var params = {sid : this.state.shoeId};
-        axios.post('api/transaction/', params);
+            var newCartCount = this.state.cartCount + 1;
+            this.setState({cartCount : newCartCount});
 
-        this.setState({cartCount : this.state.cartCount + 1});
+        }
 
     }
 
@@ -45,8 +43,8 @@ export default class ShoePage extends React.Component {
         });
 
 
-        // get cart count method
-        axios.get('api/transaction/')
+        // get cart count
+        axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
@@ -210,4 +208,12 @@ const styles = {
         alignItems : 'center'
     }
 
-}
+};
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ShoePage);

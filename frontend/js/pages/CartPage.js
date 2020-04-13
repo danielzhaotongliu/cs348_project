@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Card, List, Button} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
@@ -6,14 +7,8 @@ import { Link } from 'react-router-dom';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
-/*
-    TODO:
-        - add a button to go back to main shoe store page
 
-*/
-
-
-export default class CartPage extends React.Component {
+class CartPage extends React.Component {
 
 
     /* HELPER FUNCTIONS */
@@ -73,7 +68,7 @@ export default class CartPage extends React.Component {
         var newTransactionArr = [];
 
         // populate sids
-        axios.get('api/transaction/')
+        axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
 
                 response.data.forEach(transaction => {
@@ -201,3 +196,11 @@ const styles = {
         justifyContent : 'space-between'
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(CartPage);
