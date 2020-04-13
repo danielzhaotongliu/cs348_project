@@ -6,6 +6,7 @@ import { Button, Badge } from 'antd';
 import { LeftOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 class ShoePage extends React.Component {
 
@@ -44,7 +45,7 @@ class ShoePage extends React.Component {
 
 
         // get cart count
-        axios.get('api/transaction/', { params : {uid : this.props.uid} })
+        axios.get('api/transaction/cart', { params : {uid : this.props.uid} })
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
@@ -108,7 +109,7 @@ class ShoePage extends React.Component {
                         </Button>
                 </Link>
 
-                <div style={{padding : 20, marginRight : 25}}>
+                <div style={{padding : 20, marginRight : 25, display : 'flex'}}>
                     <Link to="/cart">
                         <Badge count={this.state.cartCount} showZero>
                             <ShoppingCartOutlined style={{fontSize  : 100}}/>
@@ -118,6 +119,9 @@ class ShoePage extends React.Component {
                     <Link to="/user">
                         <UserOutlined style={{fontSize  : 100, marginLeft: 30}}/>
                     </Link>
+                    <div style={{marginLeft : 10}}>
+                                <LoginStatusComponent />
+                    </div>
                 </div>
             </div>
 
