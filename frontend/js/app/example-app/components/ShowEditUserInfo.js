@@ -1,10 +1,9 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, List, Divider } from 'antd';
+import { List, Divider } from 'antd';
 import axios from 'axios';
 
-import { setLoggedInCustomer } from '../../../reducers/customer/actions';
+import EditUserInfoComponent from './EditUserInfoComponent';
 
 class ShowEditUserInfo extends React.Component {
   constructor(props) {
@@ -73,6 +72,7 @@ class ShowEditUserInfo extends React.Component {
             {password}
           </List.Item>
         </List>
+        <EditUserInfoComponent />
       </div>
     );
   }
@@ -85,13 +85,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      setLoggedInCustomer,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShowEditUserInfo);
+export default connect(mapStateToProps)(ShowEditUserInfo);
