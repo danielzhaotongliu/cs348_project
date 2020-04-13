@@ -44,7 +44,7 @@ class ShoePage extends React.Component {
 
 
         // get cart count
-        axios.get('api/transaction/', { params : {uid : this.props.uid} })
+        axios.get('api/transaction/cart', { params : {uid : this.props.uid} })
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})

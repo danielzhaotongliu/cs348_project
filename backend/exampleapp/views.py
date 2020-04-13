@@ -170,6 +170,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    # get transactions with datetime == NULL
+    @action(detail=False)
+    def cart(self, request):
+        uid = request.query_params.get('uid', None)
+
+        print(uid)
+
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s AND datetime is NULL', [uid])
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """

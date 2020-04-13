@@ -69,7 +69,7 @@ class CartPage extends React.Component {
 
         // populate sids
         // TODO: This is wrong. we need to get transactions with no date
-        axios.get('api/transaction/', { params : {uid : this.props.uid} })
+        axios.get('api/transaction/cart', { params : {uid : this.props.uid} })
             .then(response => {
 
                 response.data.forEach(transaction => {
