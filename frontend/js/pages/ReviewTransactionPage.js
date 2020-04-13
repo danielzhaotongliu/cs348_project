@@ -27,7 +27,7 @@ class ReviewTransactionPage extends React.Component {
         var newTransactionArr = [];
 
         // populate sids
-        axios.get('api/transaction/', { params : {uid : this.props.uid} })
+        axios.get('api/transaction/cart', { params : {uid : this.props.uid} })
             .then(response => {
                 console.log(response)
                 response.data.forEach(transaction => {
