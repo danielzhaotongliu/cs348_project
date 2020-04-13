@@ -68,6 +68,7 @@ class CartPage extends React.Component {
         var newTransactionArr = [];
 
         // populate sids
+        // TODO: This is wrong. we need to get transactions with no date
         axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
 
