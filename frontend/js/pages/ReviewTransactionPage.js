@@ -69,8 +69,7 @@ class ReviewTransactionPage extends React.Component {
             .then(response => {
                 console.log(response);
                 this.props.history.push({
-                    pathname: '/reviewTransaction',
-                    data: {address: this.props.location.data, paymentMethod: {cardNumber: this.state.cardNumber, cardType: this.state.cardType }}
+                    pathname: '/'
                   })
         });
     }
