@@ -145,13 +145,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
         uid = self.request.query_params.get('uid', None)
 
-        # if (uid != None):
-        #     queryset = Transaction.objects.raw(
-        #     'SELECT * FROM exampleapp_transaction WHERE uid_id = %s', [uid])
-        # else:
-        #     queryset = Transaction.objects.raw(
-        #     'SELECT * FROM exampleapp_transaction')
-        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+        if (uid != None):
+            queryset = Transaction.objects.raw(
+            'SELECT * FROM exampleapp_transaction WHERE uid_id = %s', [uid])
+        else:
+            queryset = Transaction.objects.raw(
+            'SELECT * FROM exampleapp_transaction')
 
         return queryset
 

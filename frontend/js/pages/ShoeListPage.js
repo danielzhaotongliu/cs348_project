@@ -95,9 +95,7 @@ class ShoeListPage extends React.Component {
         var paramsObj = {uid : this.props.uid}
 
         // call the get method
-        // { params : {uid : this.props.uid} }
-        // put in after shiz is working
-        axios.get('api/transaction/')
+        axios.get('api/transaction/', { params : {uid : this.props.uid} })
             .then(response => {
                 const transactions = response.data; // array
                 this.setState({cartCount : transactions.length})
@@ -107,7 +105,6 @@ class ShoeListPage extends React.Component {
         axios.get('api/shoe/get_popular')
             .then(response => {
                 const trending = response.data;
-                console.log(trending);
                 this.setState({trendingShoes : trending});
         });
 
