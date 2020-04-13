@@ -17,18 +17,21 @@ class ShowEditUserInfo extends React.Component {
   }
 
   componentDidMount() {
+    // get the Customer info when the component mounts which
+    // only occurs after successful sign in
     const { uid } = this.props;
     this.getUserInfo(uid);
   }
 
-  //   componentDidUpdate(prevProps, prevState) {
-  //     const { prevPassword, prevEmail } = prevState;
-  //     const { password, email } = this.state;
-  //     const { uid } = this.props;
-  //     if (prevPassword !== password || prevEmail !== email) {
-  //         this.getUserInfo(uid);
-  //     }
-  //   }
+  componentDidUpdate(prevProps, prevState) {
+    const prevPassword = prevState.password;
+    const prevEmail = prevState.email;
+    const { password, email } = this.state;
+    const { uid } = this.props;
+    if ((prevPassword && prevPassword !== password) || (prevEmail && prevEmail !== email)) {
+      this.getUserInfo(uid);
+    }
+  }
 
   getUserInfo(pk) {
     const url = `api/customer/${pk}/`;
