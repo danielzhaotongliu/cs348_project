@@ -106,6 +106,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         t_data = request.data
         # TODO: remove once frontend can pass in the quantity
         t_data['quantity'] = 1
+
         serializer = TransactionSerializer(data=t_data)
 
         # check if the serialized data is valid
@@ -141,8 +142,17 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return Response(f'Error: no Transaction tid provided', status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
-        queryset = Transaction.objects.raw(
-            'SELECT * FROM exampleapp_transaction')
+
+        uid = self.request.query_params.get('uid', None)
+
+        # if (uid != None):
+        #     queryset = Transaction.objects.raw(
+        #     'SELECT * FROM exampleapp_transaction WHERE uid_id = %s', [uid])
+        # else:
+        #     queryset = Transaction.objects.raw(
+        #     'SELECT * FROM exampleapp_transaction')
+        queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction')
+
         return queryset
 
 

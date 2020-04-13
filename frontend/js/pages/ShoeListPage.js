@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { List, Input, Select, Badge, Button } from 'antd';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
@@ -13,7 +14,6 @@ var searchBy = "brand";
 
 function setSearchOption(value){
     searchBy = value;
-    console.log(searchBy);
 }
 
 const searchOptions = (
@@ -25,7 +25,7 @@ const searchOptions = (
 );
 
 
-export default class ShoeListPage extends React.Component {
+class ShoeListPage extends React.Component {
 
 
     /* HELPER FUNCTIONS */
@@ -52,7 +52,6 @@ export default class ShoeListPage extends React.Component {
         axios.get('api/shoe/', { params : paramObj})
             .then(response => {
             const shoes = response.data;
-            console.log(shoes);
             this.setState({ shoeList : shoes, searching : false });
         })
  
@@ -61,9 +60,7 @@ export default class ShoeListPage extends React.Component {
     // adds a shoe to the cart and transaction table
     async addToCart(shoe){
 
-        console.log("About to add shoe with sid: " + shoe.sid);
-
-        var params = { sid : shoe.sid};
+        var params = {sid : shoe.sid, uid : this.props.uid};
         axios.post('api/transaction/', params);
 
         var newCartCount = this.state.cartCount + 1;
@@ -95,7 +92,11 @@ export default class ShoeListPage extends React.Component {
             this.setState({ shoeList : shoes });
         });
 
+        var paramsObj = {uid : this.props.uid}
+
         // call the get method
+        // { params : {uid : this.props.uid} }
+        // put in after shiz is working
         axios.get('api/transaction/')
             .then(response => {
                 const transactions = response.data; // array
@@ -281,3 +282,12 @@ const styles = {
     }
 
 };
+
+const mapStateToProps = (state) => {
+    return {
+      username: state.customer.username,
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ShoeListPage);
