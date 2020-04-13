@@ -7,12 +7,6 @@ import { LeftOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/ic
 import StarRatings from 'react-star-ratings';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
 
-
-/* 
-    TODO
-        - show laoding spinner (maybe)
-*/
-
 class ShoePage extends React.Component {
 
     /* HELPER FUNCTIONS */
@@ -20,10 +14,15 @@ class ShoePage extends React.Component {
     // adds a shoe to the cart and transaction table
     async addToCart(){
 
-        var params = {sid : this.state.shoe.sid, uid : this.props.uid};
-        axios.post('api/transaction/', params);
+        // only add to the cart (and transaction) if the uid is not null
+        if (this.props.uid){
+            var params = {sid : shoe.sid, uid : this.props.uid};
+            axios.post('api/transaction/', params);
 
-        this.setState({cartCount : this.state.cartCount + 1});
+            var newCartCount = this.state.cartCount + 1;
+            this.setState({cartCount : newCartCount});
+
+        }
 
     }
 
@@ -209,11 +208,10 @@ const styles = {
         alignItems : 'center'
     }
 
-}
+};
 
 const mapStateToProps = (state) => {
     return {
-      username: state.customer.username,
       uid: state.customer.uid,
     };
 };

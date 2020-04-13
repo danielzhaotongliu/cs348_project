@@ -60,11 +60,15 @@ class ShoeListPage extends React.Component {
     // adds a shoe to the cart and transaction table
     async addToCart(shoe){
 
-        var params = {sid : shoe.sid, uid : this.props.uid};
-        axios.post('api/transaction/', params);
+        // only add to the cart (and transaction) if the uid is not null
+        if (this.props.uid){
+            var params = {sid : shoe.sid, uid : this.props.uid};
+            axios.post('api/transaction/', params);
 
-        var newCartCount = this.state.cartCount + 1;
-        this.setState({cartCount : newCartCount});
+            var newCartCount = this.state.cartCount + 1;
+            this.setState({cartCount : newCartCount});
+
+        }
 
     }
 
@@ -91,8 +95,6 @@ class ShoeListPage extends React.Component {
             const shoes = response.data;
             this.setState({ shoeList : shoes });
         });
-
-        var paramsObj = {uid : this.props.uid}
 
         // call the get method
         axios.get('api/transaction/', { params : {uid : this.props.uid} })
@@ -282,7 +284,6 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-      username: state.customer.username,
       uid: state.customer.uid,
     };
 };
