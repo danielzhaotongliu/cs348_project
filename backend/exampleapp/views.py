@@ -87,6 +87,21 @@ class CustomerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['patch'])
+    def edit(self, request, pk=None):
+        queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer WHERE uid = %s', [pk])
+        if len(queryset) == 1:
+            customer = queryset[0]
+            serializer = CustomerSerializer(customer, request.data, partial=True)
+            # check if the serialized data is valid
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response('uid does not exist', status=status.HTTP_400_BAD_REQUEST)
+
     def get_queryset(self):
         queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
 
