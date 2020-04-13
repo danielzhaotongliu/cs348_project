@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from .models import Shoe, Customer, Transaction, Review, AddressBook, PaymentMethod
 from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer, AddressBookSerializer, PaymentMethodSerializer
 
+import time
 
 # Create your views here.
 class ShoeViewSet(viewsets.ModelViewSet):
@@ -149,6 +150,33 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    @action(detail=False, methods=['post'])
+    def purchase(self, request):        
+        r_data = request.data
+        uid = r_data["uid"]
+        address = r_data["address"]
+        cardType = r_data["cardType"]
+        cardNumber = r_data["cardNumber"]
+
+        print(uid,address,cardType,cardNumber)
+
+        r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
+        print("got here")
+        if len(r_queryset) == 1:
+            strTime = time.strftime('%Y-%m-%d %H:%M:%S')
+            #gets id
+            cursor = connection.cursor()
+            cursor.execute(
+            'SELECT id FROM exampleapp_paymentmethod WHERE type=%s and cardNumber=%s LIMIT 1', [cardType, cardNumber])
+            row1 = cursor.fetchone()
+            print("got here 3")
+            if (row1 is not None) :
+                print(row1)
+                cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, payMethod_id=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
+                return Response(f'Success: purchase Transaction')
+            return Response(f'Fail: missing transaction')
+        else :
+            return  Response('Nothing to purchase')
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """
@@ -208,8 +236,8 @@ class AddressBookViewSet(viewsets.ModelViewSet):
         #uid = self.request.query_params.get('uid', None)
         print("getting Address")
 
-        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_addressbook')
-        print(queryset)
+        uid = self.request.query_params.get('uid', None)
+        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_addressbook WHERE uid_id = %s', [uid])
         return queryset
 
     def create(self, request):
@@ -237,8 +265,8 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
         #uid = self.request.query_params.get('uid', None)
         print("getting Payment methods")
 
-        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_paymentmethod')
-        print(queryset)
+        uid = self.request.query_params.get('uid', None)
+        queryset = PaymentMethod.objects.raw('SELECT * FROM exampleapp_paymentmethod WHERE uid_id = %s', [uid])
         return queryset
 
     def create(self, request):
