@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { setLoggedInCustomer } from '../reducers/customer/actions';
 
 const styles = {
-    formStyle: {
-        display: 'table-caption',
-    }
+  formStyle: {
+    display: 'table-caption',
+  }
 }
 
 class SignUpPage extends React.Component {
@@ -18,6 +18,7 @@ class SignUpPage extends React.Component {
       username: '',
       password: '',
       email: '',
+      phone: '',
       failed: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +26,7 @@ class SignUpPage extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   async handleSubmit(event) {
@@ -34,12 +35,13 @@ class SignUpPage extends React.Component {
       const response = await axios.post('api/customer/', {
         username: this.state.username,
         password: this.state.password,
+        phone: this.state.phone,
         email: this.state.email,
       });
       if (response.status === 200) {
-          // update username in Redux state
-          // NOTE: sign up automatically sign in the user
-          this.props.setLoggedInCustomer(response.data.username, response.data.uid);
+        // update username in Redux state
+        // NOTE: sign up automatically sign in the user
+        this.props.setLoggedInCustomer(response.data.username, response.data.uid);
       } else {
         this.setState({ failed: true });
       }
@@ -48,27 +50,31 @@ class SignUpPage extends React.Component {
       this.setState({ failed: true });
     }
   }
-  
+
   render() {
     return (
-        <div style={styles.formStyle}>
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Username:
-                    <input name="username" type="text" value={this.state.username} onChange={this.handleChange} required/>
-                </label>
-                <label>
-                    Email:
-                    <input name="email" type="email" value={this.state.email} onChange={this.handleChange} required/>
-                </label>
-                <label>
-                    Password:
-                    <input name="password" type="password" value={this.state.password} onChange={this.handleChange} required/>
-                </label>
-                <input type="submit" value="Submit"/>
-            </form>
-            {this.state.failed ? <div>Username already exists, please choose another one.</div> : <div />}
-        </div>
+      <div style={styles.formStyle}>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username:
+                    <input name="username" type="text" value={this.state.username} onChange={this.handleChange} required />
+          </label>
+          <label>
+            Email:
+                    <input name="email" type="email" value={this.state.email} onChange={this.handleChange} required />
+          </label>
+          <label>
+            Phone:
+                    <input name="phone" type="tel" value={this.state.phone} onChange={this.handleChange} required />
+          </label>
+          <label>
+            Password:
+                    <input name="password" type="password" value={this.state.password} onChange={this.handleChange} required />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        {this.state.failed ? <div>Username already exists, please choose another one.</div> : <div />}
+      </div>
     );
   }
 };

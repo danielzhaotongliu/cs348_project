@@ -4,12 +4,24 @@ from django.db import connection
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from twilio.rest import Client
+import string
+import random
 
 from .models import Shoe, Customer, Transaction, Review, AddressBook, PaymentMethod
 from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializer, ReviewSerializer, AddressBookSerializer, PaymentMethodSerializer
 
+account_sid = 'AC106bc6f3d64341013d2fbf5501e87c18'
+auth_token = 'e8826bec22acd865e0a76536ccd6154e'
+client = Client(account_sid, auth_token)
+
+
+def id_generator(size=6, chars=string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
 
 # Create your views here.
+
+
 class ShoeViewSet(viewsets.ModelViewSet):
     """
     API endpoints to view Shoe information
@@ -74,8 +86,13 @@ class CustomerViewSet(viewsets.ModelViewSet):
         c_data = request.data
         serializer = CustomerSerializer(data=c_data)
         # check if the serialized data is valid
-
+        id = id_generator()
         if serializer.is_valid():
+            client.messages.create(
+                body=id,
+                messaging_service_sid='MGb21a28c77b4809d61841dd38c9f49472',
+                to='+' + c_data['phone']
+            )
             serializer.save()
             return Response(serializer.data)
         else:
@@ -191,20 +208,22 @@ class ReviewViewSet(viewsets.ModelViewSet):
                     'DELETE FROM exampleapp_review WHERE id = %s', [pk])
                 return Response(f'Success: deleted Review with id: {pk}')
             else:
-                return Response(f'Error: the Review does not exist', status=status.HTTP_400_BAD_REQUEST) 
+                return Response(f'Error: the Review does not exist', status=status.HTTP_400_BAD_REQUEST)
+
 
 class AddressBookViewSet(viewsets.ModelViewSet):
     """
     API endpoints to create/view AddressBook information
     """
     serializer_class = AddressBookSerializer
-    
+
     def get_queryset(self):
 
         #uid = self.request.query_params.get('uid', None)
         print("getting Address")
 
-        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_addressbook')
+        queryset = AddressBook.objects.raw(
+            'SELECT * FROM exampleapp_addressbook')
         print(queryset)
         return queryset
 
@@ -221,19 +240,21 @@ class AddressBookViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class PaymentMethodViewSet(viewsets.ModelViewSet):
     """
     API endpoints to create/view PaymentMethod information
     """
     serializer_class = PaymentMethodSerializer
-    
-    #TODO: need to by user id
+
+    # TODO: need to by user id
     def get_queryset(self):
 
         #uid = self.request.query_params.get('uid', None)
         print("getting Payment methods")
 
-        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_paymentmethod')
+        queryset = AddressBook.objects.raw(
+            'SELECT * FROM exampleapp_paymentmethod')
         print(queryset)
         return queryset
 

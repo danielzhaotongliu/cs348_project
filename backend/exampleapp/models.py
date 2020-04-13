@@ -4,10 +4,13 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
+
+
 class Customer(models.Model):
     uid = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
     email = models.EmailField(null=True, blank=True)
 
 
@@ -19,7 +22,8 @@ class Shoe(models.Model):
     price = models.FloatField(db_index=True)
     brand = models.CharField(max_length=100, db_index=True)
     stock = models.IntegerField(validators=[MinValueValidator(0)])
-    size = models.IntegerField(validators=[MinValueValidator(0)], db_index=True)
+    size = models.IntegerField(
+        validators=[MinValueValidator(0)], db_index=True)
     image_url = models.URLField()
     colour = models.CharField(max_length=100, db_index=True)
     name = models.CharField(max_length=100)
@@ -34,7 +38,8 @@ class Shoe(models.Model):
 class Review(models.Model):
     uid = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     sid = models.ForeignKey(Shoe, null=True, on_delete=models.SET_NULL)
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField()
 
     # Django does not allow multi-attribute primary key columns see below
@@ -45,7 +50,8 @@ class Review(models.Model):
 
 
 class PaymentMethod(models.Model):
-    CARD_TYPE = [('VISA', 'VISA'), ('MASTERCARD', 'MASTERCARD'), ('AMEX', 'AMEX')]
+    CARD_TYPE = [('VISA', 'VISA'), ('MASTERCARD',
+                                    'MASTERCARD'), ('AMEX', 'AMEX')]
     uid = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     cardNumber = models.CharField(max_length=16)
     type = models.CharField(max_length=10, choices=CARD_TYPE)
@@ -63,7 +69,8 @@ class Transaction(models.Model):
     datetime = models.DateTimeField(null=True)
     quantity = models.IntegerField(validators=[MinValueValidator(1)])
     address = models.TextField(null=True, blank=True)
-    payMethod = models.ForeignKey(PaymentMethod, null=True, on_delete=models.SET_NULL)
+    payMethod = models.ForeignKey(
+        PaymentMethod, null=True, on_delete=models.SET_NULL)
 
 
 class AddressBook(models.Model):
