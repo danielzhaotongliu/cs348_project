@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Card, List, Button, TextArea, Form} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 
-export default class ReviewPage extends React.Component {
+class ReviewPage extends React.Component {
     
     constructor(props) {
         super(props);
@@ -70,13 +71,14 @@ export default class ReviewPage extends React.Component {
             rating : this.state.rating,
             sid : this.state.shoeId,
             comment : this.state.value,
-            uid : null  // TODO: Update this when we have users
+            uid : this.props.uid
         };
 
-        axios.post('api/review/', params)
-        .then(response => {
-            console.log(response);
-        });
+        // only add to database if the user is logged in
+        if (params.uid){
+            axios.post('api/review/', params);
+        }
+        
         
     }
 
@@ -213,3 +215,11 @@ const styles = {
     }
 
 };
+
+const mapStateToProps = (state) => {
+    return {
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ReviewPage);
