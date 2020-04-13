@@ -5,6 +5,7 @@ import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 import ShoeComponent from '../app/example-app/components/ShoeComponent';
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -122,7 +123,7 @@ class ShoeListPage extends React.Component {
 
                         <p style={styles.titleStyle}>Shoe Store</p>
 
-                        <div style={{marginTop : 50}}>
+                        <div style={{display : 'flex', justifyContent : 'space-between', marginTop : 50}}>
 
                             <Link to="/cart">
                                 <Badge count={this.state.cartCount} showZero>
@@ -133,6 +134,11 @@ class ShoeListPage extends React.Component {
                             <Link to="/user">
                                 <UserOutlined style={{fontSize  : 100, marginLeft: 30}}/>
                             </Link>
+
+                            <div style={{marginLeft : 10}}>
+                                <LoginStatusComponent />
+                            </div>
+                            
 
                         </div>
                     </div>
