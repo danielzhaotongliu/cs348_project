@@ -81,6 +81,12 @@ class CustomerViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, pk=None):
+        queryset = Customer.objects.raw(
+            'SELECT * FROM exampleapp_customer WHERE uid = %s', [pk])
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def get_queryset(self):
         queryset = Customer.objects.raw('SELECT * FROM exampleapp_customer')
 
