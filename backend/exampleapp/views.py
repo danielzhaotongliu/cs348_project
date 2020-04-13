@@ -182,22 +182,21 @@ class TransactionViewSet(viewsets.ModelViewSet):
         print(uid,address,cardType,cardNumber)
 
         r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
-        print("got here")
-        if len(r_queryset) == 1:
-            strTime = time.strftime('%Y-%m-%d %H:%M:%S')
-            #gets id
-            cursor = connection.cursor()
-            cursor.execute(
+        strTime = time.strftime('%Y-%m-%d %H:%M:%S')
+        print(strTime)
+        #gets id
+        cursor = connection.cursor()
+        cursor.execute(
             'SELECT id FROM exampleapp_paymentmethod WHERE type=%s and cardNumber=%s LIMIT 1', [cardType, cardNumber])
-            row1 = cursor.fetchone()
-            print("got here 3")
-            if (row1 is not None) :
-                print(row1)
-                cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, payMethod_id=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
-                return Response(f'Success: purchase Transaction')
-            return Response(f'Fail: missing transaction')
-        else :
-            return  Response('Nothing to purchase')
+        row1 = cursor.fetchone()
+
+        if (row1 is not None) :
+            print(row1)
+            cursor = connection.cursor()
+            cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, payMethod_id=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
+            r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
+            return Response(f'Success: purchase Transaction') 
+        return Response(f'Fail: missing transaction')
 
     # get transactions with datetime == NULL
     @action(detail=False)
