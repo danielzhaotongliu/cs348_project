@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, Badge } from 'antd';
@@ -12,7 +13,7 @@ import ShoeComponent from '../app/example-app/components/ShoeComponent';
         - show laoding spinner (maybe)
 */
 
-export default class ShoePage extends React.Component {
+class ShoePage extends React.Component {
 
     /* HELPER FUNCTIONS */
 
@@ -21,7 +22,7 @@ export default class ShoePage extends React.Component {
 
         console.log("About to add shoe with sid: " + this.state.shoeId);
 
-        var params = {sid : this.state.shoeId};
+        var params = {sid : shoe.sid, uid : this.props.uid};
         axios.post('api/transaction/', params);
 
         this.setState({cartCount : this.state.cartCount + 1});
@@ -211,3 +212,12 @@ const styles = {
     }
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+      username: state.customer.username,
+      uid: state.customer.uid,
+    };
+};
+
+export default connect(mapStateToProps)(ShoePage);
