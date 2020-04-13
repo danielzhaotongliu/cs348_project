@@ -5,6 +5,7 @@ import { Card, List, Button, TextArea, Form} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import LoginStatusComponent from '../app/example-app/components/LoginStatusComponent';
 
 class ReviewPage extends React.Component {
     
@@ -97,15 +98,21 @@ class ReviewPage extends React.Component {
         return (
             <div style={styles.containerStyle}>
 
-                <Link to="/store">
-                    <Button
-                        style={styles.backButtonStyle}
-                        size="large"
-                        >
-                        <LeftOutlined />
-                        To Store
-                    </Button>
-                </Link>
+                <div style={{display : 'flex', justifyContent : 'space-between'}}>
+                
+                    <Link to="/store">
+                        <Button
+                            style={styles.backButtonStyle}
+                            size="large"
+                            >
+                            <LeftOutlined />
+                            To Store
+                        </Button>
+                    </Link>
+
+                    <LoginStatusComponent />
+
+                </div>
 
                 <Card
                     title="Review Your Purchase"
