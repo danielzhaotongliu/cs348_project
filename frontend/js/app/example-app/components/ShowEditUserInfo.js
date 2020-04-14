@@ -11,6 +11,7 @@ class ShowEditUserInfo extends React.Component {
     this.state = {
       password: '',
       email: '',
+      phone: '',
       updated: false,
     };
     this.getUserInfo = this.getUserInfo.bind(this);
@@ -43,6 +44,7 @@ class ShowEditUserInfo extends React.Component {
           this.setState({
             password: response.data[0].password,
             email: response.data[0].email,
+            phone: response.data[0].phone
           });
         }
       })
@@ -58,7 +60,7 @@ class ShowEditUserInfo extends React.Component {
 
   render() {
     const { username } = this.props;
-    const { password, email } = this.state;
+    const { password, email, phone } = this.state;
     return (
       <div>
         <Divider>Your Account Information</Divider>
@@ -72,6 +74,11 @@ class ShowEditUserInfo extends React.Component {
             <b>Email:</b>
             <br />
             {email}
+          </List.Item>
+          <List.Item>
+            <b>Phone:</b>
+            <br />
+            {phone}
           </List.Item>
           <List.Item>
             <b>Password:</b>

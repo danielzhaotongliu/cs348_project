@@ -1,7 +1,7 @@
 // import pages
 import 'bootstrap-includes';
 import '../sass/style.scss';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

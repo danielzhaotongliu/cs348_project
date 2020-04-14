@@ -52,6 +52,7 @@ class UserPage extends React.Component {
       username: '',
       email: '',
       password: '',
+      phone: ''
     };
   }
 
@@ -87,17 +88,17 @@ class UserPage extends React.Component {
               </Tabs>
             </div>
           ) : (
-            <div style={styles.tabStyle}>
-              <Tabs onChange={tabCallBack}>
-                <TabPane tab="Sign In" key="1">
-                  <LoginPage />
-                </TabPane>
-                <TabPane tab="Sign Up" key="2">
-                  <SignUpPage />
-                </TabPane>
-              </Tabs>
-            </div>
-          )}
+              <div style={styles.tabStyle}>
+                <Tabs onChange={tabCallBack}>
+                  <TabPane tab="Sign In" key="1">
+                    <LoginPage />
+                  </TabPane>
+                  <TabPane tab="Sign Up" key="2">
+                    <SignUpPage />
+                  </TabPane>
+                </Tabs>
+              </div>
+            )}
         </div>
       </div>
     );

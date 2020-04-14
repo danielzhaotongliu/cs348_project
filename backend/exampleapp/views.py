@@ -14,7 +14,7 @@ from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializ
 from twilio.rest import Client
 
 account_sid = 'AC106bc6f3d64341013d2fbf5501e87c18'
-auth_token = 'e8826bec22acd865e0a76536ccd6154e'
+auth_token = 'f793f204e865cf349ad82796b0570dc6'
 client = Client(account_sid, auth_token)
 
 
@@ -92,7 +92,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             resp_data = serializer.data
-            if "phone" in c_data:
+            if c_data['phone'] != "":
                 id = id_generator()
                 resp = client.messages.create(
                     body=id,
@@ -108,7 +108,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         queryset = Customer.objects.raw(
             'SELECT * FROM exampleapp_customer WHERE uid = %s', [pk])
-        serializer = self.get_serializer(queryset, many=False)
+        serializer = self.get_serializer(queryset, many=True)
 
         return Response(serializer.data)
 

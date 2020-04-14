@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 import { setLoggedInCustomer } from '../reducers/customer/actions';
 
@@ -20,15 +23,34 @@ class SignUpPage extends React.Component {
       email: '',
       phone: '',
       failed: false,
+      failed2fa: false,
       twofa: false,
-      otp: ''
+      otp: '',
+      user_otp: '',
+      uid: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handle2fa = this.handle2fa.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleClose() {
+    this.setState({ twofa: false, failed2fa: true })
+  }
+
+  handle2fa(event) {
+    event.preventDefault();
+    if (this.state.user_otp === this.state.otp) {
+      this.setState({ twofa: false })
+      this.props.setLoggedInCustomer(this.state.username, this.state.uid);
+    } else {
+      this.setState({ twofa: false, failed2fa: true })
+    }
   }
 
   async handleSubmit(event) {
@@ -43,8 +65,8 @@ class SignUpPage extends React.Component {
       if (response.status === 200) {
         // update username in Redux state
         // NOTE: sign up automatically sign in the user
-        if (response.data.otp.length != 0) {
-          this.setState({ otp: response.data.otp, twofa: true })
+        if (response.data.otp != undefined) {
+          this.setState({ otp: response.data.otp, twofa: true, uid: response.data.uid })
         } else {
           this.props.setLoggedInCustomer(response.data.username, response.data.uid);
         }
@@ -67,11 +89,11 @@ class SignUpPage extends React.Component {
           </label>
           <label>
             Email:
-                    <input name="email" type="email" value={this.state.email} onChange={this.handleChange} required />
+                    <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
           </label>
           <label>
             Phone:
-                    <input name="phone" type="tel" value={this.state.phone} onChange={this.handleChange} required />
+                    <input name="phone" type="tel" value={this.state.phone} onChange={this.handleChange} />
           </label>
           <label>
             Password:
@@ -79,7 +101,24 @@ class SignUpPage extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        {this.state.failed ? <div>Username already exists, please choose another one.</div> : <div />}
+        {this.state.failed ? <div style={{ color: 'red' }}>Username already exists, please choose another one.</div> : <div />}
+        {this.state.failed2fa ? <div style={{ color: 'red' }}>Failed 2FA Verification</div> : <div />}
+        <Modal show={this.state.twofa} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Phone Verification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={this.handle2fa}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Please enter the 6-digit code sent to your phone.</Form.Label>
+                <Form.Control name="user_otp" value={this.state.user_otp} onChange={this.handleChange} type="text" placeholder="123456" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
