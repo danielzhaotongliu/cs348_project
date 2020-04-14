@@ -4,7 +4,8 @@ import os
 
 from decouple import config  # noqa
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 
 
 def base_dir_join(*args):
@@ -23,7 +24,8 @@ ADMINS = (
 
 AUTH_USER_MODEL = 'users.User'
 
-ALLOWED_HOSTS = [".cs348shoeapp.herokuapp.com", "localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = [".cs348shoeapp.herokuapp.com",
+                 "localhost", "127.0.0.1", "[::1]"]
 
 INSTALLED_APPS = [
     'exampleapp.apps.ExampleappConfig',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
 
     'common',
     'users',
+    'phone_field'
 ]
 
 MIDDLEWARE = [

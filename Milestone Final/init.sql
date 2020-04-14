@@ -2,6 +2,8 @@ CREATE TABLE Customer(
     uid SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
+    email TEXT,
+    phone TEXT
 );
 
 CREATE TABLE Shoe(
