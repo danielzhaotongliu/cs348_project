@@ -13,6 +13,8 @@ from .serializers import ShoeSerializer, CustomerSerializer, TransactionSerializ
 
 from twilio.rest import Client
 
+import time
+
 account_sid = 'AC106bc6f3d64341013d2fbf5501e87c18'
 auth_token = 'f793f204e865cf349ad82796b0570dc6'
 client = Client(account_sid, auth_token)
@@ -46,7 +48,7 @@ class ShoeViewSet(viewsets.ModelViewSet):
 
         if brand:
             queryset = Shoe.objects.raw(
-                'SELECT * FROM exampleapp_shoe WHERE brand = %s', [brand])
+                'SELECT * FROM exampleapp_shoe WHERE brand LIKE %s', ['%' + brand + '%'])
         if size:
             queryset = Shoe.objects.raw(
                 'SELECT * FROM exampleapp_shoe WHERE size = %s', [size])
@@ -225,6 +227,33 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    @action(detail=False, methods=['post'])
+    def purchase(self, request):        
+        r_data = request.data
+        uid = r_data["uid"]
+        address = r_data["address"]
+        cardType = r_data["cardType"]
+        cardNumber = r_data["cardNumber"]
+
+        print(uid,address,cardType,cardNumber)
+
+        r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
+        strTime = time.strftime('%Y-%m-%d %H:%M:%S')
+        print(strTime)
+        #gets id
+        cursor = connection.cursor()
+        cursor.execute(
+            'SELECT id FROM exampleapp_paymentmethod WHERE type=%s and cardNumber=%s LIMIT 1', [cardType, cardNumber])
+        row1 = cursor.fetchone()
+
+        if (row1 is not None) :
+            print(row1)
+            cursor = connection.cursor()
+            cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, payMethod_id=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
+            r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
+            return Response(f'Success: purchase Transaction') 
+        return Response(f'Fail: missing transaction')
+
     # get transactions with datetime == NULL
     @action(detail=False)
     def cart(self, request):
@@ -247,7 +276,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
 
         return Response(serializer.data)
-
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """
@@ -308,9 +336,8 @@ class AddressBookViewSet(viewsets.ModelViewSet):
         #uid = self.request.query_params.get('uid', None)
         print("getting Address")
 
-        queryset = AddressBook.objects.raw(
-            'SELECT * FROM exampleapp_addressbook')
-        print(queryset)
+        uid = self.request.query_params.get('uid', None)
+        queryset = AddressBook.objects.raw('SELECT * FROM exampleapp_addressbook WHERE uid_id = %s', [uid])
         return queryset
 
     def create(self, request):
@@ -339,9 +366,8 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
         #uid = self.request.query_params.get('uid', None)
         print("getting Payment methods")
 
-        queryset = AddressBook.objects.raw(
-            'SELECT * FROM exampleapp_paymentmethod')
-        print(queryset)
+        uid = self.request.query_params.get('uid', None)
+        queryset = PaymentMethod.objects.raw('SELECT * FROM exampleapp_paymentmethod WHERE uid_id = %s', [uid])
         return queryset
 
     def create(self, request):
