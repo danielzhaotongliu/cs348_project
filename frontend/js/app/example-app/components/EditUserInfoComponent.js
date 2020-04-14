@@ -10,6 +10,7 @@ class EditUserInfoComponent extends React.Component {
       visible: false,
       password: '',
       email: '',
+      phone: '',
       failed: false,
       invalidEmail: false,
     };
@@ -25,7 +26,7 @@ class EditUserInfoComponent extends React.Component {
 
   handleOk() {
     const { uid, updateSuccessCallback } = this.props;
-    const { password, email } = this.state;
+    const { password, email, phone } = this.state;
     const url = `api/customer/${uid}/edit/`;
     const params = {};
     if (password) {
@@ -33,6 +34,9 @@ class EditUserInfoComponent extends React.Component {
     }
     if (email) {
       params.email = email;
+    }
+    if (phone) {
+      params.phone = phone;
     }
     if (Object.keys(params).length === 0) {
       this.setState({ failed: true });
@@ -62,7 +66,7 @@ class EditUserInfoComponent extends React.Component {
   }
 
   render() {
-    const { visible, email, password, failed, invalidEmail } = this.state;
+    const { visible, email, password, failed, invalidEmail, phone } = this.state;
     return (
       <div>
         <Button type="primary" onClick={this.handleShowModal}>
@@ -74,7 +78,7 @@ class EditUserInfoComponent extends React.Component {
           onCancel={this.handleCancel}
           onOk={this.handleOk}
         >
-          <form>
+          <form style={{ display: 'table-caption' }}>
             <label>
               New Email:
               <input
@@ -84,6 +88,10 @@ class EditUserInfoComponent extends React.Component {
                 value={email}
                 onChange={this.handleChange}
               />
+            </label>
+            <label>
+              New Phone:
+              <input name="phone" required type="tel" value={phone} onChange={this.handleChange} />
             </label>
             <label>
               New Password:
