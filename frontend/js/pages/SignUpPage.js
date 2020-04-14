@@ -56,6 +56,7 @@ class SignUpPage extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
+      this.setState({ failed: false, failed2fa: false });
       const response = await axios.post('api/customer/', {
         username: this.state.username,
         password: this.state.password,

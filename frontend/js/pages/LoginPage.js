@@ -54,6 +54,7 @@ class LoginPage extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
+      this.setState({ failed: false, failed2fa: false });
       const response = await axios.get('api/customer/login', {
         params: {
           username: this.state.username,
