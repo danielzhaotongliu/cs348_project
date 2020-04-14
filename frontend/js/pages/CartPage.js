@@ -26,13 +26,13 @@ class CartPage extends React.Component {
             newTransactions.splice(indexToDel, 1);
         }
 
-        this.setState({transactions : newTransactions});
+        this.setState({transactions : newTransactions},this.updateSubTotal);
 
         axios.delete("api/transaction/" + tidToDel)
             .then(response => {
                 console.log(response);
             })
-        this.updateSubTotal()
+        // this.updateSubTotal()
     }
 
     updateSubTotal(){
@@ -42,6 +42,8 @@ class CartPage extends React.Component {
              total  += item.shoe.price;
           });
         total = (Math.round(total * 100) / 100).toFixed(2);
+        console.log(total)
+        console.log(this.state.transactions)
         this.setState({numberOfItems : this.state.transactions.length, cartTotal : total});
     }
 
@@ -92,8 +94,6 @@ class CartPage extends React.Component {
                         })
                 });
         });
-
-
     }
 
     render(){
@@ -117,6 +117,7 @@ class CartPage extends React.Component {
                     headStyle={styles.cardHeadingStyle}
                     bordered={false}
                 >   
+                    {this.state.numberOfItems && this.state.numberOfItems != 0 ?
                     <Card
                     >   
                         <h1>Subtotal ({this.state.numberOfItems} item(s)): ${this.state.cartTotal}</h1>
@@ -130,6 +131,7 @@ class CartPage extends React.Component {
                             </Button>
                         </Link>
                     </Card>
+                    : null}
                     <List
                         style={styles.listStyle}
                         grid={{column : 1}}
