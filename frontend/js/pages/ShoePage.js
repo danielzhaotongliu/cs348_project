@@ -17,7 +17,7 @@ class ShoePage extends React.Component {
 
         // only add to the cart (and transaction) if the uid is not null
         if (this.props.uid){
-            var params = {sid : shoe.sid, uid : this.props.uid};
+            var params = {sid : this.state.shoeId, uid : this.props.uid};
             axios.post('api/transaction/', params);
 
             var newCartCount = this.state.cartCount + 1;
