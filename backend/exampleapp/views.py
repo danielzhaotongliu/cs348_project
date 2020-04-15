@@ -243,13 +243,13 @@ class TransactionViewSet(viewsets.ModelViewSet):
         #gets id
         cursor = connection.cursor()
         cursor.execute(
-            'SELECT id FROM exampleapp_paymentmethod WHERE type=%s and cardNumber=%s LIMIT 1', [cardType, cardNumber])
+            'SELECT id FROM exampleapp_paymentmethod WHERE type=%s and "cardNumber"=%s LIMIT 1', [cardType, cardNumber])
         row1 = cursor.fetchone()
 
         if (row1 is not None) :
             print(row1)
             cursor = connection.cursor()
-            cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, payMethod_id=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
+            cursor.execute('UPDATE exampleapp_transaction SET datetime=%s, "payMethod_id"=%s, address=%s WHERE uid_id=%s and datetime IS NULL', [strTime, row1[0], address, uid])
             r_queryset = Transaction.objects.raw('SELECT * FROM exampleapp_transaction WHERE uid_id = %s and datetime IS NULL', [uid])
             return Response(f'Success: purchase Transaction') 
         return Response(f'Fail: missing transaction')
